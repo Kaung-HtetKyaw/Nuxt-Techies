@@ -1,0 +1,39 @@
+@import "./article-card-block";
+@import "./typo";
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #2d3748;
+}
+p {
+  color: #4a5568;
+}
+a {
+  text-decoration: none;
+  color: inherit !important;
+}
+.center-background-img {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.nav-border-bottom {
+  border-bottom: 1px solid #eaecef !important;
+}
+@for $i from 1 through 9 {
+  .opacity-#{$i} {
+    opacity: ($i/ 10);
+  }
+}
+.hover-blue {
+  &:hover {
+    color: #1976d2;
+  }
+}
+
+.v-application--wrap {
+  background-color: #eef0f1;
+}
