@@ -1,10 +1,11 @@
 export const uniqueId = () => {
-  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-    (
-      c ^
-      (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
-    ).toString(16)
-  );
+  return `${Math.random()
+    .toString(36)
+    .substr(2, 9)}-${Math.random()
+    .toString(36)
+    .substr(2, 9)}-${Math.random()
+    .toString(36)
+    .substr(2, 9)}`;
 };
 
 export function noop() {}
@@ -16,7 +17,6 @@ export function capitalize(string) {
 // This grabs the file contents when the file changes
 export function previewImg(file, callback) {
   let previewUrl;
-  console.log("file utils: ", file);
   var reader = new FileReader();
   reader.onload = function() {
     previewUrl = reader.result;

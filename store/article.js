@@ -12,7 +12,6 @@ export const state = () => {
 };
 export const mutations = {
   SET_ARTICLES(state, { articles, lazy }) {
-    console.log("lazy:", lazy);
     if (lazy) {
       state.articles = state.articles.concat(articles);
     } else {
@@ -48,11 +47,8 @@ export const actions = {
         //referencing querysnapshot has circular references so it wont work
         //instead get the data by timestamp
         if (articles.length > 0) {
-          if (params.type === "popular") {
-            commit("SET_LAST_VISIBLE", articles[articles.length - 1].likesNo);
-          } else {
-            commit("SET_LAST_VISIBLE", articles[articles.length - 1].timestamp);
-          }
+          commit("SET_LAST_VISIBLE", articles[articles.length - 1].timestamp);
+
           commit("SET_ARTICLES", { articles, lazy });
         }
         return articles;
@@ -83,7 +79,7 @@ export const actions = {
   },
   updateArticle({ commit }, params) {
     return updateArticle(params).then(res => {
-      commit("UPDATE_ARTICLE", { article: params.data });
+      commit("UPDATE_ARTICLE", { article: { ...params.data } });
       return params.data;
     });
   },

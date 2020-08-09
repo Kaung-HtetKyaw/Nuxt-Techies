@@ -14,6 +14,7 @@ class UserFactory {
 
 class FB {
   constructor(data) {
+    this.uid = data.uid;
     this.displayName = data.displayName;
     this.photoURL = data.photoURL;
     this.bio = data.bio || "";

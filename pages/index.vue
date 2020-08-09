@@ -28,17 +28,14 @@
                   sm="12"
                   class="pt-0"
                 >
-                  <h1>{{article.title}}</h1>
-                  <write-fb collection="article" type="delete" :params="{id:article.id}">
-                    <template v-slot="{writeFB,loading}">
-                      <div v-if="loading">
-                        <h1>#Loading.......</h1>
-                      </div>
-                      <div v-else>
-                        <v-btn @click="writeFB">Delete Article</v-btn>
-                      </div>
-                    </template>
-                  </write-fb>
+                  <nuxt-link :to="{name:'by-id',params:{by:article.by,id:article.id}}">
+                    <h1>{{article.title}}</h1>
+                  </nuxt-link>
+
+                  <v-btn
+                    nuxt
+                    :to="{name:'by-id-delete',params:{by:article.by,id:article.id}}"
+                  >Delete</v-btn>
                 </v-col>
               </transition-group>
             </v-row>
@@ -75,6 +72,7 @@ export default {
     "signin-btn-model": SignInBtnModelFB,
     "write-fb": WriteModelFB,
   },
+  middleware: ["log"],
   data() {
     return { radios: { type: "all" } };
   },

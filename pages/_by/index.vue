@@ -1,0 +1,47 @@
+<template>
+  <div>
+    <article-list :lazy="true" :params="{type:'user',param:by}">
+      <template v-slot="{articles,loading,lazyLoadArticles,empty}">
+        <div>
+          <div>
+            <v-col v-for="(article) in articles" :key="article.id" cols="12" sm="12" class="pt-0">
+              <nuxt-link :to="{name:'by-id',params:{by:article.by,id:article.id}}">
+                <h1>{{article.title}}</h1>
+              </nuxt-link>
+            </v-col>
+          </div>
+          <div v-if="loading">
+            <h1>#Loading.......</h1>
+          </div>
+          <div v-if="empty">
+            <h1>#Empty</h1>
+          </div>
+          <v-btn @click="lazyLoadArticles">Load More</v-btn>
+        </div>
+      </template>
+    </article-list>
+  </div>
+</template>
+
+<script>
+import ArticleListModelFB from "@/components/Article/ArticleListModel";
+export default {
+  middleware: ["auth"],
+  components: {
+    "article-list": ArticleListModelFB,
+  },
+  data() {
+    return {
+      articles: [],
+    };
+  },
+  computed: {
+    by() {
+      return this.$route.params.by;
+    },
+  },
+};
+</script>
+
+<style>
+</style>

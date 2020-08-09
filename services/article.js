@@ -34,6 +34,7 @@ export function fetchPopular() {
   return firebase
     .firestore()
     .collection("articles")
+    .orderBy("timestamp", "desc")
     .orderBy("likesNo", "desc");
 }
 
@@ -85,7 +86,7 @@ export function createArticle(params) {
   return firebase
     .firestore()
     .collection("articles")
-    .add(params.data);
+    .add({ ...params.data });
 }
 
 //*Update Methods
@@ -94,7 +95,7 @@ export function updateArticle(params) {
     .firestore()
     .collection("articles")
     .doc(params.id)
-    .set(params.data);
+    .set({ ...params.data });
 }
 
 //*Delete Methods

@@ -1,14 +1,6 @@
-let defaultArticle = {
-  likes: [],
-  cover: "",
-  kids: [],
-  timestamp: Date.now(),
-  tags: [],
-  description: "No Description",
-  likesNo: 0,
-  title: "No title",
-  by: "unknown"
-};
+import { defaultArticleObjFB } from "@/utils/constants";
+
+let defaultArticle = defaultArticleObjFB();
 
 class ArticleFactory {
   constructor() {

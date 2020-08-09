@@ -4,11 +4,14 @@ import "firebase/storage";
 
 export function fileUpload({
   file,
+  id,
+  folder,
   progress = noop,
   error = noop,
   success = noop
 }) {
-  const storageRef = firebase.storage().ref("photos/" + file.name);
+  console.log(file);
+  const storageRef = firebase.storage().ref(`${folder}/` + id);
   const task = storageRef.put(file);
 
   task.on("state_changed", progress, error, () => {
@@ -16,4 +19,12 @@ export function fileUpload({
       success(downloadUrl);
     });
   });
+}
+
+export function deleteFile({ folder, id }) {
+  // Create a reference to the file to delete
+  const storageRef = firebase.storage().ref(`${folder}/` + id);
+
+  // Delete the file
+  return storageRef.delete();
 }

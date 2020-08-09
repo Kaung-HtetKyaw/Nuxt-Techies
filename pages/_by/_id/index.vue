@@ -6,6 +6,9 @@
     </div>
     <div v-else>
       <h1>This is {{article.title}}</h1>
+      <img :src="article.photo.url" alt />
+      <v-btn nuxt :to="{name:'by-id-edit',params:{id,by}}">Edit</v-btn>
+      <v-btn nuxt :to="{name:'by-id-delete',params:{id,by}}">Delete</v-btn>
     </div>
   </div>
 </template>
@@ -13,12 +16,12 @@
 <script>
 import articleServices from "@/services/article";
 export default {
+  middleware: ["auth"],
   async fetch() {
     const article = await this.$store.dispatch("article/fetchArticle", {
       id: this.id,
     });
     this.article = article;
-    console.log(this.article);
   },
   data() {
     return {
@@ -27,7 +30,10 @@ export default {
   },
   computed: {
     id() {
-      return this.$route.params.article;
+      return this.$route.params.id;
+    },
+    by() {
+      return this.$route.params.by;
     },
   },
   // async fetch() {
