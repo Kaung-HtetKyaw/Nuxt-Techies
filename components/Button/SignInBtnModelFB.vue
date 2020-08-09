@@ -1,5 +1,5 @@
 <script>
-import { signInFB, signOutFB } from "@/services/userAuth";
+import { signInFB, signOutFB } from "@/services/Firebase/userAuth";
 export default {
   props: {
     types: {

@@ -5,7 +5,7 @@ import {
   updateArticle,
   fetchArticle,
   deleteArticle
-} from "@/services/article";
+} from "@/services/Firebase/article";
 import { replaceByID, removeByID } from "@/utils/utils";
 export const state = () => {
   return { articles: [], article: {}, lastVisible: null };

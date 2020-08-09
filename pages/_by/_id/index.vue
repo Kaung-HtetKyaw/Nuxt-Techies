@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import articleServices from "@/services/article";
 export default {
   middleware: ["auth"],
   async fetch() {

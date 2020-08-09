@@ -55,8 +55,11 @@ export default {
     }),
   },
   watch: {
-    selected: function (newVal, oldVal) {
-      this.$emit("tagSelect", newVal);
+    selected: {
+      handler: function (newVal, oldVal) {
+        this.$emit("tagSelect", newVal);
+      },
+      immediate: true,
     },
   },
   methods: {

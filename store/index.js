@@ -17,7 +17,7 @@ export const mutations = {
 };
 export const actions = {
   //auth state change listener
-  async nuxtServerInit({ commit }, user) {
+  async nuxtServerInit({ commit, dispatch }, user) {
     if (user.authUser) {
       let userFB = userFactory.createUser({
         data: { ...user.authUser },
@@ -29,5 +29,6 @@ export const actions = {
       commit("SET_AUTH_USER", null);
       commit("SET_AUTHENTICATION", false);
     }
+    dispatch("tag/fetchAllTags", { root: true });
   }
 };

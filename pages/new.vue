@@ -8,6 +8,7 @@
         <div v-else>
           <v-text-field v-model="article.title" label="Title"></v-text-field>
           <v-textarea v-model="article.description" label="Description"></v-textarea>
+          <shitty @tagSelect="setTag"></shitty>
           <v-file-input
             @change="previewImg"
             v-model="file"
@@ -28,52 +29,43 @@
 
 <script>
 import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
-import { fileUpload, deleteFile } from "@/services/file";
-import { previewImg, uniqueId } from "@/utils/utils";
+import shitty from "@/components/Form/shitty";
 import { defaultArticleObjFB } from "@/utils/constants";
-import { mapState } from "vuex";
-
 export default {
   components: {
     "write-fb": WriteModelFB,
-  },
-  middleware: ["auth"],
-  created() {
-    this.article.by = this.by;
+    shitty,
   },
   data() {
     return {
-      file: [],
-      uploading: false,
       article: defaultArticleObjFB(),
     };
   },
-  computed: {
-    ...mapState({
-      by: (state) => state.user.user.uid,
-    }),
-  },
   methods: {
-    async create(callback) {
-      if (this.file && !this.uploading) {
-        let vm = this;
-        this.uploading = true;
-        await fileUpload({
+    create(callback) {
+      let vm = this;
+      this.updating = true;
+      //update the image only when user update it
+      if (this.file.length > 0) {
+        fileUpload({
           folder: "articles",
           file: this.file,
           id: this.article.photo.id,
           success,
         });
-        //function invocation context of success will be in the fileUpload function
-        function success(url) {
-          vm.article.photo.url = url;
-          vm.uploading = false;
-          callback();
-        }
+      } else {
+        callback();
+      }
+
+      //function invocation context of success will be in the fileUpload function
+      function success(url) {
+        vm.article.photo.url = url;
+        vm.updating = false;
+        callback();
       }
     },
-    async cancel() {
-      this.$router.replace("/");
+    cancel() {
+      this.$router.push({ name: "by", params: { by: this.by } });
     },
     previewImg(file) {
       if (file) {

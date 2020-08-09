@@ -19,7 +19,7 @@
 
 <script>
 import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
-import { deleteFile } from "~/services/file";
+import { deleteFile } from "@/services/Firebase/file";
 export default {
   components: {
     "write-fb": WriteModelFB,

@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { fileUpload } from "@/services/file";
+import { fileUpload } from "@/services/Firebase/file";
 import { previewImg } from "@/utils/utils";
 import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
 export default {

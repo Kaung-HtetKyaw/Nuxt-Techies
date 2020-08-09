@@ -13,7 +13,7 @@
     <v-radio-group v-model="radios" :mandatory="false">
       <v-radio label="All" :value="{type:'all'}"></v-radio>
       <v-radio label="Popular" :value="{type:'popular'}"></v-radio>
-      <v-radio label="Discuss Tag" :value="{type:'tag',param:'discuss'}"></v-radio>
+      <v-radio label="Javascript Tag" :value="{type:'tag',param:'javascript'}"></v-radio>
     </v-radio-group>
     <article-list-model :lazy="true" :params="radios">
       <template v-slot="{articles,lazyLoadArticles,loading,empty}">
@@ -60,7 +60,6 @@
 </template>
 
 <script>
-import { signInGithubFB, signOutFB } from "@/services/userAuth";
 import ArticleListModel from "@/components/Article/ArticleListModel.vue";
 import ArticleCard from "@/components/Article/ArticleCardBlockHorizontal";
 import SignInBtnModelFB from "@/components/Button/SignInBtnModelFB";
@@ -75,14 +74,6 @@ export default {
   middleware: ["log"],
   data() {
     return { radios: { type: "all" } };
-  },
-  methods: {
-    async signIn() {
-      await signInGithubFB();
-    },
-    async signOut() {
-      await signOutFB();
-    },
   },
 };
 </script>

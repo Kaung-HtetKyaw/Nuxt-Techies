@@ -1,9 +1,11 @@
 import { uniqueId } from "@/utils/utils";
+
 export function defaultArticleObjFB() {
   const id = uniqueId();
   const timestamp = Date.now();
   return {
     likes: [],
+
     photo: {
       url: "",
       id
