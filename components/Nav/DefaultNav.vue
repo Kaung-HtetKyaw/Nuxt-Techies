@@ -49,6 +49,11 @@ export default {
         },
         {
           icon: "mdi-chart-bubble",
+          title: "Tags",
+          to: "/t",
+        },
+        {
+          icon: "mdi-chart-bubble",
           title: "Dummy",
           to: "/dummy",
         },

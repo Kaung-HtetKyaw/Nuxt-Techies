@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import articleServices from "@/services/article";
 export default {
   async fetch() {
     const article = await this.$store.dispatch("article/fetchArticle", {
