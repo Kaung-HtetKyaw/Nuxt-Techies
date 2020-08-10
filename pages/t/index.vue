@@ -13,7 +13,9 @@
           sm="12"
           class="text-h3"
           :style="{color:`${tag.text_color}`,backgroundColor:`${tag.bg_color}`}"
-        >{{tag.name}}</v-col>
+        >
+          <nuxt-link :to="{name:'t-tag',params:{tag:tag.id}}">{{tag.name}}</nuxt-link>
+        </v-col>
       </v-row>
     </v-container>
   </div>

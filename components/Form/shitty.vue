@@ -14,19 +14,23 @@
               label="Select"
               item-value="id"
               multiple
+              @change="$emit('input',selected)"
             >
               <template v-slot:selection="data">
                 <v-chip
                   v-bind="data.attrs"
                   :input-value="data.selected"
-                  :style="{backgroundColor:`${data.item.bg_color}`,color:`${data.item.text_color}`}"
                   close
                   @click="data.select"
                   @click:close="remove(data.item)"
+                  :style="{backgroundColor:`${data.item.bg_color}`,color:`${data.item.text_color}`}"
                 >{{ data.item.name }}</v-chip>
               </template>
               <template v-slot:item="data">
-                <template>
+                <template v-if="typeof data.item !== 'object'">
+                  <v-list-item-content v-text="data.item"></v-list-item-content>
+                </template>
+                <template v-else>
                   <v-list-item-content>
                     <v-list-item-title v-html="data.item.name"></v-list-item-title>
                   </v-list-item-content>
@@ -54,18 +58,10 @@ export default {
       tags: (state) => state.tag.tags,
     }),
   },
-  watch: {
-    selected: {
-      handler: function (newVal, oldVal) {
-        this.$emit("tagSelect", newVal);
-      },
-      immediate: true,
-    },
-  },
   methods: {
     remove(item) {
-      const index = this.friends.indexOf(item.id);
-      if (index >= 0) this.friends.splice(index, 1);
+      const index = this.selected.indexOf(item.id);
+      if (index >= 0) this.selected.splice(index, 1);
     },
   },
 };

@@ -8,7 +8,7 @@
         <div v-else>
           <v-text-field v-model="article.title" label="Title"></v-text-field>
           <v-textarea v-model="article.description" label="Description"></v-textarea>
-          <shitty @tagSelect="setTag"></shitty>
+          <shitty v-model="article.tags"></shitty>
           <v-file-input
             @change="previewImg"
             v-model="file"
@@ -31,6 +31,8 @@
 import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
 import shitty from "@/components/Form/shitty";
 import { defaultArticleObjFB } from "@/utils/constants";
+import { previewImg } from "@/utils/utils";
+import { mapState } from "vuex";
 export default {
   components: {
     "write-fb": WriteModelFB,
@@ -38,8 +40,25 @@ export default {
   },
   data() {
     return {
-      article: defaultArticleObjFB(),
+      file: [],
+      article: {
+        ...defaultArticleObjFB(),
+      },
     };
+  },
+  //set uid after created
+  created() {
+    this.article.by = this.by;
+  },
+  computed: {
+    ...mapState({
+      by: (state) => state.user.user.uid,
+    }),
+  },
+  watch: {
+    "article.tags": function (v1, v2) {
+      console.log(v1);
+    },
   },
   methods: {
     create(callback) {
@@ -56,7 +75,6 @@ export default {
       } else {
         callback();
       }
-
       //function invocation context of success will be in the fileUpload function
       function success(url) {
         vm.article.photo.url = url;

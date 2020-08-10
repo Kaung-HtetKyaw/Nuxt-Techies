@@ -13,7 +13,7 @@
     <v-radio-group v-model="radios" :mandatory="false">
       <v-radio label="All" :value="{type:'all'}"></v-radio>
       <v-radio label="Popular" :value="{type:'popular'}"></v-radio>
-      <v-radio label="Javascript Tag" :value="{type:'tag',param:'javascript'}"></v-radio>
+      <v-radio label="Javascript Tag" :value="{type:'tag',param:'2gE4P4RuyGiT4KwrUtOh'}"></v-radio>
     </v-radio-group>
     <article-list-model :lazy="true" :params="radios">
       <template v-slot="{articles,lazyLoadArticles,loading,empty}">
