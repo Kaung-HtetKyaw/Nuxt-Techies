@@ -1,13 +1,33 @@
 <template>
   <div>
-    <article-list :lazy="true" :params="{type:'user',param:by}">
-      <template v-slot="{articles,loading,lazyLoadArticles,empty}">
+    <article-list :lazy="true" :params="{ type: 'user', param: by }">
+      <template v-slot="{ articles, loading, lazyLoadArticles, empty }">
         <div>
           <div>
-            <v-col v-for="(article) in articles" :key="article.id" cols="12" sm="12" class="pt-0">
-              <nuxt-link :to="{name:'by-id',params:{by:article.by,id:article.id}}">
-                <h1>{{article.title}}</h1>
+            <v-col
+              v-for="article in articles"
+              :key="article.id"
+              cols="12"
+              sm="12"
+              class="pt-0"
+            >
+              <nuxt-link
+                :to="{
+                  name: 'by-id',
+                  params: { by: article.by, id: article.id }
+                }"
+              >
+                <h1>{{ article.title }}</h1>
               </nuxt-link>
+              <like-btn :data="article" type="article">
+                <template v-slot="{ like, isLiked }">
+                  <div>
+                    <v-btn @click="like">{{
+                      isLiked ? "Unlike" : "Like"
+                    }}</v-btn>
+                  </div>
+                </template>
+              </like-btn>
             </v-col>
           </div>
           <div v-if="loading">
@@ -25,23 +45,24 @@
 
 <script>
 import ArticleListModelFB from "@/components/Article/ArticleListModel";
+import LikeBtnFB from "@/components/Button/LikeBtnFB";
 export default {
   middleware: ["auth"],
   components: {
     "article-list": ArticleListModelFB,
+    "like-btn": LikeBtnFB
   },
   data() {
     return {
-      articles: [],
+      articles: []
     };
   },
   computed: {
     by() {
       return this.$route.params.by;
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

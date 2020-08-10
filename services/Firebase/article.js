@@ -46,7 +46,6 @@ export function fetchTag({ param }) {
     .where("tags", "array-contains", param);
 }
 export function fetchUser({ param }) {
-  console.log(param);
   return firebase
     .firestore()
     .collection("articles")

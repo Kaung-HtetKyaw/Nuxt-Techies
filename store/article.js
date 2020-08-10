@@ -36,6 +36,9 @@ export const mutations = {
   },
   LIKE_ARTICLE(state, { article }) {
     replaceByID(state.articles, article);
+  },
+  UNLIKE_ARTICLE(state, { article }) {
+    replaceByID(state.articles, article);
   }
 };
 export const actions = {
@@ -92,10 +95,24 @@ export const actions = {
     });
   },
   likeArticle({ commit, getters }, { id, by }) {
+    //add the like
     const article = getters.getArticleByID(id);
     article.likes.push(by);
     article.likesNo = article.likes.length;
     commit("LIKE_ARTICLE", { article });
+    return updateArticle({ id: article.id, data: { ...article } }).then(() => {
+      return article;
+    });
+  },
+  unlikeArticle({ commit, getters }, { id, by }) {
+    //remove the like
+    const article = getters.getArticleByID(id);
+    removeByID(article.likes, by);
+    article.likesNo = article.likes.length;
+    commit("UNLIKE_ARTICLE", { article });
+    return updateArticle({ id: article.id, data: { ...article } }).then(() => {
+      return article;
+    });
   }
 };
 export const getters = {

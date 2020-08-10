@@ -39,19 +39,18 @@
                   >
                     <h1>{{ article.title }}</h1>
                   </nuxt-link>
-                  <!-- <div v-if="isAuthenticated">
-                    <like-btn
-                      :data="article"
-                      type="article"
-                      :by="$store.state.user.user.uid"
-                    >
-                      <template v-slot="{ like }">
+
+                  <div v-if="isAuthenticated">
+                    <like-btn :data="article" type="article">
+                      <template v-slot="{ like, isLiked }">
                         <div>
-                          <v-btn @click="like">Like</v-btn>
+                          <v-btn @click="like">{{
+                            isLiked ? "Unlike" : "Like"
+                          }}</v-btn>
                         </div>
                       </template>
                     </like-btn>
-                  </div> -->
+                  </div>
 
                   <v-btn
                     nuxt
