@@ -11,6 +11,7 @@ export default {
       },
     },
   },
+
   async fetch() {
     const articles = await this.$store.dispatch("article/getArticles", {
       params: this.params,

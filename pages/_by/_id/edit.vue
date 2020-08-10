@@ -14,6 +14,7 @@
           <div v-else>
             <v-text-field v-model="article.title" label="Title"></v-text-field>
             <v-textarea v-model="article.description" label="Description"></v-textarea>
+            <autocomplete-tag v-model="article.tags"></autocomplete-tag>
             <v-file-input
               @change="previewImg"
               v-model="file"
@@ -35,9 +36,11 @@
 import { fileUpload } from "@/services/Firebase/file";
 import { previewImg } from "@/utils/utils";
 import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
+import AutocompleteTag from "@/components/Form/AutocompleteTag";
 export default {
   components: {
     "write-fb": WriteModelFB,
+    "autocomplete-tag": AutocompleteTag,
   },
   data() {
     return {

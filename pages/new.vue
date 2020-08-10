@@ -8,7 +8,7 @@
         <div v-else>
           <v-text-field v-model="article.title" label="Title"></v-text-field>
           <v-textarea v-model="article.description" label="Description"></v-textarea>
-          <shitty v-model="article.tags"></shitty>
+          <autocomplete-tag v-model="article.tags"></autocomplete-tag>
           <v-file-input
             @change="previewImg"
             v-model="file"
@@ -29,15 +29,16 @@
 
 <script>
 import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
-import shitty from "@/components/Form/shitty";
+import AutocompleteTag from "@/components/Form/AutocompleteTag";
 import { defaultArticleObjFB } from "@/utils/constants";
 import { previewImg } from "@/utils/utils";
 import { mapState } from "vuex";
 export default {
   components: {
     "write-fb": WriteModelFB,
-    shitty,
+    "autocomplete-tag": AutocompleteTag,
   },
+  middleware: ["auth"],
   data() {
     return {
       file: [],
