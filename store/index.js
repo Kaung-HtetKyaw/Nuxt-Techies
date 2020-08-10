@@ -1,4 +1,5 @@
 import userFactory from "@/utils/factory/user";
+import { currentUserFB } from "@/services/Firebase/userAuth";
 export const strict = false;
 export const state = () => {
   return {
@@ -17,7 +18,9 @@ export const mutations = {
 };
 export const actions = {
   //auth state change listener
-  async nuxtServerInit({ commit, dispatch }, user) {
+  async nuxtServerInit({ dispatch }) {},
+  async authStateListener({ commit, dispatch }, user) {
+    console.log(currentUserFB());
     if (user.authUser) {
       let userFB = userFactory.createUser({
         data: { ...user.authUser },

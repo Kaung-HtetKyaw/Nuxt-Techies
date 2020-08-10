@@ -53,3 +53,7 @@ export function removeByID(array, id) {
   const index = array.findIndex(el => el.id === id);
   return array.splice(index, 1);
 }
+
+export function isLiked(array, id) {
+  return array.includes(id);
+}

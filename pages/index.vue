@@ -1,7 +1,7 @@
 <template>
   <div>
-    <signin-btn-model :types="['github','facebook']">
-      <template v-slot="{github,facebook,signout}">
+    <signin-btn-model :types="['github', 'facebook']">
+      <template v-slot="{ github, facebook, signout }">
         <div>
           <v-btn @click="github">SignIn With GitHub</v-btn>
           <v-btn @click="facebook">SignIn With Facebook</v-btn>
@@ -11,35 +11,60 @@
     </signin-btn-model>
 
     <v-radio-group v-model="radios" :mandatory="false">
-      <v-radio label="All" :value="{type:'all'}"></v-radio>
-      <v-radio label="Popular" :value="{type:'popular'}"></v-radio>
-      <v-radio label="Javascript Tag" :value="{type:'tag',param:'2gE4P4RuyGiT4KwrUtOh'}"></v-radio>
+      <v-radio label="All" :value="{ type: 'all' }"></v-radio>
+      <v-radio label="Popular" :value="{ type: 'popular' }"></v-radio>
+      <v-radio
+        label="Javascript Tag"
+        :value="{ type: 'tag', param: '2gE4P4RuyGiT4KwrUtOh' }"
+      ></v-radio>
     </v-radio-group>
     <article-list-model :lazy="true" :params="radios">
-      <template v-slot="{articles,lazyLoadArticles,loading,empty}">
+      <template v-slot="{ articles, lazyLoadArticles, loading, empty }">
         <transition :key="radios.type" name="slide-right">
           <v-container class="px-0 pt-0">
-            <v-row v-if="articles.length>0" dense>
+            <v-row v-if="articles.length > 0" dense>
               <transition-group tag="div" name="item">
                 <v-col
-                  v-for="(article) in articles"
+                  v-for="article in articles"
                   :key="article.id"
                   cols="12"
                   sm="12"
                   class="pt-0"
                 >
-                  <nuxt-link :to="{name:'by-id',params:{by:article.by,id:article.id}}">
-                    <h1>{{article.title}}</h1>
+                  <nuxt-link
+                    :to="{
+                      name: 'by-id',
+                      params: { by: article.by, id: article.id }
+                    }"
+                  >
+                    <h1>{{ article.title }}</h1>
                   </nuxt-link>
+                  <!-- <div v-if="isAuthenticated">
+                    <like-btn
+                      :data="article"
+                      type="article"
+                      :by="$store.state.user.user.uid"
+                    >
+                      <template v-slot="{ like }">
+                        <div>
+                          <v-btn @click="like">Like</v-btn>
+                        </div>
+                      </template>
+                    </like-btn>
+                  </div> -->
 
                   <v-btn
                     nuxt
-                    :to="{name:'by-id-delete',params:{by:article.by,id:article.id}}"
-                  >Delete</v-btn>
+                    :to="{
+                      name: 'by-id-delete',
+                      params: { by: article.by, id: article.id }
+                    }"
+                    >Delete</v-btn
+                  >
                 </v-col>
               </transition-group>
             </v-row>
-            <v-row dense v-if="articles.length===0">
+            <v-row dense v-if="articles.length === 0">
               <h1>No Articles yet</h1>
             </v-row>
             <v-row dense v-if="empty">
@@ -64,19 +89,26 @@ import ArticleListModel from "@/components/Article/ArticleListModel.vue";
 import ArticleCard from "@/components/Article/ArticleCardBlockHorizontal";
 import SignInBtnModelFB from "@/components/Button/SignInBtnModelFB";
 import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
+import LikeBtnFB from "@/components/Button/LikeBtnFB";
+import { mapState } from "vuex";
 export default {
   components: {
     "article-list-model": ArticleListModel,
     "article-card": ArticleCard,
     "signin-btn-model": SignInBtnModelFB,
     "write-fb": WriteModelFB,
+    "like-btn": LikeBtnFB
   },
   middleware: ["log"],
   data() {
     return { radios: { type: "all" } };
   },
+  computed: {
+    ...mapState({
+      isAuthenticated: state => state.isAuthenticated
+    })
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

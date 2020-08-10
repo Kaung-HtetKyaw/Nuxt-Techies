@@ -33,6 +33,9 @@ export const mutations = {
   },
   SET_LAST_VISIBLE(state, lastVisible) {
     state.lastVisible = lastVisible;
+  },
+  LIKE_ARTICLE(state, { article }) {
+    replaceByID(state.articles, article);
   }
 };
 export const actions = {
@@ -87,6 +90,12 @@ export const actions = {
     return deleteArticle(params.id).then(() => {
       commit("DELETE_ARTICLE", { id: params.id });
     });
+  },
+  likeArticle({ commit, getters }, { id, by }) {
+    const article = getters.getArticleByID(id);
+    article.likes.push(by);
+    article.likesNo = article.likes.length;
+    commit("LIKE_ARTICLE", { article });
   }
 };
 export const getters = {

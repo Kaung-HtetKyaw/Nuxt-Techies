@@ -83,7 +83,7 @@ export default {
           auth: {
             persistence: "local",
             initialize: {
-              onAuthStateChangedAction: "nuxtServerInit"
+              onAuthStateChangedAction: "authStateListener"
             },
             ssr: {
               // !! NEVER deploy a service account file to github or to a publicly accessible folder on your server !!
