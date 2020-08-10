@@ -13,12 +13,12 @@ export function normalizeTag(tags) {
   if (Array.isArray(tags)) {
     let arr = [];
     tags.forEach(tag => {
-      let tag_obj = tagFactory.createArticle({ data: tag });
+      let tag_obj = tagFactory.createTag({ data: tag });
       arr.push({ ...tag_obj });
     });
     return arr;
   }
 
-  const tag = tagFactory.createArticle({ data: tags });
+  const tag = tagFactory.createTag({ data: tags });
   return tag;
 }

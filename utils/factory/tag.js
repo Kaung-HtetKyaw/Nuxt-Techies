@@ -1,21 +1,17 @@
-let defaultArticle = {
-  bg_color: "#333",
-  text_color: "#eee",
-  kids: [],
-  name: "No Tag"
-};
+import { defaultTagObj } from "@/utils/constants";
+let defaultTag = defaultTagObj;
 
-class ArticleFactory {
+class TagFactory {
   constructor() {
-    this.articleClass = FireBase;
+    this.tagClass = FireBase;
   }
-  createArticle(options) {
+  createTag(options) {
     switch (options.type) {
       case "firebase":
-        this.articleClass = FireBase;
+        this.tagClass = FireBase;
         break;
     }
-    return new this.articleClass(options.data);
+    return new this.tagClass(options.data);
   }
 }
 
@@ -23,21 +19,21 @@ class FireBase {
   constructor(data) {
     this.id = data.id;
     if (typeof data.data === "function") {
-      this.normalizeArticle(data.data());
+      this.normalizeTag(data.data());
     } else {
-      this.normalizeArticle(data);
+      this.normalizeTag(data);
     }
   }
-  normalizeArticle(data) {
+  normalizeTag(data) {
     const keys = Object.keys(data);
-    for (const key in defaultArticle) {
+    for (const key in defaultTagObj) {
       if (keys.includes(key)) {
         this[key] = data[key];
       } else {
-        this[key] = defaultArticle[key];
+        this[key] = defaultTagObj[key];
       }
     }
   }
 }
 
-export default new ArticleFactory();
+export default new TagFactory();

@@ -31,3 +31,10 @@ export const defaultUserObjFB = {
   saved: [],
   topics: []
 };
+
+export const defaultTagObj = {
+  bg_color: "#333",
+  text_color: "#eee",
+  kids: [],
+  name: "No Tag"
+};
