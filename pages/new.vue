@@ -31,6 +31,7 @@
 import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
 import AutocompleteTag from "@/components/Form/AutocompleteTag";
 import { defaultArticleObjFB } from "@/utils/constants";
+import { fileUpload } from "@/services/Firebase/file";
 import { previewImg } from "@/utils/utils";
 import { mapState } from "vuex";
 export default {
@@ -66,7 +67,7 @@ export default {
       let vm = this;
       this.updating = true;
       //update the image only when user update it
-      if (this.file.length > 0) {
+      if (this.file) {
         fileUpload({
           folder: "articles",
           file: this.file,
@@ -80,6 +81,7 @@ export default {
       function success(url) {
         vm.article.photo.url = url;
         vm.updating = false;
+        console.log(vm.article);
         callback();
       }
     },
@@ -87,6 +89,7 @@ export default {
       this.$router.push({ name: "by", params: { by: this.by } });
     },
     previewImg(file) {
+      console.log(file);
       if (file) {
         let vm = this;
         previewImg(file, callback);

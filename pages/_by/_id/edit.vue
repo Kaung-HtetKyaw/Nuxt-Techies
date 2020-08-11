@@ -65,7 +65,7 @@ export default {
       let vm = this;
       this.updating = true;
       //update the image only when user update it
-      if (this.file.length > 0) {
+      if (this.file) {
         fileUpload({
           folder: "articles",
           file: this.file,
