@@ -1,3 +1,5 @@
+import { fetchUser } from "@/services/Firebase/userAuth";
+
 export const state = () => {
   return { user: null };
 };
@@ -7,5 +9,8 @@ export const mutations = {
   }
 };
 export const actions = {
-  signIn({ commit }, { user, type }) {}
+  signIn({ commit }, { user, type }) {
+    return;
+  },
+  createUser({ commit }, { user }) {}
 };
