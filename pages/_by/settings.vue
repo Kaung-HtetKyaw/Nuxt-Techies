@@ -32,6 +32,7 @@ export default {
   components: {
     "write-fb": WriteModelFB,
   },
+  middleware:['auth'],
   data() {
     return {
       file: {},
@@ -54,7 +55,6 @@ export default {
       } else {
         callback();
       }
-
       //function invocation context of success will be in the fileUpload function
       function success(url) {
         vm.user.photo.url = url;

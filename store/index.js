@@ -11,7 +11,9 @@ export const state = () => {
 export const mutations = {};
 export const actions = {
   //auth state change listener
-  async nuxtServerInit({ dispatch }) {},
+  async nuxtServerInit({ dispatch }) {
+    dispatch("tag/fetchAllTags", { root: true });
+  },
   async authStateListener({ dispatch }, user) {
     if (user.authUser) {
       let userFB = userFactory.createUser({
@@ -22,6 +24,5 @@ export const actions = {
     } else {
       dispatch("user/signOut");
     }
-    dispatch("tag/fetchAllTags", { root: true });
   }
 };

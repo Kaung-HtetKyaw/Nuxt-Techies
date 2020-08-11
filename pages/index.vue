@@ -9,7 +9,15 @@
         </div>
       </template>
     </signin-btn-model>
-
+    <user-model id="tpUmhxXm3WRLZTguGgtXOtp5xYS2">
+      <template v-slot="{data,loading}">
+        <div>
+          <div v-if="!loading&&!!data">
+            <h1>{{data.displayName}}</h1>
+          </div>
+        </div>
+      </template>
+    </user-model>
     <v-radio-group v-model="radios" :mandatory="false">
       <v-radio label="All" :value="{ type: 'all' }"></v-radio>
       <v-radio label="Popular" :value="{ type: 'popular' }"></v-radio>
@@ -22,28 +30,7 @@
             <v-row v-if="articles.length > 0" dense>
               <transition-group tag="div" name="item">
                 <v-col v-for="article in articles" :key="article.id" cols="12" sm="12" class="pt-0">
-                  <nuxt-link
-                    :to="{
-                      name: 'by-id',
-                      params: { by: article.by, id: article.id }
-                    }"
-                  >
-                    <h1>{{ article.title }}</h1>
-                  </nuxt-link>
-
-                  <div v-if="!!user">
-                    <like-btn :data="article" type="article" :user="user">
-                      <template v-slot="{ like, isLiked }">
-                        <div>
-                          <v-btn @click="like">
-                            {{
-                            isLiked ? "Unlike" : "Like"
-                            }}
-                          </v-btn>
-                        </div>
-                      </template>
-                    </like-btn>
-                  </div>
+                  <article-card :article="article"></article-card>
 
                   <v-btn
                     nuxt
@@ -81,6 +68,7 @@ import ArticleCard from "@/components/Article/ArticleCardBlockHorizontal";
 import SignInBtnModelFB from "@/components/Button/SignInBtnModelFB";
 import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
 import LikeBtnFB from "@/components/Button/LikeBtnFB";
+import UserModelFB from "@/components/Author/UserModelFB";
 import { mapState } from "vuex";
 import { authHydrated } from "@/mixins/authHydrated";
 export default {
@@ -90,6 +78,7 @@ export default {
     "signin-btn-model": SignInBtnModelFB,
     "write-fb": WriteModelFB,
     "like-btn": LikeBtnFB,
+    "user-model": UserModelFB,
   },
   middleware: ["log"],
   mixins: [authHydrated],
