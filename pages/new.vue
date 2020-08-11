@@ -32,7 +32,7 @@ import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
 import AutocompleteTag from "@/components/Form/AutocompleteTag";
 import { defaultArticleObjFB } from "@/utils/constants";
 import { fileUpload } from "@/services/Firebase/file";
-import { previewImg } from "@/utils/utils";
+import { previewImg, isEmptyObj } from "@/utils/utils";
 import { mapState } from "vuex";
 export default {
   components: {
@@ -42,7 +42,7 @@ export default {
   middleware: ["auth"],
   data() {
     return {
-      file: [],
+      file: {},
       article: {
         ...defaultArticleObjFB(),
       },
@@ -67,7 +67,7 @@ export default {
       let vm = this;
       this.updating = true;
       //update the image only when user update it
-      if (this.file) {
+      if (!isEmptyObj(this.file)) {
         fileUpload({
           folder: "articles",
           file: this.file,

@@ -29,7 +29,14 @@ export const defaultUserObjFB = {
   following: [],
   saved: [],
   topics: [],
-  uid: ""
+  uid: "",
+  profile_url: {
+    facebook: "",
+    github: "",
+    stackoverflow: "",
+    twitter: "",
+    instagram: ""
+  }
 };
 
 export const defaultTagObj = {

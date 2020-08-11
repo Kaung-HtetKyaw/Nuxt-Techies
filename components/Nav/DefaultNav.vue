@@ -16,13 +16,13 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
       <v-spacer></v-spacer>
-      <v-btn v-if="user" text>{{user.displayName}}</v-btn>
+      <v-btn nuxt v-if="user" :to="{name:'by',params:{by:user.uid}}" text>{{user.displayName}}</v-btn>
     </v-app-bar>
     <v-app-bar color="white" elevation="0" fixed app class="nav-border-bottom d-flex d-md-none">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
       <v-spacer></v-spacer>
-      <v-btn v-if="user" text>{{user.displayName}}</v-btn>
+      <v-btn nuxt v-if="user" :to="{name:'by',params:{by:user.uid}}" text>{{user.displayName}}</v-btn>
     </v-app-bar>
   </div>
 </template>

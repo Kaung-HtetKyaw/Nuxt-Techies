@@ -1,20 +1,13 @@
 <template>
   <div>
-    <write-fb
-      @dataReady="setArticle"
-      type="update"
-      collection="article"
-      :params="{id,data:article,fetch:true}"
-    >
-      <template v-slot="{loading,writeFB}">
-        <div>
-          <div v-if="loading">
-            <h1>#Loading.....</h1>
-          </div>
-          <div v-else>
-            <v-text-field v-model="article.title" label="Title"></v-text-field>
-            <v-textarea v-model="article.description" label="Description"></v-textarea>
-            <autocomplete-tag v-model="article.tags"></autocomplete-tag>
+    <h1>This is {{user.displayName}}'s page</h1>
+    <div>
+      <write-fb type="update" collection="user" :params="{id:user.uid,data:user,fetch:false}">
+        <template v-slot="{writeFB}">
+          <div>
+            <v-text-field v-model="user.displayName" label="Title"></v-text-field>
+            <v-text-field v-model="user.bio" label="Bio"></v-text-field>
+            <img :src="user.photo.url" alt />
             <v-file-input
               @change="previewImg"
               v-model="file"
@@ -23,53 +16,39 @@
               label="File input"
             ></v-file-input>
             <v-btn :loading="updating" @click="update(writeFB)">Update</v-btn>
-            <v-btn @click="cancel">Cancel</v-btn>
-            <img :src="article.photo.url" alt />
           </div>
-        </div>
-      </template>
-    </write-fb>
+        </template>
+      </write-fb>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { fileUpload } from "@/services/Firebase/file";
 import { previewImg, isEmptyObj } from "@/utils/utils";
 import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
-import AutocompleteTag from "@/components/Form/AutocompleteTag";
 export default {
   components: {
     "write-fb": WriteModelFB,
-    "autocomplete-tag": AutocompleteTag,
   },
   data() {
     return {
       file: {},
       updating: false,
-      article: {},
     };
   },
-  computed: {
-    id() {
-      return this.$route.params.id;
-    },
-    by() {
-      return this.$route.params.by;
-    },
-  },
   methods: {
-    setArticle(article) {
-      this.article = article;
-    },
     update(callback) {
       let vm = this;
       this.updating = true;
       //update the image only when user update it
       if (!isEmptyObj(this.file)) {
+        console.log(this.file);
         fileUpload({
-          folder: "articles",
+          folder: "users",
           file: this.file,
-          id: this.article.photo.id,
+          id: this.user.photo.id,
           success,
         });
       } else {
@@ -78,23 +57,28 @@ export default {
 
       //function invocation context of success will be in the fileUpload function
       function success(url) {
-        vm.article.photo.url = url;
+        vm.user.photo.url = url;
         vm.updating = false;
         callback();
       }
     },
     cancel() {
-      this.$router.push({ name: "by", params: { by: this.by } });
+      this.$router.push({ name: "by", params: { by: this.user.uid } });
     },
     previewImg(file) {
       if (file) {
         let vm = this;
         previewImg(file, callback);
         function callback(preview) {
-          vm.article.photo.url = preview;
+          vm.user.photo.url = preview;
         }
       }
     },
+  },
+  computed: {
+    ...mapState({
+      user: (state) => state.user.user,
+    }),
   },
 };
 </script>

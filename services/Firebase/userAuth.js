@@ -66,6 +66,14 @@ export function createUser(user) {
     .set(user);
 }
 
+export function updateUser(user) {
+  return firebase
+    .firestore()
+    .collection("users")
+    .doc(user.uid)
+    .set(user);
+}
+
 function typesToFunName(string) {
   return `SignIn${capitalize(string)}FB`;
 }
