@@ -1,16 +1,11 @@
 <template>
   <div>
+    <h1>This is {{user.displayName}} 's page</h1>
     <article-list :lazy="true" :params="{ type: 'user', param: by }">
       <template v-slot="{ articles, loading, lazyLoadArticles, empty }">
         <div>
           <div>
-            <v-col
-              v-for="article in articles"
-              :key="article.id"
-              cols="12"
-              sm="12"
-              class="pt-0"
-            >
+            <v-col v-for="article in articles" :key="article.id" cols="12" sm="12" class="pt-0">
               <nuxt-link
                 :to="{
                   name: 'by-id',
@@ -22,9 +17,11 @@
               <like-btn :data="article" type="article">
                 <template v-slot="{ like, isLiked }">
                   <div>
-                    <v-btn @click="like">{{
+                    <v-btn @click="like">
+                      {{
                       isLiked ? "Unlike" : "Like"
-                    }}</v-btn>
+                      }}
+                    </v-btn>
                   </div>
                 </template>
               </like-btn>
@@ -46,22 +43,26 @@
 <script>
 import ArticleListModelFB from "@/components/Article/ArticleListModel";
 import LikeBtnFB from "@/components/Button/LikeBtnFB";
+import { mapState } from "vuex";
 export default {
   middleware: ["auth"],
   components: {
     "article-list": ArticleListModelFB,
-    "like-btn": LikeBtnFB
+    "like-btn": LikeBtnFB,
   },
   data() {
     return {
-      articles: []
+      articles: [],
     };
   },
   computed: {
     by() {
       return this.$route.params.by;
-    }
-  }
+    },
+    ...mapState({
+      user: (state) => state.user.user,
+    }),
+  },
 };
 </script>
 

@@ -28,11 +28,11 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { authHydrated } from "@/mixins/authHydrated";
 export default {
+  mixins: [authHydrated],
   data() {
     return {
-      isHydrated: false,
       clipped: false,
       drawer: false,
       fixed: false,
@@ -63,17 +63,6 @@ export default {
       rightDrawer: false,
       title: "Vuetify.js",
     };
-  },
-  computed: {
-    ...mapState({
-      userAuth: (state) => state.user.user,
-    }),
-    user() {
-      return this.isHydrated ? this.userAuth : null;
-    },
-  },
-  mounted() {
-    this.isHydrated = true;
   },
 };
 </script>

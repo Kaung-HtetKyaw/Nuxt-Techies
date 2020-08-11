@@ -1,52 +1,55 @@
 <script>
 import { isLiked, capitalize } from "@/utils/utils";
-import { mapState } from "vuex";
+import { authHydrated } from "@/mixins/authHydrated";
 export default {
   props: {
     type: {
       type: String,
       required: true,
-      validator: function(value) {
+      validator: function (value) {
         return ["article", "comment"].indexOf(value) !== -1;
-      }
+      },
     },
+
     data: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
+    user: {
+      type: Object,
+      required: true,
+    },
   },
+
   methods: {
     async like() {
       let moduleName, actionName;
       moduleName = this.type;
-      if (!isLiked(this.data.likes, this.by)) {
+      if (!isLiked(this.data.likes, this.user.uid)) {
         actionName = `like${capitalize(this.type)}`;
         await this.$store.dispatch(`${moduleName}/${actionName}`, {
           id: this.data.id,
-          by: this.by
+          by: this.user.uid,
         });
       } else {
         actionName = `unlike${capitalize(this.type)}`;
         await this.$store.dispatch(`${moduleName}/${actionName}`, {
           id: this.data.id,
-          by: this.by
+          by: this.user.uid,
         });
       }
-    }
+    },
   },
   computed: {
     isLiked() {
-      return isLiked(this.data.likes, this.by);
+      return isLiked(this.data.likes, this.user.uid);
     },
-    ...mapState({
-      by: state => state.user.user.uid
-    })
   },
   render() {
     return this.$scopedSlots.default({
       like: this.like,
-      isLiked: this.isLiked
+      isLiked: this.isLiked,
     });
-  }
+  },
 };
 </script>

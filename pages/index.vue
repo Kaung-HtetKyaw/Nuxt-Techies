@@ -31,8 +31,8 @@
                     <h1>{{ article.title }}</h1>
                   </nuxt-link>
 
-                  <div v-if="isAuthenticated">
-                    <like-btn :data="article" type="article">
+                  <div v-if="!!user">
+                    <like-btn :data="article" type="article" :user="user">
                       <template v-slot="{ like, isLiked }">
                         <div>
                           <v-btn @click="like">
@@ -82,6 +82,7 @@ import SignInBtnModelFB from "@/components/Button/SignInBtnModelFB";
 import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
 import LikeBtnFB from "@/components/Button/LikeBtnFB";
 import { mapState } from "vuex";
+import { authHydrated } from "@/mixins/authHydrated";
 export default {
   components: {
     "article-list-model": ArticleListModel,
@@ -91,8 +92,9 @@ export default {
     "like-btn": LikeBtnFB,
   },
   middleware: ["log"],
+  mixins: [authHydrated],
   data() {
-    return { radios: { type: "all" } };
+    return { radios: { type: "all" }, isHydrated: false };
   },
   computed: {
     ...mapState({
