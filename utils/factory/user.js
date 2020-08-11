@@ -1,29 +1,36 @@
+import { defaultUserObjFB } from "@/utils/constants";
+
+const defaultUser = new Object(defaultUserObjFB);
+
 class UserFactory {
   constructor() {
-    this.userClass = FB;
+    this.userClass = FireBase;
   }
   createUser(options) {
     switch (options.type) {
       case "firebase":
-        this.userClass = FB;
+        this.userClass = FireBase;
         break;
     }
     return new this.userClass(options.data);
   }
 }
 
-class FB {
+class FireBase {
   constructor(data) {
-    this.uid = data.uid;
-    this.displayName = data.displayName;
-    this.photoURL = data.photoURL;
-    this.bio = data.bio || "";
-    this.claims = data.claims || { c: true };
-    this.followers = data.followers || [];
-    this.following = data.following || [];
+    this.normalizeUser(data);
+    this.photo.url = data.photoURL;
     this.joined_at = data.metadata.creationTime;
-    this.saved = data.saved || [];
-    this.topics = data.topics || [];
+  }
+  normalizeUser(data) {
+    const keys = Object.keys(data);
+    for (const key in defaultUser) {
+      if (keys.includes(key)) {
+        this[key] = data[key];
+      } else {
+        this[key] = defaultUser[key];
+      }
+    }
   }
 }
 

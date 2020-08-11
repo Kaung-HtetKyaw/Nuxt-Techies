@@ -27,9 +27,9 @@ export const defaultUserObjFB = {
   photo: { id: "", url: "" },
   followers: [],
   following: [],
-  joined_at: "",
   saved: [],
-  topics: []
+  topics: [],
+  uid: ""
 };
 
 export const defaultTagObj = {

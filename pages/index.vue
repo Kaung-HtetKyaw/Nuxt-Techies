@@ -13,10 +13,7 @@
     <v-radio-group v-model="radios" :mandatory="false">
       <v-radio label="All" :value="{ type: 'all' }"></v-radio>
       <v-radio label="Popular" :value="{ type: 'popular' }"></v-radio>
-      <v-radio
-        label="Javascript Tag"
-        :value="{ type: 'tag', param: '2gE4P4RuyGiT4KwrUtOh' }"
-      ></v-radio>
+      <v-radio label="Javascript Tag" :value="{ type: 'tag', param: '2gE4P4RuyGiT4KwrUtOh' }"></v-radio>
     </v-radio-group>
     <article-list-model :lazy="true" :params="radios">
       <template v-slot="{ articles, lazyLoadArticles, loading, empty }">
@@ -24,13 +21,7 @@
           <v-container class="px-0 pt-0">
             <v-row v-if="articles.length > 0" dense>
               <transition-group tag="div" name="item">
-                <v-col
-                  v-for="article in articles"
-                  :key="article.id"
-                  cols="12"
-                  sm="12"
-                  class="pt-0"
-                >
+                <v-col v-for="article in articles" :key="article.id" cols="12" sm="12" class="pt-0">
                   <nuxt-link
                     :to="{
                       name: 'by-id',
@@ -44,9 +35,11 @@
                     <like-btn :data="article" type="article">
                       <template v-slot="{ like, isLiked }">
                         <div>
-                          <v-btn @click="like">{{
+                          <v-btn @click="like">
+                            {{
                             isLiked ? "Unlike" : "Like"
-                          }}</v-btn>
+                            }}
+                          </v-btn>
                         </div>
                       </template>
                     </like-btn>
@@ -58,8 +51,7 @@
                       name: 'by-id-delete',
                       params: { by: article.by, id: article.id }
                     }"
-                    >Delete</v-btn
-                  >
+                  >Delete</v-btn>
                 </v-col>
               </transition-group>
             </v-row>
@@ -96,7 +88,7 @@ export default {
     "article-card": ArticleCard,
     "signin-btn-model": SignInBtnModelFB,
     "write-fb": WriteModelFB,
-    "like-btn": LikeBtnFB
+    "like-btn": LikeBtnFB,
   },
   middleware: ["log"],
   data() {
@@ -104,9 +96,9 @@ export default {
   },
   computed: {
     ...mapState({
-      isAuthenticated: state => state.isAuthenticated
-    })
-  }
+      isAuthenticated: (state) => state.user.isAuthenticated,
+    }),
+  },
 };
 </script>
 

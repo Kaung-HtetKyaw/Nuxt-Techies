@@ -8,28 +8,19 @@ export const state = () => {
   };
 };
 
-export const mutations = {
-  SET_AUTHENTICATION(state, status) {
-    state.isAuthenticated = status;
-  },
-  SET_AUTH_USER(state, user) {
-    state.user.user = user;
-  }
-};
+export const mutations = {};
 export const actions = {
   //auth state change listener
   async nuxtServerInit({ dispatch }) {},
-  async authStateListener({ commit, dispatch }, user) {
+  async authStateListener({ dispatch }, user) {
     if (user.authUser) {
       let userFB = userFactory.createUser({
         data: { ...user.authUser },
         type: "firebase"
       });
-      commit("SET_AUTH_USER", { ...userFB });
-      commit("SET_AUTHENTICATION", true);
+      dispatch("user/signIn", { user: userFB });
     } else {
-      commit("SET_AUTH_USER", null);
-      commit("SET_AUTHENTICATION", false);
+      dispatch("user/signOut");
     }
     dispatch("tag/fetchAllTags", { root: true });
   }
