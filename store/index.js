@@ -20,7 +20,6 @@ export const actions = {
   //auth state change listener
   async nuxtServerInit({ dispatch }) {},
   async authStateListener({ commit, dispatch }, user) {
-    console.log(currentUserFB());
     if (user.authUser) {
       let userFB = userFactory.createUser({
         data: { ...user.authUser },

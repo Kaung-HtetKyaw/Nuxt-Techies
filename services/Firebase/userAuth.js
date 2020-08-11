@@ -44,6 +44,27 @@ export function currentUserFB() {
   return firebase.auth().currentUser;
 }
 
+//fetch user
+export function fetchUser(id) {
+  return firebase
+    .firestore()
+    .collection("users")
+    .doc(id)
+    .get();
+}
+
+export function fetchUsersByID(ids) {
+  return Promise.all(ids.map(id => fetchUser(id)));
+}
+
+//create user
+export function createUser(user) {
+  return firebase
+    .firestore()
+    .collection("users")
+    .add(user);
+}
+
 function typesToFunName(string) {
   return `SignIn${capitalize(string)}FB`;
 }
