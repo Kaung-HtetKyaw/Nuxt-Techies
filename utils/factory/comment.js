@@ -19,6 +19,7 @@ class CommentFactory {
 class FireBase {
   constructor(data) {
     this.id = data.id;
+
     if (typeof data.data === "function") {
       this.normalizeComment(data.data());
     } else {

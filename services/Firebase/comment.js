@@ -9,9 +9,10 @@ export function fetchComment(id) {
     .doc(id)
     .get()
     .then(response => {
-      const comment = commentFactory({
+      const comment = commentFactory.createComment({
         data: response
       });
+      console.log(comment);
       return comment;
     });
 }

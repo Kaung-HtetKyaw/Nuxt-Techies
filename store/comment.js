@@ -19,11 +19,12 @@ export const mutations = {
 };
 export const actions = {
   fetchComment({ commit }, { ids }) {
-    return fetchComments(ids).then(comments => {
-      commit("SET_COMMENTS", { comments });
-      console.log(comments);
-      return comments;
-    });
+    return fetchComments(ids)
+      .then(comments => {
+        commit("SET_COMMENTS", { comments });
+        return comments;
+      })
+      .catch(e => console.log(e));
   }
 };
 
