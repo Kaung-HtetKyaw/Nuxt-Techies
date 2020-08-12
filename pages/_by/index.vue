@@ -1,5 +1,9 @@
 <template>
   <div>
+    <h1>This is {{ user.displayName }} 's page</h1>
+    <v-btn nuxt :to="{ name: 'by-settings', params: { by } }"
+      >Update Settings</v-btn
+    >
     <article-list :lazy="true" :params="{ type: 'user', param: by }">
       <template v-slot="{ articles, loading, lazyLoadArticles, empty }">
         <div>
@@ -19,12 +23,12 @@
               >
                 <h1>{{ article.title }}</h1>
               </nuxt-link>
-              <like-btn :data="article" type="article">
+              <like-btn :data="article" type="article" :user="user">
                 <template v-slot="{ like, isLiked }">
                   <div>
-                    <v-btn @click="like">{{
-                      isLiked ? "Unlike" : "Like"
-                    }}</v-btn>
+                    <v-btn @click="like">
+                      {{ isLiked ? "Unlike" : "Like" }}
+                    </v-btn>
                   </div>
                 </template>
               </like-btn>
@@ -46,6 +50,8 @@
 <script>
 import ArticleListModelFB from "@/components/Article/ArticleListModel";
 import LikeBtnFB from "@/components/Button/LikeBtnFB";
+
+import { mapState } from "vuex";
 export default {
   middleware: ["auth"],
   components: {
@@ -60,7 +66,10 @@ export default {
   computed: {
     by() {
       return this.$route.params.by;
-    }
+    },
+    ...mapState({
+      user: state => state.user.user
+    })
   }
 };
 </script>

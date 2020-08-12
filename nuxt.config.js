@@ -23,6 +23,10 @@ export default {
         rel: "stylesheet",
         href:
           "https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,300;0,400;1,400&display=swap"
+      },
+      {
+        rel: "stylesheet",
+        href: "https://unpkg.com/katex@0.12.0/dist/katex.min.css"
       }
     ]
   },
@@ -52,6 +56,8 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
     "@nuxtjs/pwa",
+    "@nuxtjs/markdownit",
+
     [
       "@nuxtjs/firebase",
       {
@@ -130,6 +136,7 @@ export default {
       }
     ]
   ],
+
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options

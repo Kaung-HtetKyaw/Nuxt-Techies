@@ -38,10 +38,19 @@
 <script>
 import { mapState } from "vuex";
 export default {
+  props: {
+    article_tags: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       selected: [],
     };
+  },
+  created() {
+    this.selected = [...this.article_tags];
   },
   computed: {
     ...mapState({

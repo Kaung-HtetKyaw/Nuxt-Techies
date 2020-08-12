@@ -3,7 +3,7 @@ import "firebase/firestore";
 import articleFactory from "@/utils/factory/articles";
 
 //*Fetch Methods
-let limit = 1;
+let limit = 2;
 
 let fetchMethods = {
   all: fetchAll,

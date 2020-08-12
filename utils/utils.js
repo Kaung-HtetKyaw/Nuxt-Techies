@@ -57,3 +57,11 @@ export function removeByID(array, id) {
 export function isLiked(array, id) {
   return array.includes(id);
 }
+
+export function isPlainObject(obj) {
+  return obj.toString() === "[object Object]";
+}
+
+export function isEmptyObj(obj) {
+  return Object.keys(obj).length === 0;
+}

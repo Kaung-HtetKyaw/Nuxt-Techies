@@ -16,20 +16,32 @@ export function defaultArticleObjFB() {
     description: "",
     likesNo: 0,
     title: "",
-    by: ""
+    by: "",
+    content: ""
   };
 }
 
 export const defaultUserObjFB = {
-  displayName: "",
+  displayName: "Unknown",
   bio: "",
   claims: { c: true },
-  photo: { id: "", url: "" },
+  photo: {
+    id: "",
+    url:
+      "https://cdn0.iconfinder.com/data/icons/user-pictures/100/unknown2-512.png"
+  },
   followers: [],
   following: [],
-  joined_at: "",
   saved: [],
-  topics: []
+  topics: [],
+  uid: "",
+  profile_url: {
+    facebook: "",
+    github: "",
+    stackoverflow: "",
+    twitter: "",
+    instagram: ""
+  }
 };
 
 export const defaultTagObj = {
@@ -38,3 +50,14 @@ export const defaultTagObj = {
   kids: [],
   name: "No Tag"
 };
+
+export function defaultCommentObjFB() {
+  const timestamp = Date.now();
+  return {
+    by: "",
+    kids: [],
+    timestamp,
+    likes: [],
+    message: ""
+  };
+}

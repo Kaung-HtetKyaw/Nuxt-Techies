@@ -62,7 +62,16 @@ export function createUser(user) {
   return firebase
     .firestore()
     .collection("users")
-    .add(user);
+    .doc(user.uid)
+    .set(user);
+}
+
+export function updateUser(user) {
+  return firebase
+    .firestore()
+    .collection("users")
+    .doc(user.uid)
+    .set(user);
 }
 
 function typesToFunName(string) {

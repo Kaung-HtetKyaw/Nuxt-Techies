@@ -16,23 +16,23 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
       <v-spacer></v-spacer>
-      <v-btn v-if="user" text>{{user.displayName}}</v-btn>
+      <v-btn nuxt v-if="user" :to="{name:'by',params:{by:user.uid}}" text>{{user.displayName}}</v-btn>
     </v-app-bar>
     <v-app-bar color="white" elevation="0" fixed app class="nav-border-bottom d-flex d-md-none">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
       <v-spacer></v-spacer>
-      <v-btn v-if="user" text>{{user.displayName}}</v-btn>
+      <v-btn nuxt v-if="user" :to="{name:'by',params:{by:user.uid}}" text>{{user.displayName}}</v-btn>
     </v-app-bar>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { authHydrated } from "@/mixins/authHydrated";
 export default {
+  mixins: [authHydrated],
   data() {
     return {
-      isHydrated: false,
       clipped: false,
       drawer: false,
       fixed: false,
@@ -63,17 +63,6 @@ export default {
       rightDrawer: false,
       title: "Vuetify.js",
     };
-  },
-  computed: {
-    ...mapState({
-      userAuth: (state) => state.user.user,
-    }),
-    user() {
-      return this.isHydrated ? this.userAuth : null;
-    },
-  },
-  mounted() {
-    this.isHydrated = true;
   },
 };
 </script>

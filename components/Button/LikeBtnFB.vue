@@ -1,5 +1,6 @@
 <script>
 import { isLiked, capitalize } from "@/utils/utils";
+import { authHydrated } from "@/mixins/authHydrated";
 import { mapState } from "vuex";
 export default {
   props: {
@@ -10,36 +11,44 @@ export default {
         return ["article", "comment"].indexOf(value) !== -1;
       }
     },
+
     data: {
+      type: Object,
+      required: true
+    },
+    user: {
       type: Object,
       required: true
     }
   },
+
   methods: {
     async like() {
-      let moduleName, actionName;
-      moduleName = this.type;
-      if (!isLiked(this.data.likes, this.by)) {
-        actionName = `like${capitalize(this.type)}`;
-        await this.$store.dispatch(`${moduleName}/${actionName}`, {
-          id: this.data.id,
-          by: this.by
-        });
-      } else {
-        actionName = `unlike${capitalize(this.type)}`;
-        await this.$store.dispatch(`${moduleName}/${actionName}`, {
-          id: this.data.id,
-          by: this.by
-        });
+      if (this.isAuthenticated) {
+        let moduleName, actionName;
+        moduleName = this.type;
+        if (!isLiked(this.data.likes, this.user.uid)) {
+          actionName = `like${capitalize(this.type)}`;
+          await this.$store.dispatch(`${moduleName}/${actionName}`, {
+            id: this.data.id,
+            by: this.user.uid
+          });
+        } else {
+          actionName = `unlike${capitalize(this.type)}`;
+          await this.$store.dispatch(`${moduleName}/${actionName}`, {
+            id: this.data.id,
+            by: this.user.uid
+          });
+        }
       }
     }
   },
   computed: {
     isLiked() {
-      return isLiked(this.data.likes, this.by);
+      return isLiked(this.data.likes, this.user.uid);
     },
     ...mapState({
-      by: state => state.user.user.uid
+      isAuthenticated: state => state.user.isAuthenticated
     })
   },
   render() {
