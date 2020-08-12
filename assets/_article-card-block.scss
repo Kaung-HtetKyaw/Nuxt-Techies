@@ -2,12 +2,4 @@
   cursor: pointer;
   border-radius: 10px !important;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08), 0 0 0 transparent;
-  transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1) !important;
-  &:hover {
-    transform: translate3D(0, -1px, 0) scale(1.02);
-    box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.2), 0 0 0 transparent;
-  }
-  &-placeholder {
-    max-width: 350px;
-  }
 }

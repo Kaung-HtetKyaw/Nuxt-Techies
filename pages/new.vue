@@ -1,14 +1,21 @@
 <template>
   <div>
-    <write-fb collection="article" type="create" :params="{data:article}">
-      <template v-slot="{writeFB,loading}">
+    <write-fb collection="article" type="create" :params="{ data: article }">
+      <template v-slot="{ writeFB, loading }">
         <div v-if="loading">
           <h1>#Loading.......</h1>
         </div>
         <div v-else>
           <v-text-field v-model="article.title" label="Title"></v-text-field>
-          <v-textarea v-model="article.description" label="Description"></v-textarea>
-          <autocomplete-tag v-model="article.tags"></autocomplete-tag>
+          <v-textarea
+            v-model="article.description"
+            label="Description"
+          ></v-textarea>
+          <v-textarea v-model="article.content" label="Content"></v-textarea>
+          <autocomplete-tag
+            v-model="article.tags"
+            :article_tags="article.tags"
+          ></autocomplete-tag>
           <v-file-input
             @change="previewImg"
             v-model="file"
@@ -16,7 +23,9 @@
             value="any"
             label="File input"
           ></v-file-input>
-          <v-btn :loading="loading" @click="create(writeFB)">Create Article</v-btn>
+          <v-btn :loading="loading" @click="create(writeFB)"
+            >Create Article</v-btn
+          >
           <v-btn @click="cancel">Cancel</v-btn>
           <div>
             <img :src="article.photo.url" alt />
@@ -37,15 +46,15 @@ import { mapState } from "vuex";
 export default {
   components: {
     "write-fb": WriteModelFB,
-    "autocomplete-tag": AutocompleteTag,
+    "autocomplete-tag": AutocompleteTag
   },
   middleware: ["auth"],
   data() {
     return {
       file: {},
       article: {
-        ...defaultArticleObjFB(),
-      },
+        ...defaultArticleObjFB()
+      }
     };
   },
   //set uid after created
@@ -54,13 +63,13 @@ export default {
   },
   computed: {
     ...mapState({
-      by: (state) => state.user.user.uid,
-    }),
+      by: state => state.user.user.uid
+    })
   },
   watch: {
-    "article.tags": function (v1, v2) {
+    "article.tags": function(v1, v2) {
       console.log(v1);
-    },
+    }
   },
   methods: {
     create(callback) {
@@ -72,7 +81,7 @@ export default {
           folder: "articles",
           file: this.file,
           id: this.article.photo.id,
-          success,
+          success
         });
       } else {
         callback();
@@ -97,10 +106,9 @@ export default {
           vm.article.photo.url = preview;
         }
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

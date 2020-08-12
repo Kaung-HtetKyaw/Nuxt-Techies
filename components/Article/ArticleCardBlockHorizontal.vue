@@ -1,9 +1,9 @@
 <template>
-  <v-card outlined>
+  <v-card class="article-card-block" outlined>
     <nuxt-link
       :to="{
         name: 'by-id',
-        params: { by:article.by,id:article.id }
+        params: { by: article.by, id: article.id }
       }"
     >
       <v-sheet
@@ -22,27 +22,49 @@
     <div class="px-6 py-6">
       <v-card-text>
         <div>
-          <p v-if="isEmptyObj">#Loading.....</p>
-          <nuxt-link
-            v-else
-            :to="{
-            name: 'by',
-            params: { by: article.by }
-          }"
-          >
-            <div class="mb-2 d-flex flex-row">
-              <v-avatar size="35">
-                <img :src="author.photo.url" :alt="author.displayName" />
-              </v-avatar>
-              <div class="d-flex flex-column justify-center px-4 opacity-7">
-                <div class="hover-blue">{{ author.displayName }}</div>
-                <div class="caption py-1">
-                  <span>June 16</span>
-                  <span>(3 hours ago)</span>
+          <div v-if="isEmptyObj">
+            <transition name="fade" mode="out-in">
+              <div class="mb-2 d-flex flex-row">
+                <v-avatar size="35">
+                  <img
+                    :src="defaultUserObjFB.photo.url"
+                    :alt="defaultUserObjFB.displayName"
+                  />
+                </v-avatar>
+                <div class="d-flex flex-column justify-center px-4 opacity-7">
+                  <div class="hover-blue">
+                    {{ defaultUserObjFB.displayName }}
+                  </div>
+                  <div class="caption py-1">
+                    - time ago
+                  </div>
                 </div>
               </div>
-            </div>
-          </nuxt-link>
+            </transition>
+          </div>
+          <div v-else>
+            <transition name="fade" mode="out-in">
+              <nuxt-link
+                :to="{
+                  name: 'by',
+                  params: { by: article.by }
+                }"
+              >
+                <div class="mb-2 d-flex flex-row">
+                  <v-avatar size="35">
+                    <img :src="author.photo.url" :alt="author.displayName" />
+                  </v-avatar>
+                  <div class="d-flex flex-column justify-center px-4 opacity-7">
+                    <div class="hover-blue">{{ author.displayName }}</div>
+                    <div class="caption py-1">
+                      <span>June 16</span>
+                      <span>(3 hours ago)</span>
+                    </div>
+                  </div>
+                </div>
+              </nuxt-link>
+            </transition>
+          </div>
         </div>
 
         <nuxt-link
@@ -59,7 +81,7 @@
             v-for="(tag, i) in article.tags"
             :key="i"
             class="monospace opacity-7"
-            :to="{ name: 't-tag', params: { tag:tag } }"
+            :to="{ name: 't-tag', params: { tag: tag } }"
           >
             <span class="hover-blue">
               <span>#</span>
@@ -97,38 +119,40 @@
 import { mapGetters } from "vuex";
 import { fetchUser } from "@/services/Firebase/userAuth";
 import { isEmptyObj } from "@/utils/utils";
+import { defaultUserObjFB } from "@/utils/constants";
 import { authHydrated } from "@/mixins/authHydrated";
 import LikeBtnFB from "@/components/Button/LikeBtnFB";
 export default {
   props: {
     article: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   components: {
-    "like-btn": LikeBtnFB,
+    "like-btn": LikeBtnFB
   },
   mixins: [authHydrated],
   data() {
     return {
       author: {},
+      defaultUserObjFB
     };
   },
   async fetch() {
     return fetchUser(this.article.by)
-      .then((res) => {
+      .then(res => {
         this.author = res.data();
       })
-      .catch((e) => console.log(e));
+      .catch(e => console.log(e));
   },
   computed: {
     ...mapGetters({
-      getTagByID: "tag/getTagByID",
+      getTagByID: "tag/getTagByID"
     }),
     isEmptyObj() {
       return isEmptyObj(this.author);
-    },
-  },
+    }
+  }
 };
 </script>

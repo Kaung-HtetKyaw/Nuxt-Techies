@@ -5,26 +5,33 @@
       <h1>#Loading......</h1>
     </div>
     <div v-else>
-      <h1>This is {{article.title}}</h1>
+      <h1>This is {{ article.title }}</h1>
       <img :src="article.photo.url" alt />
-      <v-btn nuxt :to="{name:'by-id-edit',params:{id,by}}">Edit</v-btn>
-      <v-btn nuxt :to="{name:'by-id-delete',params:{id,by}}">Delete</v-btn>
+      <vue-markdown :content="article.content"></vue-markdown>
+      <v-btn nuxt :to="{ name: 'by-id-edit', params: { id, by } }">Edit</v-btn>
+      <v-btn nuxt :to="{ name: 'by-id-delete', params: { id, by } }"
+        >Delete</v-btn
+      >
     </div>
   </div>
 </template>
 
 <script>
+import MarkDown from "@/components/UI/MarkDown";
 export default {
   middleware: ["auth"],
+  components: {
+    "vue-markdown": MarkDown
+  },
   async fetch() {
     const article = await this.$store.dispatch("article/fetchArticle", {
-      id: this.id,
+      id: this.id
     });
     this.article = article;
   },
   data() {
     return {
-      article: null,
+      article: null
     };
   },
   computed: {
@@ -33,8 +40,8 @@ export default {
     },
     by() {
       return this.$route.params.by;
-    },
-  },
+    }
+  }
   // async fetch() {
   //   const res = await this.$fireStore.collection("articles").get();
 

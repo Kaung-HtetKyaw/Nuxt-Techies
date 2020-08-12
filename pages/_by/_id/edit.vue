@@ -4,17 +4,24 @@
       @dataReady="setArticle"
       type="update"
       collection="article"
-      :params="{id,data:article,fetch:true}"
+      :params="{ id, data: article, fetch: true }"
     >
-      <template v-slot="{loading,writeFB}">
+      <template v-slot="{ loading, writeFB }">
         <div>
           <div v-if="loading">
             <h1>#Loading.....</h1>
           </div>
           <div v-else>
             <v-text-field v-model="article.title" label="Title"></v-text-field>
-            <v-textarea v-model="article.description" label="Description"></v-textarea>
-            <autocomplete-tag v-model="article.tags"></autocomplete-tag>
+            <v-textarea
+              v-model="article.description"
+              label="Description"
+            ></v-textarea>
+            <v-textarea v-model="article.content" label="Content"></v-textarea>
+            <autocomplete-tag
+              v-model="article.tags"
+              :article_tags="article.tags"
+            ></autocomplete-tag>
             <v-file-input
               @change="previewImg"
               v-model="file"
@@ -40,13 +47,14 @@ import AutocompleteTag from "@/components/Form/AutocompleteTag";
 export default {
   components: {
     "write-fb": WriteModelFB,
-    "autocomplete-tag": AutocompleteTag,
+    "autocomplete-tag": AutocompleteTag
   },
+  middleware: ["auth"],
   data() {
     return {
       file: {},
       updating: false,
-      article: {},
+      article: {}
     };
   },
   computed: {
@@ -55,7 +63,7 @@ export default {
     },
     by() {
       return this.$route.params.by;
-    },
+    }
   },
   methods: {
     setArticle(article) {
@@ -70,7 +78,7 @@ export default {
           folder: "articles",
           file: this.file,
           id: this.article.photo.id,
-          success,
+          success
         });
       } else {
         callback();
@@ -94,10 +102,9 @@ export default {
           vm.article.photo.url = preview;
         }
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>
