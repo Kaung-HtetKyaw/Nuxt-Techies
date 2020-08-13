@@ -25,7 +25,9 @@ export const mutations = {
     state.comments[comment.id] = comment;
   },
   UPDATE_COMMENT(state, { comment }) {
+    console.log("before update", state.comments[comment.id]);
     state.comments[comment.id] = comment;
+    console.log("after update", state.comments[comment.id]);
   },
   CLEAR_COMMENTS(state) {
     state.comments = {};
@@ -45,32 +47,40 @@ export const actions = {
   },
   createComment({ commit, dispatch }, params) {
     return createComment(params.data).then(comment => {
+      const parent = { ...params.parent };
+      console.log("before parent", parent);
+      parent.kids.push(comment.id);
+      console.log("after parent", parent);
       commit("CREATE_COMMENT", { comment });
       //add the comment id to the parent's kids based on the parent type
-      const parent = { ...params.parent };
-      parent.kids.push(comment.id);
       if (params.parent.type === "article") {
         //update the parent
-        dispatch(
+        return dispatch(
           "article/updateArticle",
           { id: parent.id, data: parent },
           { root: true }
         );
       } else if (params.parent.type === "comment") {
         //update the parent
-        dispatch("updateComment", { id: parent.id, data: parent });
+        return dispatch("updateComment", { id: parent.id, data: parent });
       }
     });
   },
   updateComment({ commit }, params) {
-    return updateComment(params).then(comment => {
-      commit("UPDATE_COMMENT", { comment });
-      return comment;
-    });
+    return updateComment(params)
+      .then(comment => {
+        commit("UPDATE_COMMENT", { comment });
+        return comment;
+      })
+      .catch(e => console.log(e));
   },
   clearComment({ commit }) {
     commit("CLEAR_COMMENTS");
   }
 };
 
-export const getters = {};
+export const getters = {
+  getCommentByID: state => id => {
+    return state.comments[id];
+  }
+};

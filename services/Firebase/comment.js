@@ -39,7 +39,8 @@ export function updateComment(params) {
     .then(() => {
       const comment = commentFactory.createComment({ data: params.data });
       return comment;
-    });
+    })
+    .catch(e => console.log(e));
 }
 
 export function deleteComment(id) {

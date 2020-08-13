@@ -26,6 +26,7 @@ export const mutations = {
   },
   UPDATE_ARTICLE(state, { article }) {
     replaceByID(state.articles, article);
+    console.log("after update", state.article);
   },
   DELETE_ARTICLE(state, { id }) {
     removeByID(state.articles, id);
@@ -83,8 +84,10 @@ export const actions = {
       return article;
     });
   },
-  updateArticle({ commit }, params) {
+  updateArticle({ commit, state }, params) {
     return updateArticle(params).then(res => {
+      console.log("article", params.data.kids);
+      console.log("before update", { ...state.article });
       commit("UPDATE_ARTICLE", { article: { ...params.data } });
       return params.data;
     });

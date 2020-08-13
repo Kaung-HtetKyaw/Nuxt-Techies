@@ -47,6 +47,7 @@ export default {
         .dispatch(`${this.collection}/${action_name}`, this.params)
         .then((res) => {
           this.loading = false;
+          console.log("result", res);
           //redirect to the corresponding page
           if (
             (this.collection !== "comment" && this.type === "create") ||
@@ -55,7 +56,8 @@ export default {
             const to_method = `to${capitalize(this.collection)}`;
             this[to_method](res);
           }
-        });
+        })
+        .catch((e) => console.log(e));
     },
     toArticle(res) {
       this.$router.push({

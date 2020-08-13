@@ -1,8 +1,6 @@
 <template>
   <li v-if="comment" class="comment">
-    <div class="by">
-      <router-link :to="'/user/' + comment.by">{{ comment.by }}</router-link>time ago
-    </div>
+    <div class="by">{{ comment.id }}</div>
     <div class="text">{{comment.message}}</div>
     <div class="toggle" :class="{ open }" v-if="comment.kids && comment.kids.length">
       <a @click="open = !open">
@@ -11,23 +9,30 @@
         }}
       </a>
     </div>
-    <create-comment type="create" collection="comment" :params="{data:new_comment,parent:comment}">
-      <template v-slot="{writeFB,creatingComment}">
+    <create-comment
+      type="create"
+      collection="comment"
+      :params="{data:new_comment,parent:{...comment}}"
+    >
+      <template v-slot="{writeFB,loading:creatingComment}">
         <div>
           <v-text-field v-model="new_comment.message"></v-text-field>
-          <v-btn :loading="creatingComment" @click="writeFB">Comment</v-btn>
+          <v-btn :loading="creatingComment" @click="createComment(writeFB)">Comment</v-btn>
         </div>
       </template>
     </create-comment>
     <ul class="comment-children" v-show="open">
-      <comment v-for="id in comment.kids" :key="id" :id="id"></comment>
+      <li v-for="id in comment.kids" :key="id">
+        <h1>{{id}}</h1>
+        <comment :id="id"></comment>
+      </li>
     </ul>
   </li>
 </template>
 
 <script>
 import { fetchComment } from "@/services/Firebase/comment";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import { defaultCommentObjFB } from "@/utils/constants";
 import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
 export default {
@@ -42,30 +47,47 @@ export default {
     "create-comment": WriteModelFB,
   },
   watch: {
-    "comment.kids": function (v1, v2) {
-      console.log("new", v1);
-      console.log("old", v2);
+    comment: function () {
+      console.log("created a comment");
     },
   },
-  created() {
-    this.new_comment.by = this.user.uid;
+  async fetch() {
+    const comment = this.getCommentByID(this.id);
+    this.comment = comment;
   },
   data() {
     return {
       new_comment: defaultCommentObjFB(),
       open: true,
+      comment: {},
     };
   },
   computed: {
-    comment() {
-      return this.$store.state.comment.comments[this.id];
-    },
+    ...mapGetters({
+      getCommentByID: "comment/getCommentByID",
+    }),
     ...mapState({
       user: (state) => state.user.user,
     }),
   },
+  watch: {
+    comment: {
+      handler: function (v1, v2) {
+        console.log("message", this.comment.message);
+        console.log("new", v1);
+        console.log("old", v2);
+      },
+      deep: true,
+    },
+  },
   methods: {
     pluralize: (n) => n + (n === 1 ? " reply" : " replies"),
+    createComment(writeFB) {
+      this.new_comment.by = this.user.uid;
+      return writeFB().then(() => {
+        this.new_comment.message = "";
+      });
+    },
   },
 };
 </script>

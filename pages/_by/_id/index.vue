@@ -20,17 +20,20 @@
       <create-comment
         type="create"
         collection="comment"
-        :params="{data:new_comment,parent:article}"
+        :params="{data:new_comment,parent:{...article}}"
       >
-        <template v-slot="{writeFB,creatingComment}">
+        <template v-slot="{writeFB,loading:creatingComment}">
           <div>
             <v-text-field v-model="new_comment.message"></v-text-field>
-            <v-btn :loading="creatingComment" @click="writeFB">Comment</v-btn>
+            <v-btn :loading="creatingComment" @click="createComment(writeFB)">Comment</v-btn>
           </div>
         </template>
       </create-comment>
       <div v-if="!loading">
         <comment v-for="kid in article.kids" :key="kid" :id="kid" />
+      </div>
+      <div v-else>
+        <h1>#Loading.....</h1>
       </div>
     </div>
   </div>
@@ -66,11 +69,12 @@ export default {
       new_comment: defaultCommentObjFB(),
     };
   },
-  created() {
-    this.new_comment.by = this.user.uid;
-  },
+  created() {},
   watch: {
     article: "loadComments",
+    "article.kids": function () {
+      console.log("created an article");
+    },
   },
   methods: {
     loadComments(article) {
@@ -80,6 +84,12 @@ export default {
         .then(() => {
           this.loading = false;
         });
+    },
+    createComment(writeFB) {
+      this.new_comment.by = this.user.uid;
+      return writeFB().then(() => {
+        this.new_comment.message = "";
+      });
     },
   },
   computed: {
@@ -96,30 +106,6 @@ export default {
   beforeDestroy() {
     this.$store.dispatch("comment/clearComment");
   },
-  // async fetch() {
-  //   const res = await this.$fireStore.collection("articles").get();
-
-  //   console.log("firestore", res);
-  // },
-  // created() {
-  //   var starCountRef = this.$fireDb.ref("articles/");
-  //   starCountRef.on("value", function(snapshot) {
-  //     console.log("changed", snapshot.val());
-  //   });
-  //   this.$fireStore.collection("articles").onSnapshot(function(snapshot) {
-  //     snapshot.docChanges().forEach(function(change) {
-  //       if (change.type === "added") {
-  //         console.log("New article: ", change.doc.data());
-  //       }
-  //       if (change.type === "modified") {
-  //         console.log("Modified article: ", change.doc.data());
-  //       }
-  //       if (change.type === "removed") {
-  //         console.log("Removed article: ", change.doc.data());
-  //       }
-  //     });
-  //   });
-  // }
 };
 </script>
 
