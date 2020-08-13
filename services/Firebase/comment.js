@@ -12,25 +12,34 @@ export function fetchComment(id) {
       const comment = commentFactory.createComment({
         data: response
       });
-      console.log(comment);
       return comment;
     });
 }
 export function fetchComments(ids) {
   return Promise.all(ids.map(id => fetchComment(id)));
 }
-export function createComment(comment) {
+export function createComment(commentData) {
   return firebase
     .firestore()
     .collection("comments")
-    .add({ ...comment });
+    .add({ ...commentData })
+    .then(res => {
+      const comment = commentFactory.createComment({
+        data: { id: res.id, ...commentData }
+      });
+      return comment;
+    });
 }
-export function updateComment({ id, comment }) {
+export function updateComment(params) {
   return firebase
     .firestore()
     .collection("comments")
-    .doc(id)
-    .set({ ...comment });
+    .doc(params.id)
+    .set({ ...params.data })
+    .then(() => {
+      const comment = commentFactory.createComment({ data: params.data });
+      return comment;
+    });
 }
 
 export function deleteComment(id) {

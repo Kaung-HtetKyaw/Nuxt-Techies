@@ -1,6 +1,6 @@
 <template>
   <div>
-    <comment id="ibtk0F7oxPGib3GHJ6cQ" />
+    <comment v-for="id in ids" :key="id" :id="id" />
   </div>
 </template>
 
@@ -8,8 +8,13 @@
 import Comment from "@/components/Comment/Comment";
 export default {
   components: {
-    Comment
-  }
+    Comment,
+  },
+  data() {
+    return {
+      ids: ["YORuYXB8mL2vCWmVqKg2", "ibtk0F7oxPGib3GHJ6cQ"],
+    };
+  },
 };
 </script>
 

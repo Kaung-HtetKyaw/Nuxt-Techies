@@ -48,7 +48,10 @@ export default {
         .then((res) => {
           this.loading = false;
           //redirect to the corresponding page
-          if (this.type === "create" || this.type === "update") {
+          if (
+            (this.collection !== "comment" && this.type === "create") ||
+            this.type === "update"
+          ) {
             const to_method = `to${capitalize(this.collection)}`;
             this[to_method](res);
           }

@@ -17,7 +17,8 @@ export function defaultArticleObjFB() {
     likesNo: 0,
     title: "",
     by: "",
-    content: ""
+    content: "",
+    type: "article"
   };
 }
 
@@ -35,6 +36,7 @@ export const defaultUserObjFB = {
   saved: [],
   topics: [],
   uid: "",
+  type: "user",
   profile_url: {
     facebook: "",
     github: "",
@@ -48,16 +50,18 @@ export const defaultTagObj = {
   bg_color: "#333",
   text_color: "#eee",
   kids: [],
-  name: "No Tag"
+  name: "No Tag",
+  type: "tag"
 };
 
 export function defaultCommentObjFB() {
   const timestamp = Date.now();
   return {
-    by: "",
     kids: [],
     timestamp,
     likes: [],
-    message: ""
+    message: "",
+    type: "comment",
+    by: ""
   };
 }
