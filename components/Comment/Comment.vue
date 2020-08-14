@@ -70,22 +70,12 @@ export default {
       user: (state) => state.user.user,
     }),
   },
-  watch: {
-    comment: {
-      handler: function (v1, v2) {
-        console.log("message", this.comment.message);
-        console.log("new", v1);
-        console.log("old", v2);
-      },
-      deep: true,
-    },
-  },
   methods: {
     pluralize: (n) => n + (n === 1 ? " reply" : " replies"),
     createComment(writeFB) {
       this.new_comment.by = this.user.uid;
       return writeFB().then(() => {
-        this.new_comment.message = "";
+        this.new_comment = defaultCommentObjFB();
       });
     },
   },

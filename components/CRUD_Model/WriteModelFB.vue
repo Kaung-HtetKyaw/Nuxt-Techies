@@ -43,6 +43,7 @@ export default {
       this.loading = true;
       const collection_name = `${this.collection}s`;
       const action_name = `${this.type}${capitalize(this.collection)}`;
+      console.log("params in renderless", this.params);
       return this.$store
         .dispatch(`${this.collection}/${action_name}`, this.params)
         .then((res) => {

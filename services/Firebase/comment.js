@@ -27,6 +27,7 @@ export function createComment(commentData) {
       const comment = commentFactory.createComment({
         data: { id: res.id, ...commentData }
       });
+      console.log("service", comment);
       return comment;
     });
 }

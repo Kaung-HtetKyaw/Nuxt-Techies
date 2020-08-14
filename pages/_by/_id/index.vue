@@ -87,8 +87,10 @@ export default {
     },
     createComment(writeFB) {
       this.new_comment.by = this.user.uid;
+      console.log("article before createing comment", this.article);
+      console.log("comment before going to renderless", this.new_comment);
       return writeFB().then(() => {
-        this.new_comment.message = "";
+        this.new_comment = defaultCommentObjFB();
       });
     },
   },
