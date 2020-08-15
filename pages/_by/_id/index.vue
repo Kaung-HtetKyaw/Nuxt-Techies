@@ -6,29 +6,20 @@
     </div>
     <div v-else>
       <author-profile :id="by">
-        <template v-slot="{data:author,loading:loadingAuthor,}">
+        <template v-slot="{ data: author, loading: loadingAuthor }">
           <div>
             <h1 v-if="loadingAuthor">#Loading...</h1>
-            <h1 v-else>{{author.displayName}}</h1>
+            <h1 v-else>{{ author.displayName }}</h1>
           </div>
         </template>
       </author-profile>
       <img :src="article.photo.url" alt />
       <vue-markdown :content="article.content"></vue-markdown>
       <v-btn nuxt :to="{ name: 'by-id-edit', params: { id, by } }">Edit</v-btn>
-      <v-btn nuxt :to="{ name: 'by-id-delete', params: { id, by } }">Delete</v-btn>
-      <create-comment
-        type="create"
-        collection="comment"
-        :params="{data:new_comment,parent:{...article}}"
+      <v-btn nuxt :to="{ name: 'by-id-delete', params: { id, by } }"
+        >Delete</v-btn
       >
-        <template v-slot="{writeFB,loading:creatingComment}">
-          <div>
-            <v-text-field v-model="new_comment.message"></v-text-field>
-            <v-btn :loading="creatingComment" @click="createComment(writeFB)">Comment</v-btn>
-          </div>
-        </template>
-      </create-comment>
+      <create-comment :show="true" :parent="{ ...article }"></create-comment>
       <div v-if="!loading">
         <comment v-for="kid in article.kids" :key="kid" :id="kid" />
       </div>
@@ -43,7 +34,7 @@
 import MarkDown from "@/components/UI/MarkDown";
 import Comment from "@/components/Comment/Comment";
 import UserModelFB from "@/components/Author/UserModelFB";
-import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
+import CommentBox from "@/components/Comment/CommentBox";
 import { defaultCommentObjFB } from "@/utils/constants";
 import { mapState } from "vuex";
 export default {
@@ -52,12 +43,12 @@ export default {
     "vue-markdown": MarkDown,
     comment: Comment,
     "author-profile": UserModelFB,
-    "create-comment": WriteModelFB,
+    "create-comment": CommentBox
   },
   async fetch() {
     this.loading = true;
     const article = await this.$store.dispatch("article/fetchArticle", {
-      id: this.id,
+      id: this.id
     });
     this.article = article;
     this.loading = false;
@@ -66,15 +57,15 @@ export default {
     return {
       article: null,
       loading: false,
-      new_comment: defaultCommentObjFB(),
+      new_comment: defaultCommentObjFB()
     };
   },
   created() {},
   watch: {
     article: "loadComments",
-    "article.kids": function () {
+    "article.kids": function() {
       console.log("created an article");
-    },
+    }
   },
   methods: {
     loadComments(article) {
@@ -92,7 +83,7 @@ export default {
       return writeFB().then(() => {
         this.new_comment = defaultCommentObjFB();
       });
-    },
+    }
   },
   computed: {
     id() {
@@ -102,12 +93,12 @@ export default {
       return this.$route.params.by;
     },
     ...mapState({
-      user: (state) => state.user.user,
-    }),
+      user: state => state.user.user
+    })
   },
   beforeDestroy() {
     this.$store.dispatch("comment/clearComment");
-  },
+  }
 };
 </script>
 
