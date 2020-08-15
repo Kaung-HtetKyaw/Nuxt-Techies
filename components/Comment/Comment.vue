@@ -1,115 +1,105 @@
 <template>
-  <li v-if="comment" class="comment">
-    <div class="by">{{ comment.id }}</div>
-    <div class="text">{{ comment.message }}</div>
-    <div
-      class="toggle"
-      :class="{ open }"
-      v-if="comment.kids && comment.kids.length"
-    >
-      <a @click="open = !open">
-        {{
-          open ? "[-]" : "[+] " + pluralize(comment.kids.length) + " collapsed"
-        }}
-      </a>
-    </div>
-    <v-btn @click="show_comment = !show_comment">Reply </v-btn>
-    <create-comment
-      @commentCanceled="show_comment = false"
-      @commentCreated="show_comment = false"
-      :show="show_comment"
-      :parent="{ ...comment }"
-    >
-    </create-comment>
-    <ul class="comment-children" v-show="open">
-      <li v-for="id in comment.kids" :key="id">
-        <h1>{{ id }}</h1>
-        <comment :id="id"></comment>
-      </li>
-    </ul>
-  </li>
+  <div class="comment">
+    <comment-stack :size="3" v-if="!$fetchState.pending">
+      <v-container>
+        <v-row dense>
+          <v-col cols="12" sm="1">
+            <div v-if="comment.kids.length>0">
+              <v-btn @click="show_comments=false" icon :ripple="false" v-if="show_comments">
+                <v-icon>mdi-arrow-down-drop-circle</v-icon>
+              </v-btn>
+              <v-btn @click="show_comments=true" icon :ripple="false" v-else>
+                <v-icon>mdi-arrow-right-drop-circle</v-icon>
+              </v-btn>
+            </div>
+          </v-col>
+          <v-col cols="12" sm="11">
+            <v-card elevation="0" class="mx-auto">
+              <v-card-text>
+                <div class="d-flex flex-row justify-space-between align-start">
+                  <div>
+                    <v-avatar size="35">
+                      <img :src="author.photo.url" :alt="author.displayName" />
+                    </v-avatar>
+                  </div>
+                  <div>
+                    <p class="text-caption">{{timeAgo}} ago</p>
+                  </div>
+                </div>
+                <div class="text--primary pt-3">{{comment.message}}</div>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn @click="show_form=!show_form" text color="deep-purple accent-4">Reply</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+      <create-comment
+        @commentCanceled="show_form = false"
+        @commentCreated="show_form= false"
+        :show="show_form"
+        :parent="{ ...comment }"
+      ></create-comment>
+      <div v-if="show_comments">
+        <comment v-for="kid in comment.kids" :key="kid" :id="kid"></comment>
+      </div>
+    </comment-stack>
+  </div>
 </template>
 
 <script>
 import { fetchComment } from "@/services/Firebase/comment";
+import { fetchUser } from "@/services/Firebase/userAuth";
 import { mapState, mapGetters } from "vuex";
-import { defaultCommentObjFB } from "@/utils/constants";
+import { defaultCommentObjFB, defaultUserObjFB } from "@/utils/constants";
+import { timeAgo } from "@/utils/utils";
 import CommentBox from "@/components/Comment/CommentBox";
+import Stack from "@/components/UI/Stack";
 export default {
   name: "comment",
   props: {
     id: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   components: {
-    "create-comment": CommentBox
+    "create-comment": CommentBox,
+    "comment-stack": Stack,
   },
   async fetch() {
     const comment = this.getCommentByID(this.id);
-    this.comment = comment;
+    return fetchUser(comment.by).then((res) => {
+      const author = res.data();
+      this.comment = comment;
+      this.author = author;
+    });
   },
   data() {
     return {
       open: true,
       comment: {},
-      show_comment: false
+      show_form: false,
+      show_comments: true,
+      author: null,
+      default_user: defaultUserObjFB,
     };
   },
   computed: {
     ...mapGetters({
-      getCommentByID: "comment/getCommentByID"
-    })
+      getCommentByID: "comment/getCommentByID",
+    }),
+    timeAgo() {
+      return timeAgo(this.comment.timestamp);
+    },
   },
   methods: {
-    pluralize: n => n + (n === 1 ? " reply" : " replies")
-  }
+    pluralize: (n) => n + (n === 1 ? " reply" : " replies"),
+  },
 };
 </script>
 
-<style>
-.comment-children .comment-children {
-  margin-left: 1.5em;
-}
-.comment {
-  border-top: 1px solid #eee;
-  position: relative;
-}
-.comment .by,
-.comment .text,
-.comment .toggle {
-  font-size: 0.9em;
-  margin: 1em 0;
-}
-.comment .by {
-  color: #828282;
-}
-.comment .by a {
-  color: #828282;
-  text-decoration: underline;
-}
-.comment .text {
-  overflow-wrap: break-word;
-}
-.comment .text a:hover {
-  color: #f60;
-}
-.comment .text pre {
-  white-space: pre-wrap;
-}
-.comment .toggle {
-  background-color: #fffbf2;
-  padding: 0.3em 0.5em;
-  border-radius: 4px;
-}
-.comment .toggle a {
-  color: #828282;
-  cursor: pointer;
-}
-.comment .toggle.open {
-  padding: 0;
-  background-color: transparent;
-  margin-bottom: -0.5em;
-}
+<style  scoped>
 </style>

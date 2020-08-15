@@ -1,6 +1,7 @@
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import { capitalize } from "@/utils/utils";
+import userFactory from "@/utils/factory/user";
 
 let signInMethods = {
   facebook: signInFacebookFB,

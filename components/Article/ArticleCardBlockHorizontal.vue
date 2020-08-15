@@ -26,18 +26,11 @@
             <transition name="fade" mode="out-in">
               <div class="mb-2 d-flex flex-row">
                 <v-avatar size="35">
-                  <img
-                    :src="defaultUserObjFB.photo.url"
-                    :alt="defaultUserObjFB.displayName"
-                  />
+                  <img :src="defaultUserObjFB.photo.url" :alt="defaultUserObjFB.displayName" />
                 </v-avatar>
                 <div class="d-flex flex-column justify-center px-4 opacity-7">
-                  <div class="hover-blue">
-                    {{ defaultUserObjFB.displayName }}
-                  </div>
-                  <div class="caption py-1">
-                    - time ago
-                  </div>
+                  <div class="hover-blue">Loading...</div>
+                  <div class="caption py-1"></div>
                 </div>
               </div>
             </transition>
@@ -57,8 +50,7 @@
                   <div class="d-flex flex-column justify-center px-4 opacity-7">
                     <div class="hover-blue">{{ author.displayName }}</div>
                     <div class="caption py-1">
-                      <span>June 16</span>
-                      <span>(3 hours ago)</span>
+                      <span>({{timeAgo}} ago)</span>
                     </div>
                   </div>
                 </div>
@@ -118,7 +110,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { fetchUser } from "@/services/Firebase/userAuth";
-import { isEmptyObj } from "@/utils/utils";
+import { isEmptyObj, timeAgo } from "@/utils/utils";
 import { defaultUserObjFB } from "@/utils/constants";
 import { authHydrated } from "@/mixins/authHydrated";
 import LikeBtnFB from "@/components/Button/LikeBtnFB";
@@ -126,33 +118,36 @@ export default {
   props: {
     article: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   components: {
-    "like-btn": LikeBtnFB
+    "like-btn": LikeBtnFB,
   },
   mixins: [authHydrated],
   data() {
     return {
       author: {},
-      defaultUserObjFB
+      defaultUserObjFB,
     };
   },
   async fetch() {
     return fetchUser(this.article.by)
-      .then(res => {
+      .then((res) => {
         this.author = res.data();
       })
-      .catch(e => console.log(e));
+      .catch((e) => console.log(e));
   },
   computed: {
     ...mapGetters({
-      getTagByID: "tag/getTagByID"
+      getTagByID: "tag/getTagByID",
     }),
     isEmptyObj() {
       return isEmptyObj(this.author);
-    }
-  }
+    },
+    timeAgo() {
+      return timeAgo(this.article.timestamp);
+    },
+  },
 };
 </script>

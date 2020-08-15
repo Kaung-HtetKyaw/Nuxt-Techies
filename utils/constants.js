@@ -16,6 +16,7 @@ export function defaultArticleObjFB() {
     description: "",
     likesNo: 0,
     title: "",
+    topics: [],
     by: "",
     content: "",
     type: "article"

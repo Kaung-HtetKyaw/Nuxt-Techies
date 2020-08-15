@@ -12,6 +12,9 @@ export const mutations = {
   SET_AUTH_USER(state, user) {
     state.user = user;
   },
+  FETCH_USER(state, user) {
+    state.currentUser = user;
+  },
   SET_AUTHENTICATION(state, isAuthenticated) {
     state.isAuthenticated = isAuthenticated;
   },
@@ -43,7 +46,9 @@ export const actions = {
         data: res.doc(),
         type: "firebase"
       });
+      commit("FETCH_USER", user);
       console.log(user);
+      return user;
     });
   },
   updateUser({ commit }, params) {
