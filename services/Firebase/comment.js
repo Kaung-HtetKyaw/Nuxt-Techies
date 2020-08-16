@@ -45,9 +45,14 @@ export function updateComment(params) {
 }
 
 export function deleteComment(id) {
+  console.log("servic", id);
   return firebase
     .firestore()
     .collection("comments")
     .doc(id)
     .delete();
+}
+
+export function deleteComments(ids) {
+  return Promise.all(ids.map(id => deleteComment(id)));
 }

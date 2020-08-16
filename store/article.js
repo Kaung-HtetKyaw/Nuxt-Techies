@@ -116,6 +116,13 @@ export const actions = {
     return updateArticle({ id: article.id, data: { ...article } }).then(() => {
       return article;
     });
+  },
+  removeCommentFromArticle({ dispatch, state }, { id }) {
+    const parent = state.articles.find(el => el.kids.includes(id));
+    //remove comment from parent article
+    removeByID(parent.kids, id);
+    //update parent article
+    dispatch("updateArticle", { id: parent.id, data: parent });
   }
 };
 export const getters = {

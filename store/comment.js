@@ -2,35 +2,34 @@ import Vue from "vue";
 import {
   fetchComments,
   createComment,
-  updateComment
+  updateComment,
+  deleteComment,
+  deleteComments
 } from "@/services/Firebase/comment";
 import { removeByID, replaceByID } from "@/utils/utils";
 
 export const strict = false;
 export const state = () => {
   return {
-    comments: {}
+    comments: []
   };
 };
 
 export const mutations = {
   SET_COMMENTS(state, { comments }) {
-    comments.forEach(comment => {
-      if (comment) {
-        Vue.set(state.comments, comment.id, comment);
-      }
-    });
+    comments.forEach(comment => state.comments.push(comment));
   },
   CREATE_COMMENT(state, { comment }) {
-    state.comments[comment.id] = comment;
+    state.comments.push(comment);
   },
   UPDATE_COMMENT(state, { comment }) {
-    console.log("before update", state.comments[comment.id]);
-    state.comments[comment.id] = comment;
-    console.log("after update", state.comments[comment.id]);
+    replaceByID(state.comments, comment);
+  },
+  DELETE_COMMENT(state, { id }) {
+    removeByID(state.comments, id);
   },
   CLEAR_COMMENTS(state) {
-    state.comments = {};
+    state.comments = [];
   }
 };
 export const actions = {
@@ -48,9 +47,7 @@ export const actions = {
   createComment({ commit, dispatch }, params) {
     return createComment(params.data).then(comment => {
       const parent = { ...params.parent };
-      console.log("before parent", parent);
       parent.kids.push(comment.id);
-      console.log("after parent", parent);
       commit("CREATE_COMMENT", { comment });
       //add the comment id to the parent's kids based on the parent type
       if (params.parent.type === "article") {
@@ -74,6 +71,36 @@ export const actions = {
       })
       .catch(e => console.log(e));
   },
+  deleteComment({ commit, state, dispatch, getters }, params) {
+    return deleteComment(params.id).then(() => {
+      const parent = state.comments.find(el => el.kids.includes(params.id));
+      const self = getters.getCommentByID(params.id);
+      //remove self from the parent
+      if (parent) {
+        dispatch("removeReplyFromComment", {
+          id: params.id
+        });
+      } else {
+        dispatch(
+          "article/removeCommentFromArticle",
+          { id: params.id },
+          { root: true }
+        );
+      }
+      //delete self from the store
+      commit("DELETE_COMMENT", { id: self.id });
+      //delete the kids
+      self.kids.forEach(kid => commit("DELETE_COMMENT", { id: kid }));
+      return deleteComments(self.kids || []);
+    });
+  },
+  removeReplyFromComment({ dispatch, state, getters }, { id }) {
+    const parent = state.comments.find(el => el.kids.includes(id));
+    //remove reply from parent comment
+    removeByID(parent.kids, id);
+    //update the parent comment
+    dispatch("updateComment", { id: parent.id, data: parent });
+  },
   clearComment({ commit }) {
     commit("CLEAR_COMMENTS");
   }
@@ -81,6 +108,6 @@ export const actions = {
 
 export const getters = {
   getCommentByID: state => id => {
-    return state.comments[id];
+    return state.comments.find(el => el.id === id);
   }
 };

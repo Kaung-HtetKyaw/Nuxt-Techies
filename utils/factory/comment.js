@@ -27,6 +27,7 @@ class FireBase {
     }
   }
   normalizeComment(data) {
+    console.log("data", data);
     const keys = Object.keys(data);
     for (const key in defaultComment) {
       if (keys.includes(key)) {

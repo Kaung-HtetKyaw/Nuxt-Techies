@@ -48,38 +48,8 @@ export default {
         .dispatch(`${this.collection}/${action_name}`, this.params)
         .then((res) => {
           this.loading = false;
-          console.log("result", res);
-          //redirect to the corresponding page
-          if (
-            (this.collection !== "comment" && this.type === "create") ||
-            this.type === "update"
-          ) {
-            const to_method = `to${capitalize(this.collection)}`;
-            this[to_method](res);
-          }
         })
         .catch((e) => console.log(e));
-    },
-    toArticle(res) {
-      this.$router.push({
-        name: "by-id",
-        params: { by: res.by, id: res.id },
-      });
-    },
-    toTag(res) {
-      this.$router.push({
-        name: "t-tag",
-        params: { tag: res.id },
-      });
-    },
-    toUser(res) {
-      this.$router.push({
-        name: "by",
-        params: { by: res.uid },
-      });
-    },
-    toTopics(res) {
-      this.$router.push("/");
     },
   },
   render() {

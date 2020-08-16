@@ -9,14 +9,8 @@
       <template v-slot="{ writeFB, loading: creatingComment }">
         <div>
           <v-form v-model="valid">
-            <v-textarea
-              placeholder="Add a comment"
-              outlined=""
-              v-model="new_comment.message"
-            ></v-textarea>
-            <v-btn :loading="creatingComment" @click="createComment(writeFB)"
-              >Submit</v-btn
-            >
+            <v-textarea placeholder="Add a comment" outlined v-model="new_comment.message"></v-textarea>
+            <v-btn :loading="creatingComment" @click="createComment(writeFB)">Submit</v-btn>
             <v-btn @click="cancel">Cancel</v-btn>
           </v-form>
         </div>
@@ -33,27 +27,27 @@ export default {
   props: {
     parent: {
       type: Object,
-      required: true
+      required: true,
     },
     show: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   components: {
-    "create-comment": WriteModelFB
+    "create-comment": WriteModelFB,
   },
   data() {
     return {
       new_comment: defaultCommentObjFB(),
       comment: {},
-      valid: true
+      valid: true,
     };
   },
   computed: {
     ...mapState({
-      user: state => state.user.user
-    })
+      user: (state) => state.user.user,
+    }),
   },
   methods: {
     createComment(writeFB) {
@@ -66,8 +60,8 @@ export default {
     cancel() {
       this.new_comment = defaultCommentObjFB();
       this.$emit("commentCanceled");
-    }
-  }
+    },
+  },
 };
 </script>
 
