@@ -41,7 +41,7 @@ import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
 import AutocompleteTag from "@/components/Form/AutocompleteTag";
 import { defaultArticleObjFB } from "@/utils/constants";
 import { fileUpload } from "@/services/Firebase/file";
-import { previewImg, isEmptyObj } from "@/utils/utils";
+import { previewImg, isFile } from "@/utils/utils";
 import { mapState } from "vuex";
 export default {
   components: {
@@ -75,8 +75,10 @@ export default {
     create(callback) {
       let vm = this;
       this.updating = true;
-      //update the image only when user update it
-      if (!isEmptyObj(this.file)) {
+      //update the image only when user choose it
+      // console.log("vm file", this.file);
+      // console.log("file empty", isEmptyObj(this.file));
+      if (isFile(this.file)) {
         fileUpload({
           folder: "articles",
           file: this.file,
@@ -84,10 +86,12 @@ export default {
           success
         });
       } else {
+        console.log(this.file);
         callback();
       }
       //function invocation context of success will be in the fileUpload function
       function success(url) {
+        console.log(url);
         vm.article.photo.url = url;
         vm.updating = false;
         console.log(vm.article);
@@ -101,6 +105,7 @@ export default {
       console.log(file);
       if (file) {
         let vm = this;
+        console.log("vm file", this.file);
         previewImg(file, callback);
         function callback(preview) {
           vm.article.photo.url = preview;

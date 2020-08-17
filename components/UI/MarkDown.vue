@@ -3,7 +3,7 @@
     <v-container>
       <v-row dense>
         <v-col aria-colspan="12" sm="12">
-          <div v-html="processedMarkdown"></div>
+          <div v-html="md"></div>
         </v-col>
       </v-row>
     </v-container>
@@ -12,8 +12,9 @@
 
 <script>
 import marked from "marked";
-import highlight from "highlight.js";
-import "highlight.js/styles/tomorrow-night.css";
+import hljs from "highlight.js";
+import javascript from "highlight.js/lib/languages/javascript";
+import "highlight.js/styles/atom-one-dark.css";
 export default {
   props: {
     content: {
@@ -21,22 +22,28 @@ export default {
       required: true
     }
   },
-  computed: {
-    processedMarkdown() {
-      return marked(this.content, {
-        highlight(md) {
-          return highlight.highlightAuto(md).value;
-        }
-      });
-    }
+  data() {
+    return {
+      md: ""
+    };
   },
-  methods: {
-    update: function() {
-      this.$nextTick(() => {
-        Prism.highlightAll();
-      });
-    }
+  mounted() {
+    marked.setOptions({
+      renderer: new marked.Renderer(),
+      highlight: function(code) {
+        return hljs.highlightAuto(code).value;
+      },
+      pedantic: false,
+      gfm: true,
+      tables: true,
+      breaks: false,
+      sanitize: false,
+      smartLists: true,
+      smartypants: false,
+      xhtml: false
+    });
+    this.md = marked(this.content);
   }
 };
 </script>
-<style scoped></style>
+<style></style>

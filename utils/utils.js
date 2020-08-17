@@ -65,3 +65,7 @@ export function isPlainObject(obj) {
 export function isEmptyObj(obj) {
   return Object.keys(obj).length === 0;
 }
+
+export function isFile(obj) {
+  return obj.toString() === "[object File]";
+}

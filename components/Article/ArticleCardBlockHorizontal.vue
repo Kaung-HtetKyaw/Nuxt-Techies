@@ -48,9 +48,9 @@
                     <img :src="author.photo.url" :alt="author.displayName" />
                   </v-avatar>
                   <div class="d-flex flex-column justify-center px-4 opacity-7">
-                    <div class="hover-blue">{{ author.displayName }}</div>
-                    <div class="caption py-1">
-                      <span>({{timeAgo}} ago)</span>
+                    <div class="hover-blue font-weight-medium">{{ author.displayName }}</div>
+                    <div class="caption py-1 black--text">
+                      <span>({{ timeAgo }} ago)</span>
                     </div>
                   </div>
                 </div>
@@ -58,7 +58,22 @@
             </transition>
           </div>
         </div>
-
+        <div class="my-2">
+          <nuxt-link
+            v-for="(tag, i) in article.tags"
+            :key="i"
+            class="monospace opacity-7 pr-2 py-1"
+            :to="{ name: 't-tag', params: { tag: tag } }"
+          >
+            <span
+              :style="{
+                backgroundColor: `${getTagByID(tag).bg_color}`,
+                color: `${getTagByID(tag).text_color}`
+              }"
+              class="hover-blue rounded px-2 py-1 font-weight-medium"
+            >{{ getTagByID(tag).name }}</span>
+          </nuxt-link>
+        </div>
         <nuxt-link
           :to="{
             name: 'by-id',
@@ -68,19 +83,6 @@
           <h3 class="mb-2 text-h6">{{ article.title }}</h3>
         </nuxt-link>
 
-        <div class="mb-2">
-          <nuxt-link
-            v-for="(tag, i) in article.tags"
-            :key="i"
-            class="monospace opacity-7"
-            :to="{ name: 't-tag', params: { tag: tag } }"
-          >
-            <span class="hover-blue">
-              <span>#</span>
-              {{ getTagByID(tag).name }}
-            </span>
-          </nuxt-link>
-        </div>
         <div class="mb-2" v-if="!!user">
           <like-btn :data="article" type="article" :user="user">
             <template v-slot="{ like, isLiked }">
