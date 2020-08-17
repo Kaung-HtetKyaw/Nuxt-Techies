@@ -1,14 +1,19 @@
 <template>
   <div class="comment">
-    <comment-stack :size="3" v-if="!$fetchState.pending">
+    <comment-stack :size="3" v-if="!$fetchState.pending && comment">
       <v-container>
         <v-row dense>
           <v-col cols="12" sm="1">
-            <div v-if="comment.kids.length>0">
-              <v-btn @click="show_comments=false" icon :ripple="false" v-if="show_comments">
+            <div v-if="comment.kids.length > 0">
+              <v-btn
+                @click="show_comments = false"
+                icon
+                :ripple="false"
+                v-if="show_comments"
+              >
                 <v-icon>mdi-arrow-down-drop-circle</v-icon>
               </v-btn>
-              <v-btn @click="show_comments=true" icon :ripple="false" v-else>
+              <v-btn @click="show_comments = true" icon :ripple="false" v-else>
                 <v-icon>mdi-arrow-right-drop-circle</v-icon>
               </v-btn>
             </div>
@@ -18,15 +23,20 @@
               <v-card-text>
                 <div class="d-flex flex-row justify-space-between align-start">
                   <div>
-                    <nuxt-link :to="{name:'by',params:{by:author.uid}}">
+                    <nuxt-link :to="{ name: 'by', params: { by: author.uid } }">
                       <v-avatar size="35">
-                        <img :src="author.photo.url" :alt="author.displayName" />
+                        <img
+                          :src="author.photo.url"
+                          :alt="author.displayName"
+                        />
                       </v-avatar>
-                      <span class="pl-3 d-none d-md-inline-block">{{author.displayName}}</span>
+                      <span class="pl-3 d-none d-md-inline-block">{{
+                        author.displayName
+                      }}</span>
                     </nuxt-link>
                   </div>
                   <div>
-                    <p class="text-caption">{{timeAgo}} ago</p>
+                    <p class="text-caption">{{ timeAgo }} ago</p>
                   </div>
                 </div>
                 <markdown-container
@@ -37,19 +47,29 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
-                  v-if="comment.by===user.uid"
+                  v-if="comment.by === user.uid"
                   text
                   color="red accent-4"
                   nuxt
-                  :to="{name:'by-comment-id-delete',params:{by:comment.by,id:comment.id}}"
-                >Delete</v-btn>
+                  :to="{
+                    name: 'by-comment-id-delete',
+                    params: { by: comment.by, id: comment.id }
+                  }"
+                  >Delete</v-btn
+                >
                 <v-btn
-                  v-if="comment.by===user.uid"
-                  @click="show_form=!show_form"
+                  v-if="comment.by === user.uid"
+                  @click="show_form = !show_form"
                   text
                   color="deep-purple accent-4"
-                >Edit</v-btn>
-                <v-btn @click="show_form=!show_form" text color="deep-purple accent-4">Reply</v-btn>
+                  >Edit</v-btn
+                >
+                <v-btn
+                  @click="show_form = !show_form"
+                  text
+                  color="deep-purple accent-4"
+                  >Reply</v-btn
+                >
               </v-card-actions>
             </v-card>
           </v-col>
@@ -57,7 +77,7 @@
       </v-container>
       <create-comment
         @commentCanceled="show_form = false"
-        @commentCreated="show_form= false"
+        @commentCreated="show_form = false"
         :show="show_form"
         :parent="{ ...comment }"
       ></create-comment>
@@ -82,17 +102,18 @@ export default {
   props: {
     id: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   components: {
     "create-comment": CommentBox,
     "comment-stack": Stack,
-    "markdown-container": Markdonwn,
+    "markdown-container": Markdonwn
   },
   async fetch() {
     const comment = this.getCommentByID(this.id);
-    return fetchUser(comment.by).then((res) => {
+
+    return fetchUser(comment.by).then(res => {
       const author = res.data();
       this.comment = comment;
       this.author = author;
@@ -101,29 +122,28 @@ export default {
   data() {
     return {
       open: true,
-      comment: {},
+      comment: null,
       show_form: false,
       show_comments: true,
       author: null,
-      default_user: defaultUserObjFB,
+      default_user: defaultUserObjFB
     };
   },
   computed: {
     ...mapGetters({
-      getCommentByID: "comment/getCommentByID",
+      getCommentByID: "comment/getCommentByID"
     }),
     ...mapState({
-      user: (state) => state.user.user,
+      user: state => state.user.user
     }),
     timeAgo() {
       return timeAgo(this.comment.timestamp);
-    },
+    }
   },
   methods: {
-    pluralize: (n) => n + (n === 1 ? " reply" : " replies"),
-  },
+    pluralize: n => n + (n === 1 ? " reply" : " replies")
+  }
 };
 </script>
 
-<style  scoped>
-</style>
+<style scoped></style>

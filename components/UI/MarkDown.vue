@@ -3,12 +3,7 @@
     <v-container>
       <v-row dense>
         <v-col aria-colspan="12" sm="12">
-          <vue-markdown
-            :linkify="true"
-            :toc="true"
-            :source="content"
-            @rendered="update"
-          ></vue-markdown>
+          <div v-html="processedMarkdown"></div>
         </v-col>
       </v-row>
     </v-container>
@@ -16,11 +11,9 @@
 </template>
 
 <script>
-import VueMarkdown from "vue-markdown";
-import Prism from "prismjs";
-import "prismjs/themes/prism-tomorrow.css"; // theme
-import "prismjs/components/prism-go.min"; // language
-
+import marked from "marked";
+import highlight from "highlight.js";
+import "highlight.js/styles/tomorrow-night.css";
 export default {
   props: {
     content: {
@@ -28,10 +21,15 @@ export default {
       required: true
     }
   },
-  components: {
-    VueMarkdown
+  computed: {
+    processedMarkdown() {
+      return marked(this.content, {
+        highlight(md) {
+          return highlight.highlightAuto(md).value;
+        }
+      });
+    }
   },
-
   methods: {
     update: function() {
       this.$nextTick(() => {

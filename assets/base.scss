@@ -45,7 +45,12 @@ blockquote {
   padding-left: 1.4rem;
   border-left: 4px solid #dadada;
 }
-
+pre {
+  background-color: #333;
+  code {
+    background-color: #333 !important;
+  }
+}
 .comment-box {
   background-color: white;
   box-shadow: 0 0 0 1px rgba(8, 9, 10, 0.2);
