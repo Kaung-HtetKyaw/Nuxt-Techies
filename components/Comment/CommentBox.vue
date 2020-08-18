@@ -12,16 +12,16 @@
             >
               <template v-slot="{ writeFB, loading: creatingComment }">
                 <div>
-                  <v-form v-model="valid">
+                  <v-form v-model="valid" v-if="!!user">
                     <v-textarea placeholder="Add a comment" outlined v-model="new_comment.message"></v-textarea>
-                    <div class="d-flex justify-center align-center">
+                    <div class="d-flex justify-sm-center align-center">
+                      <v-btn text color="purple" @click="cancel">Cancel</v-btn>
                       <v-btn
                         text
                         color="purple"
                         :loading="creatingComment"
                         @click="createComment(writeFB)"
                       >Submit</v-btn>
-                      <v-btn text color="red" @click="cancel">Cancel</v-btn>
                     </div>
                   </v-form>
                 </div>
@@ -38,6 +38,7 @@
 import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
 import { mapState } from "vuex";
 import { defaultCommentObjFB } from "@/utils/constants";
+import { authHydrated } from "@/mixins/authHydrated";
 export default {
   props: {
     parent: {
@@ -52,6 +53,7 @@ export default {
   components: {
     "create-comment": WriteModelFB,
   },
+  mixins: [authHydrated],
   data() {
     return {
       new_comment: defaultCommentObjFB(),

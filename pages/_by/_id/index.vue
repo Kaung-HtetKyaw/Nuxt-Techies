@@ -125,6 +125,23 @@
             </v-row>
           </v-container>
         </div>
+        <div v-else class="white pa-md-8 pa-sm-4 bs-border">
+          <v-container>
+            <v-row dense>
+              <v-col cols="12" sm="12">
+                <div class="d-flex justify-center align-center">
+                  <v-btn
+                    color="purple"
+                    class="white--text"
+                    small
+                    :ripple="false"
+                    elevation="0"
+                  >Creat account to comment</v-btn>
+                </div>
+              </v-col>
+            </v-row>
+          </v-container>
+        </div>
 
         <!-- <v-btn nuxt :to="{ name: 'by-id-edit', params: { id, by } }">Edit</v-btn>
         <v-btn nuxt :to="{ name: 'by-id-delete', params: { id, by } }">Delete</v-btn>-->
