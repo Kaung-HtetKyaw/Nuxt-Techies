@@ -88,7 +88,7 @@
             </template>
           </like-btn>
 
-          <v-btn @click="show_comment_box=!show_comment_box" :ripple="false" text class="opacity-7">
+          <v-btn :ripple="false" text class="opacity-7">
             <v-icon size="30" left>mdi-comment-outline</v-icon>
             <span>{{ article.kids.length }}</span>
           </v-btn>
@@ -112,25 +112,39 @@
           </template>
         </author-profile>
       </div>
-      <create-comment :show="show_comment_box" :parent="{ ...article }"></create-comment>
-      <!-- <v-btn nuxt :to="{ name: 'by-id-edit', params: { id, by } }">Edit</v-btn>
-      <v-btn nuxt :to="{ name: 'by-id-delete', params: { id, by } }">Delete</v-btn>-->
-      <div
-        v-if="article.kids.length>0"
-        class="comment-section white bs-border pa-md-8 pa-sm-4 my-6"
-      >
-        <v-container>
-          <v-row dense>
-            <v-col cols="12" sm="12">
-              <div v-if="!loading">
-                <comment v-for="kid in article.kids" :key="kid" :id="kid" />
-              </div>
-              <div v-else>
-                <h1>#Loading.....</h1>
-              </div>
-            </v-col>
-          </v-row>
-        </v-container>
+      <div>
+        <div v-if="!!user" class="white pa-md-8 pa-sm-4 bs-border">
+          <v-container>
+            <v-row dense>
+              <v-col cols="12" sm="12">
+                <h4
+                  class="text-center text-sm-subtitle-2 text-md-h6 font-weight-medium"
+                >Add a Comment</h4>
+                <create-comment :show="true" :parent="{ ...article }"></create-comment>
+              </v-col>
+            </v-row>
+          </v-container>
+        </div>
+
+        <!-- <v-btn nuxt :to="{ name: 'by-id-edit', params: { id, by } }">Edit</v-btn>
+        <v-btn nuxt :to="{ name: 'by-id-delete', params: { id, by } }">Delete</v-btn>-->
+        <div
+          v-if="article.kids.length>0"
+          class="comment-section white bs-border pa-md-8 pa-sm-4 my-6"
+        >
+          <v-container>
+            <v-row dense>
+              <v-col cols="12" sm="12">
+                <div v-if="!loading">
+                  <comment v-for="kid in article.kids" :key="kid" :id="kid" />
+                </div>
+                <div v-else>
+                  <h1>#Loading.....</h1>
+                </div>
+              </v-col>
+            </v-row>
+          </v-container>
+        </div>
       </div>
     </div>
   </div>
@@ -142,7 +156,7 @@ import Comment from "@/components/Comment/Comment";
 import UserModelFB from "@/components/Author/UserModelFB";
 import CommentBox from "@/components/Comment/CommentBox";
 import LikeBtnFB from "@/components/Button/LikeBtnFB";
-import AuthorCard from "@/components/Author/AuthorCard";
+import AuthorCard from "@/components/Author/AuthorCardArticle";
 import { defaultCommentObjFB } from "@/utils/constants";
 import { timeAgo } from "@/utils/utils";
 import { mapState, mapGetters } from "vuex";
@@ -170,7 +184,6 @@ export default {
       article: null,
       loading: false,
       new_comment: defaultCommentObjFB(),
-      show_comment_box: false,
     };
   },
   watch: {
@@ -205,7 +218,6 @@ export default {
     by() {
       return this.$route.params.by;
     },
-
     ...mapGetters({
       getTagByID: "tag/getTagByID",
     }),

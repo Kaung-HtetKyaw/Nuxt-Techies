@@ -19,18 +19,18 @@ export default {
   props: {
     content: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      md: ""
+      md: "",
     };
   },
   mounted() {
     marked.setOptions({
       renderer: new marked.Renderer(),
-      highlight: function(code) {
+      highlight: function (code) {
         return hljs.highlightAuto(code).value;
       },
       pedantic: false,
@@ -40,10 +40,10 @@ export default {
       sanitize: false,
       smartLists: true,
       smartypants: false,
-      xhtml: false
+      xhtml: false,
     });
     this.md = marked(this.content);
-  }
+  },
 };
 </script>
 <style></style>

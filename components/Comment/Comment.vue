@@ -39,72 +39,83 @@
                 ></markdown-container>
               </v-card-text>
               <v-card-actions class="d-flex justify-center align-center">
-                <div class="d-none d-md-block">
-                  <v-btn
-                    v-if="comment.by === user.uid"
-                    text
-                    color="red accent-4"
-                    nuxt
-                    :to="{
+                <div v-if="!!user">
+                  <div class="d-none d-md-block">
+                    <v-btn
+                      v-if="comment.by === user.uid"
+                      text
+                      color="red accent-4"
+                      nuxt
+                      :to="{
                     name: 'by-comment-id-delete',
                     params: { by: comment.by, id: comment.id }
                   }"
-                  >Delete</v-btn>
-                  <v-btn
-                    v-if="comment.by === user.uid"
-                    @click="show_form = !show_form"
-                    text
-                    color="deep-purple accent-4"
-                  >Edit</v-btn>
-                  <v-btn @click="show_form = !show_form" text color="deep-purple accent-4">Reply</v-btn>
+                    >Delete</v-btn>
+                    <v-btn
+                      v-if="comment.by === user.uid"
+                      @click="show_form = !show_form"
+                      text
+                      color="deep-purple accent-4"
+                    >Edit</v-btn>
+                    <v-btn @click="show_form = !show_form" text color="deep-purple accent-4">Reply</v-btn>
+                  </div>
+                  <div class="d-block d-md-none">
+                    <v-menu bottom origin="center center" transition="scale-transition">
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                          x-small
+                          :ripple="false"
+                          text
+                          color="purple"
+                          v-bind="attrs"
+                          v-on="on"
+                        >Manage</v-btn>
+                      </template>
+                      <v-list elevation="0">
+                        <v-list-item>
+                          <v-list-item-title>
+                            <v-btn
+                              x-small
+                              @click="show_form = !show_form"
+                              text
+                              color="deep-purple accent-4"
+                            >Reply</v-btn>
+                          </v-list-item-title>
+                          <v-list-item-title>
+                            <v-btn
+                              v-if="comment.by === user.uid"
+                              @click="show_form = !show_form"
+                              text
+                              x-small
+                              color="deep-purple accent-4"
+                            >Edit</v-btn>
+                          </v-list-item-title>
+                          <v-list-item-title>
+                            <v-btn
+                              v-if="comment.by === user.uid"
+                              x-small
+                              text
+                              color="red accent-4"
+                              nuxt
+                              :to="{
+                    name: 'by-comment-id-delete',
+                    params: { by: comment.by, id: comment.id }
+                  }"
+                            >Delete</v-btn>
+                          </v-list-item-title>
+                        </v-list-item>
+                      </v-list>
+                    </v-menu>
+                  </div>
                 </div>
-                <div class="d-block d-md-none">
-                  <v-menu bottom origin="center center" transition="scale-transition">
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-btn
-                        x-small
-                        :ripple="false"
-                        text
-                        color="purple"
-                        v-bind="attrs"
-                        v-on="on"
-                      >Manage</v-btn>
-                    </template>
-                    <v-list elevation="0">
-                      <v-list-item>
-                        <v-list-item-title>
-                          <v-btn
-                            x-small
-                            @click="show_form = !show_form"
-                            text
-                            color="deep-purple accent-4"
-                          >Reply</v-btn>
-                        </v-list-item-title>
-                        <v-list-item-title>
-                          <v-btn
-                            v-if="comment.by === user.uid"
-                            @click="show_form = !show_form"
-                            text
-                            x-small
-                            color="deep-purple accent-4"
-                          >Edit</v-btn>
-                        </v-list-item-title>
-                        <v-list-item-title>
-                          <v-btn
-                            v-if="comment.by === user.uid"
-                            x-small
-                            text
-                            color="red accent-4"
-                            nuxt
-                            :to="{
-                    name: 'by-comment-id-delete',
-                    params: { by: comment.by, id: comment.id }
-                  }"
-                          >Delete</v-btn>
-                        </v-list-item-title>
-                      </v-list-item>
-                    </v-list>
-                  </v-menu>
+                <div v-else>
+                  <v-btn
+                    small
+                    color="purple"
+                    class="white--text"
+                    :ripple="false"
+                    elevation="0"
+                  >Create acoount to reply</v-btn>
                 </div>
               </v-card-actions>
             </v-card>
@@ -130,6 +141,7 @@ import { fetchUser } from "@/services/Firebase/userAuth";
 import { mapState, mapGetters } from "vuex";
 import { defaultCommentObjFB, defaultUserObjFB } from "@/utils/constants";
 import { timeAgo } from "@/utils/utils";
+import { authHydrated } from "@/mixins/authHydrated";
 import CommentBox from "@/components/Comment/CommentBox";
 import Stack from "@/components/UI/Stack";
 import Markdonwn from "@/components/UI/MarkDown";
@@ -146,6 +158,7 @@ export default {
     "comment-stack": Stack,
     "markdown-container": Markdonwn,
   },
+  mixins: [authHydrated],
   async fetch() {
     const comment = this.getCommentByID(this.id);
 
@@ -168,9 +181,6 @@ export default {
   computed: {
     ...mapGetters({
       getCommentByID: "comment/getCommentByID",
-    }),
-    ...mapState({
-      user: (state) => state.user.user,
     }),
     timeAgo() {
       return timeAgo(this.comment.timestamp);

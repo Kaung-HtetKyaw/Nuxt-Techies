@@ -1,24 +1,37 @@
 <template>
-  <div>
-    <transition name="vertical" mode="out-in">
-      <create-comment
-        v-if="show"
-        type="create"
-        collection="comment"
-        :params="{ data: new_comment, parent }"
-      >
-        <template v-slot="{ writeFB, loading: creatingComment }">
-          <div>
-            <v-form v-model="valid">
-              <v-textarea placeholder="Add a comment" outlined v-model="new_comment.message"></v-textarea>
-              <v-btn :loading="creatingComment" @click="createComment(writeFB)">Submit</v-btn>
-              <v-btn @click="cancel">Cancel</v-btn>
-            </v-form>
-          </div>
-        </template>
-      </create-comment>
-    </transition>
-  </div>
+  <v-container class="white">
+    <v-row dense>
+      <v-col cols="12" sm="12">
+        <div>
+          <transition name="vertical" mode="out-in">
+            <create-comment
+              v-if="show"
+              type="create"
+              collection="comment"
+              :params="{ data: new_comment, parent }"
+            >
+              <template v-slot="{ writeFB, loading: creatingComment }">
+                <div>
+                  <v-form v-model="valid">
+                    <v-textarea placeholder="Add a comment" outlined v-model="new_comment.message"></v-textarea>
+                    <div class="d-flex justify-center align-center">
+                      <v-btn
+                        text
+                        color="purple"
+                        :loading="creatingComment"
+                        @click="createComment(writeFB)"
+                      >Submit</v-btn>
+                      <v-btn text color="red" @click="cancel">Cancel</v-btn>
+                    </div>
+                  </v-form>
+                </div>
+              </template>
+            </create-comment>
+          </transition>
+        </div>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
