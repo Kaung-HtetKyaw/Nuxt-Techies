@@ -43,7 +43,7 @@ a {
   color: #6200ea !important;
 }
 .v-application--wrap {
-  // background-color: #eef0f1;
+  background-color: #eef0f1;
 }
 .v-application {
   code {
@@ -81,4 +81,8 @@ blockquote {
 }
 .opacity-7 {
   opacity: 0.7;
+}
+
+.bs-border {
+  box-shadow: 0 0 0 1px rgba(8, 9, 10, 0.2);
 }

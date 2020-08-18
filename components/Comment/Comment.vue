@@ -1,16 +1,11 @@
 <template>
   <div class="comment">
-    <comment-stack :size="3" v-if="!$fetchState.pending && comment">
-      <v-container>
+    <comment-stack :size="2" v-if="!$fetchState.pending && comment">
+      <v-container fluid>
         <v-row dense>
-          <v-col cols="12" sm="1">
+          <v-col cols="12" sm="0" md="1" class="d-none d-md-inline-block">
             <div v-if="comment.kids.length > 0">
-              <v-btn
-                @click="show_comments = false"
-                icon
-                :ripple="false"
-                v-if="show_comments"
-              >
+              <v-btn @click="show_comments = false" icon :ripple="false" v-if="show_comments">
                 <v-icon>mdi-arrow-down-drop-circle</v-icon>
               </v-btn>
               <v-btn @click="show_comments = true" icon :ripple="false" v-else>
@@ -18,21 +13,20 @@
               </v-btn>
             </div>
           </v-col>
-          <v-col cols="12" sm="11" class="pa-0">
+          <v-col cols="12" sm="12" md="11" class="pa-0">
             <v-card elevation="0" class="pa-0">
-              <v-card-text>
-                <div class="d-flex flex-row justify-space-between align-start">
+              <v-card-text class="pa-0">
+                <div class="d-flex flex-row justify-space-between align-center">
                   <div>
                     <nuxt-link :to="{ name: 'by', params: { by: author.uid } }">
                       <v-avatar size="35">
-                        <img
-                          :src="author.photo.url"
-                          :alt="author.displayName"
-                        />
+                        <img :src="author.photo.url" :alt="author.displayName" />
                       </v-avatar>
-                      <span class="pl-3 d-none d-md-inline-block">{{
+                      <span class="pl-3 d-none d-md-inline-block">
+                        {{
                         author.displayName
-                      }}</span>
+                        }}
+                      </span>
                     </nuxt-link>
                   </div>
                   <div>
@@ -44,32 +38,74 @@
                   class="text-sm-body-2 text-md-subtitle-1 font-weight-medium pt-3"
                 ></markdown-container>
               </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                  v-if="comment.by === user.uid"
-                  text
-                  color="red accent-4"
-                  nuxt
-                  :to="{
+              <v-card-actions class="d-flex justify-center align-center">
+                <div class="d-none d-md-block">
+                  <v-btn
+                    v-if="comment.by === user.uid"
+                    text
+                    color="red accent-4"
+                    nuxt
+                    :to="{
                     name: 'by-comment-id-delete',
                     params: { by: comment.by, id: comment.id }
                   }"
-                  >Delete</v-btn
-                >
-                <v-btn
-                  v-if="comment.by === user.uid"
-                  @click="show_form = !show_form"
-                  text
-                  color="deep-purple accent-4"
-                  >Edit</v-btn
-                >
-                <v-btn
-                  @click="show_form = !show_form"
-                  text
-                  color="deep-purple accent-4"
-                  >Reply</v-btn
-                >
+                  >Delete</v-btn>
+                  <v-btn
+                    v-if="comment.by === user.uid"
+                    @click="show_form = !show_form"
+                    text
+                    color="deep-purple accent-4"
+                  >Edit</v-btn>
+                  <v-btn @click="show_form = !show_form" text color="deep-purple accent-4">Reply</v-btn>
+                </div>
+                <div class="d-block d-md-none">
+                  <v-menu bottom origin="center center" transition="scale-transition">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        x-small
+                        :ripple="false"
+                        text
+                        color="purple"
+                        v-bind="attrs"
+                        v-on="on"
+                      >Manage</v-btn>
+                    </template>
+                    <v-list elevation="0">
+                      <v-list-item>
+                        <v-list-item-title>
+                          <v-btn
+                            x-small
+                            @click="show_form = !show_form"
+                            text
+                            color="deep-purple accent-4"
+                          >Reply</v-btn>
+                        </v-list-item-title>
+                        <v-list-item-title>
+                          <v-btn
+                            v-if="comment.by === user.uid"
+                            @click="show_form = !show_form"
+                            text
+                            x-small
+                            color="deep-purple accent-4"
+                          >Edit</v-btn>
+                        </v-list-item-title>
+                        <v-list-item-title>
+                          <v-btn
+                            v-if="comment.by === user.uid"
+                            x-small
+                            text
+                            color="red accent-4"
+                            nuxt
+                            :to="{
+                    name: 'by-comment-id-delete',
+                    params: { by: comment.by, id: comment.id }
+                  }"
+                          >Delete</v-btn>
+                        </v-list-item-title>
+                      </v-list-item>
+                    </v-list>
+                  </v-menu>
+                </div>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -102,18 +138,18 @@ export default {
   props: {
     id: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   components: {
     "create-comment": CommentBox,
     "comment-stack": Stack,
-    "markdown-container": Markdonwn
+    "markdown-container": Markdonwn,
   },
   async fetch() {
     const comment = this.getCommentByID(this.id);
 
-    return fetchUser(comment.by).then(res => {
+    return fetchUser(comment.by).then((res) => {
       const author = res.data();
       this.comment = comment;
       this.author = author;
@@ -126,23 +162,23 @@ export default {
       show_form: false,
       show_comments: true,
       author: null,
-      default_user: defaultUserObjFB
+      default_user: defaultUserObjFB,
     };
   },
   computed: {
     ...mapGetters({
-      getCommentByID: "comment/getCommentByID"
+      getCommentByID: "comment/getCommentByID",
     }),
     ...mapState({
-      user: state => state.user.user
+      user: (state) => state.user.user,
     }),
     timeAgo() {
       return timeAgo(this.comment.timestamp);
-    }
+    },
   },
   methods: {
-    pluralize: n => n + (n === 1 ? " reply" : " replies")
-  }
+    pluralize: (n) => n + (n === 1 ? " reply" : " replies"),
+  },
 };
 </script>
 

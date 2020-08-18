@@ -1,21 +1,23 @@
 <template>
   <div>
-    <create-comment
-      v-if="show"
-      type="create"
-      collection="comment"
-      :params="{ data: new_comment, parent }"
-    >
-      <template v-slot="{ writeFB, loading: creatingComment }">
-        <div>
-          <v-form v-model="valid">
-            <v-textarea placeholder="Add a comment" outlined v-model="new_comment.message"></v-textarea>
-            <v-btn :loading="creatingComment" @click="createComment(writeFB)">Submit</v-btn>
-            <v-btn @click="cancel">Cancel</v-btn>
-          </v-form>
-        </div>
-      </template>
-    </create-comment>
+    <transition name="vertical" mode="out-in">
+      <create-comment
+        v-if="show"
+        type="create"
+        collection="comment"
+        :params="{ data: new_comment, parent }"
+      >
+        <template v-slot="{ writeFB, loading: creatingComment }">
+          <div>
+            <v-form v-model="valid">
+              <v-textarea placeholder="Add a comment" outlined v-model="new_comment.message"></v-textarea>
+              <v-btn :loading="creatingComment" @click="createComment(writeFB)">Submit</v-btn>
+              <v-btn @click="cancel">Cancel</v-btn>
+            </v-form>
+          </div>
+        </template>
+      </create-comment>
+    </transition>
   </div>
 </template>
 
