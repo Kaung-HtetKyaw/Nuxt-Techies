@@ -42,13 +42,7 @@
                   </div>
 
                   <div v-else>
-                    <v-btn
-                      small
-                      color="purple"
-                      class="white--text"
-                      :ripple="false"
-                      elevation="0"
-                    >Create acoount To Follow</v-btn>
+                    <sign-in type="follow"></sign-in>
                   </div>
                 </div>
               </v-col>
@@ -61,6 +55,7 @@
 </template>
 
 <script>
+import SignInModal from "@/components/Button/SignInModal";
 import { authHydrated } from "@/mixins/authHydrated";
 export default {
   props: {
@@ -68,6 +63,9 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  components: {
+    "sign-in": SignInModal,
   },
   mixins: [authHydrated],
 };

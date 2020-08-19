@@ -11,18 +11,18 @@
       </v-container>
     </v-main>
 
-    <v-footer :fixed="fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+    <Footer />
   </v-app>
 </template>
 
 <script>
 import DefaultNav from "@/components/Nav/DefaultNav";
+import Footer from "@/components/UI/Footer";
 
 export default {
   components: {
     DefaultNav,
+    Footer,
   },
   data() {
     return {

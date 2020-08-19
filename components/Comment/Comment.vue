@@ -53,9 +53,10 @@
                     >Delete</v-btn>
                     <v-btn
                       v-if="comment.by === user.uid"
-                      @click="show_form = !show_form"
                       text
                       color="deep-purple accent-4"
+                      nuxt
+                      :to="{name:'by-comment-id-edit',params:{by:comment.id,id:comment.id}}"
                     >Edit</v-btn>
                     <v-btn @click="show_form = !show_form" text color="deep-purple accent-4">Reply</v-btn>
                   </div>
@@ -84,10 +85,10 @@
                           <v-list-item-title>
                             <v-btn
                               v-if="comment.by === user.uid"
-                              @click="show_form = !show_form"
                               text
                               x-small
                               color="deep-purple accent-4"
+                              :to="{name:'by-comment-id-edit',params:{by:comment.id,id:comment.id}}"
                             >Edit</v-btn>
                           </v-list-item-title>
                           <v-list-item-title>
@@ -109,13 +110,7 @@
                   </div>
                 </div>
                 <div v-else>
-                  <v-btn
-                    small
-                    color="purple"
-                    class="white--text"
-                    :ripple="false"
-                    elevation="0"
-                  >Create acoount to reply</v-btn>
+                  <sign-in type="reply"></sign-in>
                 </div>
               </v-card-actions>
             </v-card>
@@ -145,6 +140,7 @@ import { authHydrated } from "@/mixins/authHydrated";
 import CommentBox from "@/components/Comment/CommentBox";
 import Stack from "@/components/UI/Stack";
 import Markdonwn from "@/components/UI/MarkDown";
+import SignInModal from "@/components/Button/SignInModal";
 export default {
   name: "comment",
   props: {
@@ -157,6 +153,7 @@ export default {
     "create-comment": CommentBox,
     "comment-stack": Stack,
     "markdown-container": Markdonwn,
+    "sign-in": SignInModal,
   },
   mixins: [authHydrated],
   async fetch() {

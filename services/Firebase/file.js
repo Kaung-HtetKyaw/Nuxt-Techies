@@ -10,7 +10,7 @@ export function fileUpload({
   error = noop,
   success = noop
 }) {
-  console.log(file);
+  console.log(id);
   const storageRef = firebase.storage().ref(`${folder}/` + id);
   const task = storageRef.put(file);
 

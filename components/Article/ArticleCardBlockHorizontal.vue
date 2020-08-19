@@ -1,5 +1,5 @@
 <template>
-  <v-card class="article-card-block" outlined>
+  <v-card class="article-card-block bs-border" outlined>
     <nuxt-link
       :to="{
         name: 'by-id',
@@ -58,21 +58,8 @@
             </transition>
           </div>
         </div>
-        <div class="my-2">
-          <nuxt-link
-            v-for="(tag, i) in article.tags"
-            :key="i"
-            class="monospace opacity-7 pr-2 py-1"
-            :to="{ name: 't-tag', params: { tag: tag } }"
-          >
-            <span
-              :style="{
-                backgroundColor: `${getTagByID(tag).bg_color}`,
-                color: `${getTagByID(tag).text_color}`
-              }"
-              class="hover-blue rounded px-2 py-1 font-weight-medium"
-            >{{ getTagByID(tag).name }}</span>
-          </nuxt-link>
+        <div class="my-4">
+          <tag-slider :tags="article.tags" />
         </div>
         <nuxt-link
           :to="{
@@ -81,6 +68,7 @@
           }"
         >
           <h3 class="mb-2 text-h6">{{ article.title }}</h3>
+          <p class="mb-2 text-subtitle-2">{{article.description}}</p>
         </nuxt-link>
 
         <div class="mb-2" v-if="!!user">
@@ -116,6 +104,7 @@ import { isEmptyObj, timeAgo } from "@/utils/utils";
 import { defaultUserObjFB } from "@/utils/constants";
 import { authHydrated } from "@/mixins/authHydrated";
 import LikeBtnFB from "@/components/Button/LikeBtnFB";
+import TagSlider from "@/components/UI/TagSlider";
 export default {
   props: {
     article: {
@@ -125,6 +114,7 @@ export default {
   },
   components: {
     "like-btn": LikeBtnFB,
+    "tag-slider": TagSlider,
   },
   mixins: [authHydrated],
   data() {

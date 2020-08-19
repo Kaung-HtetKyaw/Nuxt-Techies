@@ -26,13 +26,13 @@
 <script>
 import { mapState } from "vuex";
 import { fileUpload } from "@/services/Firebase/file";
-import { previewImg, isEmptyObj } from "@/utils/utils";
+import { previewImg, isEmptyObj, isFile } from "@/utils/utils";
 import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
 export default {
   components: {
     "write-fb": WriteModelFB,
   },
-  middleware:['auth'],
+  middleware: ["auth"],
   data() {
     return {
       file: {},
@@ -44,12 +44,12 @@ export default {
       let vm = this;
       this.updating = true;
       //update the image only when user update it
-      if (!isEmptyObj(this.file)) {
+      if (isFile(this.file)) {
         console.log(this.file);
         fileUpload({
           folder: "users",
           file: this.file,
-          id: this.user.photo.id,
+          id: this.user.uid,
           success,
         });
       } else {
@@ -58,6 +58,7 @@ export default {
       //function invocation context of success will be in the fileUpload function
       function success(url) {
         vm.user.photo.url = url;
+        vm.user.photo.id = vm.user.uid;
         vm.updating = false;
         callback();
       }
