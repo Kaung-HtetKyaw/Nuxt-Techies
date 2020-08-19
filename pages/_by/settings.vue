@@ -53,14 +53,22 @@ export default {
           success,
         });
       } else {
-        callback();
+        return callback()
+          .then(() => {
+            vm.$router.push({ name: "by", params: { by: vm.user.uid } });
+          })
+          .catch((e) => console.log(e));
       }
       //function invocation context of success will be in the fileUpload function
       function success(url) {
         vm.user.photo.url = url;
         vm.user.photo.id = vm.user.uid;
         vm.updating = false;
-        callback();
+        return callback()
+          .then(() => {
+            vm.$router.push({ name: "by", params: { by: vm.user.uid } });
+          })
+          .catch((e) => console.log(e));
       }
     },
     cancel() {
