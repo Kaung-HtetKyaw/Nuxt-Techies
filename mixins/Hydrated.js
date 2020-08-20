@@ -18,3 +18,23 @@ export const authHydrated = {
     this.isHydrated = true;
   }
 };
+
+export const tagsHydrated = {
+  data() {
+    return {
+      isHydrated: false
+    };
+  },
+  computed: {
+    ...mapState({
+      storedTags: state => state.tag.tags
+    }),
+    tags() {
+      return this.isHydrated ? this.storedTags : [];
+    }
+  },
+
+  mounted() {
+    this.isHydrated = true;
+  }
+};

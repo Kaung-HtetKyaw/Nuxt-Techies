@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { authHydrated } from "@/mixins/authHydrated";
+import { authHydrated } from "@/mixins/Hydrated";
 import SignInBtnFB from "@/components/Button/SignInBtnModelFB";
 
 const defaultItem = [
@@ -99,6 +99,11 @@ export default {
               icon: "mdi-cog",
               title: "Settings",
               to: { name: "by", params: { by: vm.user.uid } },
+            },
+            {
+              icon: "mdi-cog",
+              title: "Dummy",
+              to: "dummy",
             },
           ]
         : defaultItem;

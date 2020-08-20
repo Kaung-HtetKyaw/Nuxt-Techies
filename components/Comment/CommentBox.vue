@@ -38,7 +38,7 @@
 import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
 import { mapState } from "vuex";
 import { defaultCommentObjFB } from "@/utils/constants";
-import { authHydrated } from "@/mixins/authHydrated";
+import { authHydrated } from "@/mixins/Hydrated";
 export default {
   props: {
     parent: {

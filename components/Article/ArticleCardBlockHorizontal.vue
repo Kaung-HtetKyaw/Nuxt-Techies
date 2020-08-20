@@ -102,7 +102,7 @@ import { mapGetters } from "vuex";
 import { fetchUser } from "@/services/Firebase/userAuth";
 import { isEmptyObj, timeAgo } from "@/utils/utils";
 import { defaultUserObjFB } from "@/utils/constants";
-import { authHydrated } from "@/mixins/authHydrated";
+import { authHydrated } from "@/mixins/Hydrated";
 import LikeBtnFB from "@/components/Button/LikeBtnFB";
 import TagSlider from "@/components/UI/TagSlider";
 export default {

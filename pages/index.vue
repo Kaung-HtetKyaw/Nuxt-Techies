@@ -83,7 +83,7 @@ import TagGroup from "@/components/UI/TagGroup";
 import NavigationDrawer from "@/components/UI/NavigationDrawer";
 import UserAvatar from "@/components/UI/UserAvatarDrawer";
 import { mapState } from "vuex";
-import { authHydrated } from "@/mixins/authHydrated";
+import { authHydrated } from "@/mixins/Hydrated";
 export default {
   components: {
     "article-list-model": ArticleListModel,

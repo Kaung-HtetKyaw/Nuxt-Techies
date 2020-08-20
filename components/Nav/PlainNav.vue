@@ -6,7 +6,9 @@
       </nuxt-link>
 
       <v-spacer></v-spacer>
-      <v-btn small elevation="0" :ripple="false" to="/">Close</v-btn>
+      <v-btn icon small elevation="0" :ripple="false" to="/">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
     </v-app-bar>
   </div>
 </template>
@@ -15,7 +17,7 @@
 export default {
   data() {
     return {
-      title: "MCL",
+      title: "MTU Code Lab",
     };
   },
 };

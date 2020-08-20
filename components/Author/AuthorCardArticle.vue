@@ -56,7 +56,7 @@
 
 <script>
 import SignInModal from "@/components/Button/SignInModal";
-import { authHydrated } from "@/mixins/authHydrated";
+import { authHydrated } from "@/mixins/Hydrated";
 export default {
   props: {
     author: {

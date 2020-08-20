@@ -136,7 +136,7 @@ import { fetchUser } from "@/services/Firebase/userAuth";
 import { mapState, mapGetters } from "vuex";
 import { defaultCommentObjFB, defaultUserObjFB } from "@/utils/constants";
 import { timeAgo } from "@/utils/utils";
-import { authHydrated } from "@/mixins/authHydrated";
+import { authHydrated } from "@/mixins/Hydrated";
 import CommentBox from "@/components/Comment/CommentBox";
 import Stack from "@/components/UI/Stack";
 import Markdonwn from "@/components/UI/MarkDown";

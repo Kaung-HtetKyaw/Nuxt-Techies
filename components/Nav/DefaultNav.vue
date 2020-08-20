@@ -3,7 +3,6 @@
     <v-navigation-drawer v-model="drawer" temporary fixed app>
       <v-list>
         <user-avatar-drawer v-if="!!user" :user="user"></user-avatar-drawer>
-
         <navigation-drawer></navigation-drawer>
       </v-list>
     </v-navigation-drawer>
@@ -31,7 +30,7 @@
 </template>
 
 <script>
-import { authHydrated } from "@/mixins/authHydrated";
+import { authHydrated } from "@/mixins/Hydrated";
 import UserAvatarMenu from "@/components/UI/UserAvatarMenu";
 import UserAvatarDrawer from "@/components/UI/UserAvatarDrawer";
 import NavigationDrawer from "@/components/UI/NavigationDrawer";

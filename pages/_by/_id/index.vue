@@ -170,7 +170,7 @@ import TagSlider from "@/components/UI/TagSlider";
 import { defaultCommentObjFB } from "@/utils/constants";
 import { timeAgo } from "@/utils/utils";
 import { mapState, mapGetters } from "vuex";
-import { authHydrated } from "@/mixins/authHydrated";
+import { authHydrated } from "@/mixins/Hydrated";
 export default {
   components: {
     "vue-markdown": MarkDown,

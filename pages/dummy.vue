@@ -1,30 +1,55 @@
 <template>
-  <v-card color="basil">
-    <v-card-title class="text-center justify-center py-6">
-      <h1 class="font-weight-bold display-3 basil--text">BASiL</h1>
-    </v-card-title>
+  <div>
+    <v-container>
+      <v-row dense>
+        <v-col cols="12" sm="12" md="9" class="white bs-border">
+          <v-card color="white" elevation="0" min-height="400px">
+            <v-tabs v-model="tab" background-color="transparent" color="purple" grow>
+              <v-tab v-for="item in items" :key="item.title">{{ item.title }}</v-tab>
+            </v-tabs>
 
-    <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
-      <v-tab v-for="item in items" :key="item">{{ item }}</v-tab>
-    </v-tabs>
-
-    <v-tabs-items v-model="tab">
-      <v-tab-item v-for="item in items" :key="item">
-        <v-card color="basil" flat>
-          <v-card-text>{{ text }}</v-card-text>
-        </v-card>
-      </v-tab-item>
-    </v-tabs-items>
-  </v-card>
+            <v-tabs-items v-model="tab">
+              <v-tab-item v-for="item in items" :key="item.title">
+                <div>
+                  <v-container>
+                    <v-row dense>
+                      <v-col cols="12" sm="12" class="pa-sm-3 pa-md-6">
+                        <component v-bind:is="item.component"></component>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </div>
+              </v-tab-item>
+            </v-tabs-items>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script>
+import ArticleForm from "@/components/Form/ArticleForm";
+import ArticlePreview from "@/components/Article/ArticlePreview";
 export default {
   layout: "form",
+  components: {
+    articleForm: ArticleForm,
+    articlePreview: ArticlePreview,
+  },
   data() {
     return {
       tab: null,
-      items: ["Appetizers", "Entrees", "Deserts", "Cocktails"],
+      items: [
+        {
+          title: "Write",
+          component: "articleForm",
+        },
+        {
+          title: "Preview",
+          component: "articlePreview",
+        },
+      ],
       text:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     };
