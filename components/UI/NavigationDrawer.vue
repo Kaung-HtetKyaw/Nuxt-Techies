@@ -81,21 +81,24 @@ export default {
       return !!vm.user
         ? [
             {
+              icon: "mdi-newspaper-variant-outline",
+              title: "Create new Article",
+              to: { name: "new" },
+            },
+            {
+              icon: "#",
+              title: "Tags",
+              to: "/t",
+            },
+            {
               icon: "mdi-format-list-bulleted",
               title: "Reading List",
               to: { name: "by", params: { by: vm.user.uid } },
             },
             {
-              icon: "mdi-chart-bubble",
-              title: "Create new Article",
-              to: "/new",
-              auth: true,
-            },
-            {
-              icon: "mdi-chart-bubble",
-              title: "Tags",
-              to: "/t",
-              auth: false,
+              icon: "mdi-cog",
+              title: "Settings",
+              to: { name: "by", params: { by: vm.user.uid } },
             },
           ]
         : defaultItem;

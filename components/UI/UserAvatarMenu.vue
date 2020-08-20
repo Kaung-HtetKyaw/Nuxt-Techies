@@ -11,22 +11,18 @@
 
       <v-card width="200px">
         <v-list>
-          <v-list-item class="pa-0">
-            <v-list-item-content>
-              <v-list-item-title>
-                <v-btn
-                  color="white"
-                  class="black--text text-body-2 text-capitalize"
-                  link
-                  block
-                  elevation="0"
-                  :ripple="false"
-                  nuxt
-                  :to="{name:'by',params:{by:user.uid}}"
-                >{{user.displayName}}</v-btn>
+          <nuxt-link :to="{name:'by',params:{by:user.uid}}">
+            <v-list-item class="d-flex justify-center align-center">
+              <v-avatar size="40">
+                <img :src="user.photo.url" :alt="user.displayName" />
+              </v-avatar>
+              <v-list-item-title class="ml-4 body-1">
+                {{
+                user.displayName
+                }}
               </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+            </v-list-item>
+          </nuxt-link>
         </v-list>
 
         <v-divider></v-divider>
@@ -37,7 +33,7 @@
               <v-list-item-title>
                 <v-btn
                   color="white"
-                  class="black--text text-body-2 text-capitalize"
+                  class="black--text text-body-2 font-weight-medium text-capitalize"
                   link
                   block
                   elevation="0"
