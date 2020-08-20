@@ -4,7 +4,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon color="primary" dark v-bind="attrs" v-on="on">
           <v-avatar size="40">
-            <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+            <img :src="user.photo.url" :alt="user.displayName" />
           </v-avatar>
         </v-btn>
       </template>

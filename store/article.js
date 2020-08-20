@@ -40,6 +40,9 @@ export const mutations = {
   },
   UNLIKE_ARTICLE(state, { article }) {
     replaceByID(state.articles, article);
+  },
+  CLEAR_ARTICLES(state) {
+    state.articles = [];
   }
 };
 export const actions = {
@@ -55,9 +58,8 @@ export const actions = {
         //instead get the data by timestamp
         if (articles.length > 0) {
           commit("SET_LAST_VISIBLE", articles[articles.length - 1].timestamp);
-
-          commit("SET_ARTICLES", { articles, lazy });
         }
+        commit("SET_ARTICLES", { articles, lazy });
         return articles;
       })
       .catch(e => console.log(e));
@@ -123,6 +125,9 @@ export const actions = {
     removeByID(parent.kids, id);
     //update parent article
     dispatch("updateArticle", { id: parent.id, data: parent });
+  },
+  clearArticles({ commit }) {
+    commit("CLEAR_ARTICLES");
   }
 };
 export const getters = {

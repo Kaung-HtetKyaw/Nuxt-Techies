@@ -17,6 +17,7 @@ export default {
       params: this.params,
       lazy: this.lazyLoad,
     });
+
     //set lazy loading state
     if (articles.length > 0) {
       if (this.lazy) {
@@ -31,6 +32,7 @@ export default {
     return {
       lazyLoad: false,
       empty: false,
+      loading: false,
     };
   },
   methods: {

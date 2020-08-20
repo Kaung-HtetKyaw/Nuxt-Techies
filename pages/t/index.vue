@@ -27,6 +27,10 @@ export default {
   async fetch() {
     return this.$store.dispatch("tag/fetchAllTags");
   },
+  //clear the previous articles from store
+  created() {
+    this.$store.dispatch("article/clearArticles");
+  },
   computed: {
     ...mapState({
       tags: (state) => state.tag.tags,
