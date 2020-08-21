@@ -15,13 +15,19 @@
                   <v-form v-model="valid" v-if="!!user">
                     <v-textarea placeholder="Add a comment" outlined v-model="new_comment.message"></v-textarea>
                     <div class="d-flex justify-sm-center align-center">
-                      <v-btn text color="purple" @click="cancel">Cancel</v-btn>
                       <v-btn
-                        text
+                        depressed
                         color="purple"
+                        class="white--text mx-1"
                         :loading="creatingComment"
                         @click="createComment(writeFB)"
                       >Submit</v-btn>
+                      <v-btn
+                        depressed
+                        color="indigo lighten-4"
+                        class="white--text mx-1"
+                        @click="cancel"
+                      >Cancel</v-btn>
                     </div>
                   </v-form>
                 </div>
