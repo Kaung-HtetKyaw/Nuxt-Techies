@@ -6,30 +6,31 @@
           <h1>#Loading.......</h1>
         </div>
         <div v-else>
-          <v-text-field v-model="article.title" label="Title"></v-text-field>
-          <v-textarea
-            v-model="article.description"
-            label="Description"
-          ></v-textarea>
-          <v-textarea v-model="article.content" label="Content"></v-textarea>
-          <autocomplete-tag
-            v-model="article.tags"
-            :article_tags="article.tags"
-          ></autocomplete-tag>
-          <v-file-input
-            @change="previewImg"
-            v-model="file"
-            show-size
-            value="any"
-            label="File input"
-          ></v-file-input>
-          <v-btn :loading="loading" @click="create(writeFB)"
-            >Create Article</v-btn
-          >
-          <v-btn @click="cancel">Cancel</v-btn>
-          <div>
-            <img :src="article.photo.url" alt />
-          </div>
+          <v-container>
+            <v-row dense>
+              <v-col cols="12" sm="12" md="9" class="white bs-border">
+                <v-card color="white" elevation="0" min-height="400px">
+                  <v-tabs v-model="tab" background-color="transparent" color="purple" grow>
+                    <v-tab v-for="item in items" :key="item.title">{{ item.title }}</v-tab>
+                  </v-tabs>
+
+                  <v-tabs-items v-model="tab">
+                    <v-tab-item v-for="item in items" :key="item.title">
+                      <div>
+                        <v-container>
+                          <v-row dense>
+                            <v-col cols="12" sm="12" class="pa-sm-3 pa-md-6">
+                              <component v-bind:is="item.component"></component>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                      </div>
+                    </v-tab-item>
+                  </v-tabs-items>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
         </div>
       </template>
     </write-fb>
@@ -39,6 +40,8 @@
 <script>
 import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
 import AutocompleteTag from "@/components/Form/AutocompleteTag";
+import ArticleForm from "@/components/Form/ArticleForm";
+import ArticlePreview from "@/components/Article/ArticlePreview";
 import { defaultArticleObjFB } from "@/utils/constants";
 import { fileUpload } from "@/services/Firebase/file";
 import { previewImg, isFile } from "@/utils/utils";
@@ -46,15 +49,28 @@ import { mapState } from "vuex";
 export default {
   components: {
     "write-fb": WriteModelFB,
-    "autocomplete-tag": AutocompleteTag
+    "autocomplete-tag": AutocompleteTag,
+    articleForm: ArticleForm,
+    articlePreview: ArticlePreview,
   },
   middleware: ["auth"],
   data() {
     return {
       file: {},
       article: {
-        ...defaultArticleObjFB()
-      }
+        ...defaultArticleObjFB(),
+      },
+      tab: null,
+      items: [
+        {
+          title: "Write",
+          component: "articleForm",
+        },
+        {
+          title: "Preview",
+          component: "articlePreview",
+        },
+      ],
     };
   },
   //set uid after created
@@ -63,13 +79,8 @@ export default {
   },
   computed: {
     ...mapState({
-      by: state => state.user.user.uid
-    })
-  },
-  watch: {
-    "article.tags": function(v1, v2) {
-      console.log(v1);
-    }
+      by: (state) => state.user.user.uid,
+    }),
   },
   methods: {
     create(callback) {
@@ -83,7 +94,7 @@ export default {
           folder: "articles",
           file: this.file,
           id: this.article.photo.id,
-          success
+          success,
         });
       } else {
         console.log(this.file);
@@ -111,8 +122,8 @@ export default {
           vm.article.photo.url = preview;
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

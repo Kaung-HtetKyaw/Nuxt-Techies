@@ -2,14 +2,16 @@
   <v-autocomplete
     v-model="selected"
     :items="tags"
-    filled
+    solo
     chips
     deletable-chips
-    color="blue-grey lighten-2"
-    label="Select"
+    color="grey lighten-1"
+    label="Add up to 4 tags"
     item-value="id"
     item-text="name"
     multiple
+    height="50px"
+    class="text-subtitle-2 text-md-h6"
     @change="$emit('input',selected)"
   >
     <template v-slot:selection="data">
@@ -27,8 +29,11 @@
         <v-list-item-content v-text="data.item"></v-list-item-content>
       </template>
       <template v-else>
-        <v-list-item-content class="box-shadow">
-          <v-list-item-title v-html="data.item.name"></v-list-item-title>
+        <v-list-item-content
+          class="bs-border"
+          :style="{backgroundColor:`${data.item.bg_color}`,color:`${data.item.text_color}`}"
+        >
+          <v-list-item-title class="d-flex justify-center align-center" v-html="data.item.name"></v-list-item-title>
         </v-list-item-content>
       </template>
     </template>
@@ -52,6 +57,7 @@ export default {
   created() {
     this.selected = [...this.article_tags];
   },
+
   computed: {
     ...mapState({
       tags: (state) => state.tag.tags,

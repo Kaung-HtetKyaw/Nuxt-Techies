@@ -13,18 +13,21 @@
       </nuxt-link>
 
       <v-spacer></v-spacer>
-      <v-btn
-        v-if="user"
-        color="purple"
-        class="white--text d-none d-md-flex mr-2"
-        small
-        elevation="0"
-        :ripple="false"
-        :to="{name:'new'}"
-      >Write an article</v-btn>
-      <v-btn nuxt v-if="user" elevation="0" :ripple="false" icon>
-        <user-avatar :user="user" />
-      </v-btn>
+      <transition name="fade" mode="out-in">
+        <span v-if="user" class="d-flex align-center">
+          <v-btn
+            color="purple"
+            class="white--text d-none d-md-flex mr-2"
+            small
+            elevation="0"
+            :ripple="false"
+            :to="{name:'new'}"
+          >Write an article</v-btn>
+          <v-btn nuxt elevation="0" :ripple="false" icon>
+            <user-avatar :user="user" />
+          </v-btn>
+        </span>
+      </transition>
     </v-app-bar>
   </div>
 </template>
