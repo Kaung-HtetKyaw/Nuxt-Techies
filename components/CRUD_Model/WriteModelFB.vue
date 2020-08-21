@@ -50,6 +50,7 @@ export default {
           .dispatch(`${this.collection}/${action_name}`, this.params)
           .then((res) => {
             this.loading = false;
+            return res;
           })
           .catch((e) => console.log(e));
       }

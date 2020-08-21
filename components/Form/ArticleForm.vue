@@ -86,8 +86,8 @@ export default {
   created() {
     this.clonedArticle = { ...this.article };
     this.clonedFile = this.file;
-  
-    console.log(this.clonedArticle.by);
+    console.log(this.article);
+    console.log(this.clonedArticle);
   },
   methods: {
     emitArticle() {
