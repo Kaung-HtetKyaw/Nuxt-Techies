@@ -70,6 +70,9 @@ export default {
       required: true,
     },
   },
+  created() {
+    console.log("PREVIEW", this.article);
+  },
   methods: {
     timeAgo(time) {
       return timeAgo(time);

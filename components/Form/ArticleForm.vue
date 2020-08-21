@@ -86,7 +86,8 @@ export default {
   created() {
     this.clonedArticle = { ...this.article };
     this.clonedFile = this.file;
-    this.clonedArticle.by = this.user.uid;
+  
+    console.log(this.clonedArticle.by);
   },
   methods: {
     emitArticle() {

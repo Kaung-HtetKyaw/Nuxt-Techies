@@ -22,6 +22,7 @@ export default {
         users = response.map((res) => res.data());
         this.data = Array.isArray(this.id) ? users : users[0];
         this.loading = false;
+        console.log(this.data);
       })
       .catch(() => {
         this.loading = false;

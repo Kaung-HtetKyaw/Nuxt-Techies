@@ -1,14 +1,5 @@
 <template>
   <div>
-    <signin-btn-model :types="['github', 'facebook']">
-      <template v-slot="{ github, facebook, signout }">
-        <div>
-          <v-btn @click="github">SignIn With GitHub</v-btn>
-          <v-btn @click="facebook">SignIn With Facebook</v-btn>
-          <v-btn @click="signout">Sign Out</v-btn>
-        </div>
-      </template>
-    </signin-btn-model>
     <v-container fluid class="px-0">
       <v-row dense>
         <v-col cols="12" md="3" sm="0" class="d-none d-md-block flex-column">
