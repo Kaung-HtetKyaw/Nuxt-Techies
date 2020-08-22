@@ -1,10 +1,14 @@
 <template>
   <div>
-    <profile-card :author="user" :by="by" />
-
-    <v-col cols="12" md="7" sm="12" class="pt-0">
-      <v-container class="px-0 pt-0">
-        <v-row dense>
+    <v-container>
+      <v-row dense>
+        <v-col cols="12" sm="12">
+          <profile-card :author="user" :by="by" />
+        </v-col>
+      </v-row>
+      <v-row dense class="my-6">
+        <v-col cols="12" sm="12" md="2"></v-col>
+        <v-col cols="12" md="8" sm="12" class="pt-0">
           <article-list :lazy="true" :params="{type:'user',param:by}">
             <template v-slot="{ articles, lazyLoadArticles, loading, empty }">
               <v-container class="px-0 pt-0">
@@ -42,9 +46,10 @@
               </v-container>
             </template>
           </article-list>
-        </v-row>
-      </v-container>
-    </v-col>
+        </v-col>
+        <v-col cols="12" sm="12" md="2"></v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
@@ -52,7 +57,7 @@
 import ArticleListModelFB from "@/components/Article/ArticleListModel";
 import LikeBtnFB from "@/components/Button/LikeBtnFB";
 import ProfileCard from "@/components/Author/ProfileCard";
-import ArticleCard from "@/components/Article/ArticleCardBlockHorizontal";
+import ArticleCard from "@/components/Article/ArticleCardBlockBrief";
 import UserModelFB from "@/components/Author/UserModelFB";
 import { mapState } from "vuex";
 export default {

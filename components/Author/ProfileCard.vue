@@ -42,7 +42,7 @@
                       :ripple="false"
                       class="white--text text-capitalize my-2"
                     >Follow</v-btn>
-                    <div class="my-2">
+                    <div class="my-2 text-center text-md-left">
                       <span v-for="key in Object.keys(author.profile_url)" :key="key">
                         <v-btn
                           :ripple="false"
@@ -63,7 +63,22 @@
                   </div>
                 </div>
               </v-col>
-              <v-col cols="12" sm="12" md="2" class="px-6">shit</v-col>
+              <v-col
+                cols="12"
+                sm="12"
+                md="2"
+                class="text-center text-md-left text-subtitle-2 text-md-subtitle-1"
+              >
+                <div>
+                  <p>{{author.followers.length}} Followers</p>
+                </div>
+                <div>
+                  <p>{{author.following.length}} Following</p>
+                </div>
+                <div>
+                  <p>Joined {{timeAgo}} ago</p>
+                </div>
+              </v-col>
             </v-row>
           </v-container>
         </div>
@@ -75,6 +90,7 @@
 <script>
 import SignInModal from "@/components/Button/SignInModal";
 import { authHydrated } from "@/mixins/Hydrated";
+import { timeAgo } from "@/utils/utils";
 export default {
   props: {
     author: {
@@ -90,6 +106,12 @@ export default {
     "sign-in": SignInModal,
   },
   mixins: [authHydrated],
+  computed: {
+    timeAgo() {
+      const dateAsMilliSec = +new Date(this.author.joined_at);
+      return timeAgo(dateAsMilliSec);
+    },
+  },
 };
 </script>
 
