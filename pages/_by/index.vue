@@ -1,8 +1,7 @@
 <template>
   <div>
-    <h1>This is {{ user.displayName }} 's page</h1>
+    <profile-card :author="user" :by="by" />
 
-    <v-btn nuxt :to="{ name: 'by-settings', params: { by } }">Update Settings</v-btn>
     <v-col cols="12" md="7" sm="12" class="pt-0">
       <v-container class="px-0 pt-0">
         <v-row dense>
@@ -52,16 +51,16 @@
 <script>
 import ArticleListModelFB from "@/components/Article/ArticleListModel";
 import LikeBtnFB from "@/components/Button/LikeBtnFB";
-import AuthorCard from "@/components/Author/AuthorCardArticle";
+import ProfileCard from "@/components/Author/ProfileCard";
 import ArticleCard from "@/components/Article/ArticleCardBlockHorizontal";
-
+import UserModelFB from "@/components/Author/UserModelFB";
 import { mapState } from "vuex";
 export default {
   middleware: ["auth"],
   components: {
     "article-list": ArticleListModelFB,
     "like-btn": LikeBtnFB,
-    "author-card": AuthorCard,
+    "profile-card": ProfileCard,
     "article-card": ArticleCard,
   },
   created() {
