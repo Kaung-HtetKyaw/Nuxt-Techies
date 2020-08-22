@@ -13,9 +13,7 @@
       <div class="white pa-sm-6 pa-md-12 rounded-xl article-view bs-border">
         <div class="pa-4">
           <h1
-            :style="{
-            textShadow: `-4px -1px 0 ${getTagByID(article.tags[0]).bg_color}`
-          }"
+            :style="[article.tags.length>0?{textShadow:`-4px -1px 0 ${getTagByID(article.tags[0]).bg_color}`}:null]"
             class="text-center text-sm-h6 text-md-h3 font-weight-medium"
           >{{ article.title }}</h1>
           <h3
@@ -71,7 +69,7 @@
             height="400px"
             :style="{
             backgroundImage: `url(${article.photo.url})`,
-            filter:`8px 8px 10px ${getTagByID(article.tags[0]).bg_color}`,
+           
             backgroundSize:'cover',
             backgroundPosition:'center',
             backgroundRepeat:'no-repeat',

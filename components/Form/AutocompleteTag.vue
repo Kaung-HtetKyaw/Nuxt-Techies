@@ -66,7 +66,10 @@ export default {
   methods: {
     remove(item) {
       const index = this.selected.indexOf(item.id);
-      if (index >= 0) this.selected.splice(index, 1);
+      if (index >= 0) {
+        this.selected.splice(index, 1);
+        this.$emit("input", this.selected);
+      }
     },
   },
 };

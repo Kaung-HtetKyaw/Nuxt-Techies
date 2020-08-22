@@ -68,7 +68,7 @@
           }"
         >
           <h3 class="mb-2 text-h6">{{ article.title }}</h3>
-          <p class="mb-2 text-subtitle-2">{{article.description}}</p>
+          <p class="mb-2 text-subtitle-2 font-italic opacity-7">{{article.description}}</p>
         </nuxt-link>
 
         <div class="mb-2" v-if="!!user">

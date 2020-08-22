@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-form ref="form" v-model="valid">
+    <v-form ref="form">
       <div class="d-flex align-center px-2 mb-8">
         <v-btn elevation="0" color="grey lighten-1" class="white--text" :ripple="false">
           <v-file-input
@@ -11,19 +11,21 @@
             class="pa-0 ma-0 white--text"
             @change="emitFile"
             v-model="clonedFile"
+            :rules="fileRules"
           ></v-file-input>
         </v-btn>
         <span class="text-sm-subtitle-2 text-md-h6 grey--text lighten-1 ml-3">Add a Cover image</span>
       </div>
-      <img :src="clonedArticle.photo.url" alt />
+      <img :src="clonedArticle.photo.url" />
       <div>
         <v-text-field
           label="Solo"
           placeholder="Article title here..."
           solo
           v-model="clonedArticle.title"
+          :rules="titleRules"
           @change="emitArticle"
-          class="text-h5 text-md-h3 font-weight-medium grey--text darken-2"
+          class="text-h5 text-md-h4 font-weight-medium grey--text darken-2"
         ></v-text-field>
       </div>
       <div>
@@ -37,6 +39,7 @@
           auto-grow
           class="text-subtitle-1 font-weight-medium grey--text darken-2"
           v-model="clonedArticle.description"
+          :rules="descriptionRules"
           @change="emitArticle"
         ></v-textarea>
       </div>
@@ -48,6 +51,7 @@
           auto-grow
           class="text-subtitle-1 font-weight-medium grey--text darken-1"
           v-model="clonedArticle.content"
+          :rules="textRules"
           @change="emitArticle"
         ></v-textarea>
       </div>
@@ -58,12 +62,15 @@
 <script>
 import AutoCompleteTag from "@/components/Form/AutocompleteTag";
 import { previewImg } from "@/utils/utils";
+import { rules } from "@/mixins/validation_rules";
 import { mapState } from "vuex";
+
 export default {
   components: {
     "autocomplete-tag": AutoCompleteTag,
   },
   middleware: ["auth"],
+  mixins: [rules],
   props: {
     article: {
       type: Object,
@@ -78,20 +85,25 @@ export default {
   data() {
     return {
       clonedFile: {},
-      valid: true,
       tags: [],
       clonedArticle: {},
     };
   },
+  watch: {
+    "clonedArticle.tags": {
+      deep: true,
+      handler: function (v1, v2) {
+        this.$emit("articleChanged", this.clonedArticle);
+      },
+    },
+  },
   created() {
     this.clonedArticle = { ...this.article };
     this.clonedFile = this.file;
-    console.log(this.article);
-    console.log(this.clonedArticle);
   },
+
   methods: {
     emitArticle() {
-      console.log("emitArticle", this.clonedArticle);
       this.$emit("articleChanged", this.clonedArticle);
     },
     emitFile(file) {

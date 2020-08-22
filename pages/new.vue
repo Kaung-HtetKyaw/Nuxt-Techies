@@ -4,6 +4,9 @@
       <template v-slot="{writeFB}">
         <div>
           <v-container>
+            <v-row dense v-if="!valid">
+              <v-alert border="left" color="red " dark>Article title can't be empty</v-alert>
+            </v-row>
             <v-row dense>
               <v-col cols="12" sm="12" md="9" class="white bs-border">
                 <v-card color="white" elevation="0">
@@ -80,6 +83,7 @@ export default {
       tab: null,
       article: { ...defaultArticleObjFB() },
       file: {},
+      valid: true,
       loading: false,
       tabItems: [
         {
@@ -103,6 +107,13 @@ export default {
     createArticle(callback) {
       let vm = this;
       vm.loading = true;
+      vm.valid = true;
+      //terminate if title is empty
+      if (!vm.article.title) {
+        vm.loading = false;
+        vm.valid = false;
+        return;
+      }
       //update the image only when user choose it
       // console.log("vm file", this.file);
       // console.log("file empty", isEmptyObj(this.file));
@@ -153,11 +164,4 @@ export default {
 </script>
 
 <style>
-/* Helper classes */
-.basil {
-  background-color: #fffbe6 !important;
-}
-.basil--text {
-  color: #356859 !important;
-}
-</style>
+</style> 
