@@ -25,8 +25,8 @@
                                 v-bind:is="item.component"
                                 :article="article"
                                 :file="file"
-                                @articleChanged="changeArticle"
-                                @fileChaged="changeFile"
+                                @articleChanged="listenArticleChange"
+                                @fileChaged="listenFileChange"
                               ></component>
                             </v-col>
                           </v-row>
@@ -103,10 +103,10 @@ export default {
     setArticle(article) {
       this.article = article;
     },
-    changeArticle(article) {
+    listenArticleChange(article) {
       this.article = article;
     },
-    changeFile(file) {
+    listenFileChange(file) {
       this.file = file;
     },
     updateArticle(callback) {
