@@ -69,3 +69,7 @@ export function isEmptyObj(obj) {
 export function isFile(obj) {
   return obj.toString() === "[object File]";
 }
+
+export function isSaved(array, id) {
+  return array.includes(id);
+}

@@ -3,6 +3,7 @@ import {
   createUser,
   updateUser
 } from "@/services/Firebase/userAuth";
+
 import userFactory from "@/utils/factory/user";
 
 export const state = () => {
@@ -19,6 +20,12 @@ export const mutations = {
     state.isAuthenticated = isAuthenticated;
   },
   UPDATE_USER(state, { user }) {
+    state.user = user;
+  },
+  SAVE_ARTICLE(state, { user }) {
+    state.user = user;
+  },
+  UNSAVE_ARTICLE(state, { user }) {
     state.user = user;
   }
 };
@@ -55,6 +62,21 @@ export const actions = {
     return updateUser(params.data).then(() => {
       commit("UPDATE_USER", { user: params.data });
       return params.data;
+    });
+  },
+  saveArticle({ commit, state }, { id }) {
+    const user = { ...state.user };
+    user.saved.push(id);
+    return updateUser(user).then(() => {
+      commit("SAVE_ARTICLE", { user });
+    });
+  },
+  unsaveArticle({ commit, state }, { id }) {
+    const user = { ...state.user };
+    const index = user.saved.findIndex(el => el === id);
+    user.saved.splice(index, 1);
+    return updateUser(user).then(() => {
+      commit("UNSAVE_ARTICLE", { user });
     });
   }
 };

@@ -20,7 +20,7 @@
     </nuxt-link>
 
     <div class="px-6 py-6">
-      <v-card-text>
+      <v-card-text class="px-0">
         <div>
           <div v-if="isEmptyObj">
             <transition name="fade" mode="out-in">
@@ -74,7 +74,7 @@
         <div class="mb-2" v-if="!!user">
           <like-btn :data="article" type="article" :user="user">
             <template v-slot="{ like, isLiked }">
-              <v-btn :ripple="false" text @click="like" class="opacity-7">
+              <v-btn color="white" :ripple="false" depressed @click="like" class="opacity-7">
                 <v-icon v-if="!isLiked" left>mdi-heart-outline</v-icon>
                 <v-icon color="red" v-else left>mdi-heart</v-icon>
                 <span>{{ article.likesNo }}</span>
@@ -82,10 +82,18 @@
             </template>
           </like-btn>
 
-          <v-btn text class="opacity-7">
+          <v-btn depressed color="white" class="opacity-7">
             <v-icon left>mdi-comment-outline</v-icon>
             <span>{{ article.kids.length }}</span>
           </v-btn>
+          <save-btn :id="article.id">
+            <template v-slot="{save,isSaved}">
+              <v-btn depressed color="white" :ripple="false" @click="save" class="opacity-7">
+                <v-icon v-if="!isSaved" left>mdi-bookmark</v-icon>
+                <v-icon color="blue" v-else left>mdi-bookmark-check</v-icon>
+              </v-btn>
+            </template>
+          </save-btn>
         </div>
       </v-card-text>
     </div>
@@ -105,6 +113,7 @@ import { defaultUserObjFB } from "@/utils/constants";
 import { authHydrated } from "@/mixins/Hydrated";
 import LikeBtnFB from "@/components/Button/LikeBtnFB";
 import TagSlider from "@/components/UI/TagSlider";
+import SaveBtn from "@/components/Button/SaveArticleModelFB";
 export default {
   props: {
     article: {
@@ -115,6 +124,7 @@ export default {
   components: {
     "like-btn": LikeBtnFB,
     "tag-slider": TagSlider,
+    "save-btn": SaveBtn,
   },
   mixins: [authHydrated],
   data() {
