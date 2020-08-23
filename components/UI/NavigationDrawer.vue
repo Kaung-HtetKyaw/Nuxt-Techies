@@ -92,8 +92,8 @@ export default {
             },
             {
               icon: "mdi-format-list-bulleted",
-              title: "Reading List",
-              to: { name: "by", params: { by: vm.user.uid } },
+              title: "Saved",
+              to: { name: "by-saved", params: { by: vm.user.uid } },
             },
             {
               icon: "mdi-cog",

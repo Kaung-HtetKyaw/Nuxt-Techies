@@ -72,8 +72,7 @@ export const actions = {
       return article;
     }
     //fetch id is not in the stored articles
-    return fetchArticle(id).then(res => {
-      article = normalizeArticles(res);
+    return fetchArticle(id).then(article => {
       commit("SET_ARTICLE", { article });
       commit("SET_ARTICLES", { articles: [article], lazy: true });
       return article;

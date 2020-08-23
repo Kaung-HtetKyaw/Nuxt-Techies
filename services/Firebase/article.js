@@ -17,9 +17,17 @@ export function fetchArticle(id) {
     .firestore()
     .collection("articles")
     .doc(id)
-    .get();
+    .get()
+    .then(res => {
+      const article = normalizeArticles(res);
+      console.log("shit");
+      console.log(article);
+      return article;
+    });
 }
-
+export function fetchArticlesByID(ids) {
+  return Promise.all(ids.map(id => fetchArticle(id)));
+}
 export async function fetchArticlesByType({ params, lvState }) {
   return normalizeFetch({ params, lvState });
 }
