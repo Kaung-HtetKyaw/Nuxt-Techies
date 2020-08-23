@@ -1,21 +1,102 @@
 <template>
   <div>
-    <h1>This is {{user.displayName}}'s page</h1>
     <div>
       <write-fb type="update" collection="user" :params="{id:user.uid,data:user,fetch:false}">
         <template v-slot="{writeFB}">
           <div>
-            <v-text-field v-model="user.displayName" label="Title"></v-text-field>
-            <v-text-field v-model="user.bio" label="Bio"></v-text-field>
-            <img :src="user.photo.url" alt />
-            <v-file-input
-              @change="previewImg"
-              v-model="file"
-              show-size
-              value="any"
-              label="File input"
-            ></v-file-input>
-            <v-btn :loading="updating" @click="update(writeFB)">Update</v-btn>
+            <v-container>
+              <v-row dense class="mb-4">
+                <v-col cols="12" sm="12" class="text-center">
+                  <div class="text-h6 text-md-h4 font-weight-medium">
+                    <span>Settings for</span>
+                    <span class="purple--text">{{user.displayName}}</span>
+                  </div>
+                </v-col>
+              </v-row>
+              <v-row dense>
+                <v-col cols="12" sm="12" md="8" offset-md="2" class="white pa-4 pa-md-8 bs-border">
+                  <div>
+                    <v-text-field outlined v-model="user.displayName" label="Name"></v-text-field>
+                    <v-text-field outlined v-model="user.bio" label="Bio"></v-text-field>
+                    <div>
+                      <p>Profile Image</p>
+                      <v-avatar size="50">
+                        <img :src="user.photo.url" :alt="user.displayName" />
+                      </v-avatar>
+                      <v-btn
+                        small
+                        elevation="0"
+                        color="grey lighten-1 ml-2"
+                        class="white--text"
+                        :ripple="false"
+                      >
+                        <v-file-input
+                          show-size
+                          value="any"
+                          label="Choose a file"
+                          hide-input
+                          class="pa-0 ma-0 white--text"
+                          @change="previewImg"
+                          v-model="file"
+                        ></v-file-input>
+                        <span>Choose a file</span>
+                      </v-btn>
+                    </div>
+                  </div>
+                </v-col>
+              </v-row>
+              <v-row dense>
+                <v-col
+                  cols="12"
+                  sm="12"
+                  md="8"
+                  offset-md="2"
+                  class="white pa-4 pa-md-8 my-4 bs-border"
+                >
+                  <div class="mb-4">
+                    <h3 class="text-h6 text-md-h5 font-weight-medium">Links</h3>
+                  </div>
+                  <div>
+                    <v-text-field
+                      outlined
+                      v-model="user.profile_url.facebook"
+                      label="Facebook profile URL"
+                    ></v-text-field>
+                    <v-text-field
+                      outlined
+                      v-model="user.profile_url.github"
+                      label="Github profile URL"
+                    ></v-text-field>
+                    <v-text-field
+                      outlined
+                      v-model="user.profile_url.twitter"
+                      label="Twitter profile URL"
+                    ></v-text-field>
+                    <v-text-field
+                      outlined
+                      v-model="user.profile_url.stackoverflow"
+                      label="Stackoverflow profile URL"
+                    ></v-text-field>
+                    <v-text-field
+                      outlined
+                      v-model="user.profile_url.instagram"
+                      label="Instagram profile URL"
+                    ></v-text-field>
+                  </div>
+                </v-col>
+              </v-row>
+              <v-row dense>
+                <v-col cols="12" sm="12" md="8" offset-md="2" class="white pa-4 pa-md-8 my-4">
+                  <v-btn
+                    depressed
+                    color="purple"
+                    class="white--text"
+                    :loading="updating"
+                    @click="update(writeFB)"
+                  >Update</v-btn>
+                </v-col>
+              </v-row>
+            </v-container>
           </div>
         </template>
       </write-fb>

@@ -107,7 +107,6 @@ export default {
       this.$emit("articleChanged", this.clonedArticle);
     },
     emitFile(file) {
-      console.log("emitFIle", this.clonedFile);
       this.previewImg(file);
       this.$emit("fileChaged", this.clonedFile);
     },
