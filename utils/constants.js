@@ -52,7 +52,8 @@ export const defaultTagObj = {
   text_color: "#eee",
   kids: [],
   name: "No Tag",
-  type: "tag"
+  type: "tag",
+  description: ""
 };
 
 export function defaultCommentObjFB() {

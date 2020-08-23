@@ -9,6 +9,9 @@ h5,
 h6 {
   color: #2d3748;
 }
+body {
+  line-height: 1.5;
+}
 p {
   color: #4a5568;
 }
@@ -92,4 +95,18 @@ blockquote {
 }
 .input {
   margin-bottom: 2rem;
+}
+
+.p-line-height {
+  line-height: 1.5 !important;
+}
+.full-height {
+  height: 100%;
+}
+.full-width {
+  width: 100%;
+}
+
+.bottom-0 {
+  bottom: 0;
 }

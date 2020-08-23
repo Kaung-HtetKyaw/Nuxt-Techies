@@ -3,18 +3,16 @@
     <h1>This is tags Page</h1>
     <v-container>
       <v-row v-if="$fetchState.pending">
-        <h1>#Loading.....</h1>
+        <v-col cols="12" sm="12" md="4" v-for="i in 12" :key="i">
+          <content-placeholders rounded>
+            <content-placeholders-img />
+            <content-placeholders-text :lines="3" />
+          </content-placeholders>
+        </v-col>
       </v-row>
-      <v-row dense v-else>
-        <v-col
-          v-for="tag in tags"
-          :key="tag.id"
-          cols="12"
-          sm="12"
-          class="text-h3"
-          :style="{color:`${tag.text_color}`,backgroundColor:`${tag.bg_color}`}"
-        >
-          <nuxt-link :to="{name:'t-tag',params:{tag:tag.id}}">{{tag.name}}</nuxt-link>
+      <v-row dense v-else class="d-flex">
+        <v-col v-for="tag in tags" :key="tag.id" cols="12" sm="12" md="4" class="text-h3">
+          <tag-card :tag="tag"></tag-card>
         </v-col>
       </v-row>
     </v-container>
@@ -22,8 +20,12 @@
 </template>
 
 <script>
+import TagCard from "@/components/UI/TagCard";
 import { mapState } from "vuex";
 export default {
+  components: {
+    "tag-card": TagCard,
+  },
   async fetch() {
     return this.$store.dispatch("tag/fetchAllTags");
   },
