@@ -12,10 +12,10 @@
             <tag-group class="mt-4"></tag-group>
           </div>
         </v-col>
-        <v-col cols="12" md="7" sm="12" class="pt-0">
+        <v-col cols="12" md="6" sm="12" class="pt-0">
           <v-container class="px-0 pt-0">
             <v-row dense>
-              <article-list-model :lazy="true" :params="radios">
+              <article-list-model :lazy="true" :params="{type:'all'}">
                 <template v-slot="{ articles, lazyLoadArticles, loading, empty }">
                   <v-container class="px-0 pt-0">
                     <v-col cols="12" sm="12" class="pt-0">
@@ -55,7 +55,7 @@
             </v-row>
           </v-container>
         </v-col>
-        <v-col cols="12" sm="0" md="2" class="red d-none d-md-flex">
+        <v-col cols="12" sm="0" md="3" class="red d-none d-md-flex">
           <h1>Posts</h1>
         </v-col>
       </v-row>
@@ -90,7 +90,7 @@ export default {
   middleware: ["log"],
   mixins: [authHydrated],
   data() {
-    return { radios: { type: "all" }, isHydrated: false };
+    return { isHydrated: false };
   },
   computed: {
     ...mapState({

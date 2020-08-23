@@ -53,7 +53,8 @@ export const defaultTagObj = {
   kids: [],
   name: "No Tag",
   type: "tag",
-  description: ""
+  description: "",
+  logo: ""
 };
 
 export function defaultCommentObjFB() {

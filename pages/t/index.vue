@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>This is tags Page</h1>
-    <v-container>
+    <v-container class="px-0">
       <v-row v-if="$fetchState.pending">
         <v-col cols="12" sm="12" md="4" v-for="i in 12" :key="i">
           <content-placeholders rounded>

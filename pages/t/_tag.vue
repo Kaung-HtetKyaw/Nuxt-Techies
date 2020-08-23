@@ -1,61 +1,78 @@
 <template>
   <div>
-    <h1
-      :style="{
-        backgroundColor: `${tag.bg_color}`,
-        color: `${tag.text_color}`
-      }"
-    >This is {{ tag.name }} tag</h1>
-    <article-list-model :lazy="true" :params="{ type: 'tag', param: tag.id }">
-      <template v-slot="{ articles, lazyLoadArticles, loading, empty }">
-        <transition name="slide-right">
-          <v-container class="px-0 pt-0">
-            <v-row v-if="articles.length > 0" dense>
-              <transition-group tag="div" name="item">
-                <v-col v-for="article in articles" :key="article.id" cols="12" sm="12" class="pt-0">
-                  <nuxt-link
-                    :to="{
-                      name: 'by-id',
-                      params: { by: article.by, id: article.id }
-                    }"
-                  >
-                    <h1>{{ article.title }}</h1>
-                  </nuxt-link>
-
-                  <v-btn
-                    nuxt
-                    :to="{
-                      name: 'by-id-delete',
-                      params: { by: article.by, id: article.id }
-                    }"
-                  >Delete</v-btn>
+    <v-container>
+      <v-row dense class="white pa-6" :style="{boxShadow:`5px 6px 0px ${tag.bg_color}`}">
+        <v-col cols="12" sm="12" md="12" class="d-flex justify-center align-center">
+          <div class="d-flex flex-row align-center">
+            <span v-if="!!tag.logo" class="pa-4">
+              <v-img width="80px" :src="tag.logo"></v-img>
+            </span>
+            <span
+              class="text-h5 text-md-h3 font-weight-medium text-capitalize black--text pa-4"
+            >{{tag.name}}</span>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-container class="px-0">
+      <v-row dense>
+        <v-col cols="12" sm="0" md="3"></v-col>
+        <v-col cols="12" sm="12" md="6">
+          <div class="text-center my-2">
+            <h3 class="text-h5 font-weight-medium black--text">Posts</h3>
+          </div>
+          <article-list-model :lazy="true" :params="{ type: 'tag', param: tag.id }">
+            <template v-slot="{ articles, lazyLoadArticles, loading, empty }">
+              <v-container class="px-0 pt-0">
+                <v-col cols="12" sm="12" class="pt-0">
+                  <v-container class="px-0 pt-0">
+                    <v-row dense>
+                      <v-col
+                        v-for="(article, i) in articles"
+                        v-observe-visibility="
+                              i === articles.length - 1
+                                ? lazyLoadArticles
+                                : false
+                            "
+                        :key="article.id"
+                        cols="12"
+                        sm="12"
+                        class="pt-0"
+                      >
+                        <article-card :article="article" />
+                      </v-col>
+                    </v-row>
+                    <v-row dense v-if="loading">
+                      <v-col cols="12" sm="12" v-for="i in 10" :key="i">
+                        <content-placeholders rounded>
+                          <content-placeholders-img />
+                          <content-placeholders-text :lines="3" />
+                        </content-placeholders>
+                      </v-col>
+                    </v-row>
+                    <v-row dense v-if="empty">
+                      <h1>#Empty.....</h1>
+                    </v-row>
+                  </v-container>
                 </v-col>
-              </transition-group>
-            </v-row>
-
-            <v-row dense v-if="empty">
-              <h1>#Empty</h1>
-            </v-row>
-            <transition name="fade">
-              <v-row dense v-if="loading">
-                <h1>#Loading......</h1>
-              </v-row>
-            </transition>
-
-            <v-btn @click="lazyLoadArticles">Load More</v-btn>
-          </v-container>
-        </transition>
-      </template>
-    </article-list-model>
+              </v-container>
+            </template>
+          </article-list-model>
+        </v-col>
+        <v-col cols="12" sm="0" md="3"></v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
 import ArticleListModelFB from "@/components/Article/ArticleListModel";
+import ArticleCard from "@/components/Article/ArticleCardBlockBrief";
 import { mapGetters } from "vuex";
 export default {
   components: {
     "article-list-model": ArticleListModelFB,
+    "article-card": ArticleCard,
   },
   data() {
     return {

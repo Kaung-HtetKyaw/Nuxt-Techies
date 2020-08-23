@@ -78,7 +78,6 @@ export default {
 
   data() {
     const vm = this;
-    console.log(this);
     return {
       items: [
         { title: "Write an article", to: { name: "new" } },
