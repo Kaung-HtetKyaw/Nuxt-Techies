@@ -1,5 +1,5 @@
 <template>
-  <v-card class="article-card-block bs-border" outlined>
+  <v-card class="article-card-block bs-border my-2" outlined>
     <nuxt-link
       :to="{
         name: 'by-id',
@@ -19,7 +19,7 @@
       ></v-sheet>
     </nuxt-link>
 
-    <div class="px-6 py-6">
+    <div class="px-6 py-3">
       <v-card-text class="px-0">
         <div>
           <div v-if="isEmptyObj">
@@ -71,10 +71,10 @@
           <p class="mb-2 text-subtitle-2 font-italic opacity-7">{{article.description}}</p>
         </nuxt-link>
 
-        <div class="mb-2" v-if="!!user">
+        <v-card-actions v-if="!!user">
           <like-btn :data="article" type="article" :user="user">
             <template v-slot="{ like, isLiked }">
-              <v-btn color="white" :ripple="false" depressed @click="like" class="opacity-7">
+              <v-btn :ripple="false" text @click="like" class="opacity-7">
                 <v-icon v-if="!isLiked" left>mdi-heart-outline</v-icon>
                 <v-icon color="red" v-else left>mdi-heart</v-icon>
                 <span>{{ article.likesNo }}</span>
@@ -82,7 +82,7 @@
             </template>
           </like-btn>
 
-          <v-btn depressed color="white" class="opacity-7">
+          <v-btn text class="opacity-7">
             <v-icon left>mdi-comment-outline</v-icon>
             <span>{{ article.kids.length }}</span>
           </v-btn>
@@ -94,15 +94,9 @@
               </v-btn>
             </template>
           </save-btn>
-        </div>
+        </v-card-actions>
       </v-card-text>
     </div>
-
-    <!-- <v-card-actions>
-      <v-btn color="orange" text>Share</v-btn>
-
-      <v-btn color="orange" text>Explore</v-btn>
-    </v-card-actions>-->
   </v-card>
 </template>
 <script>

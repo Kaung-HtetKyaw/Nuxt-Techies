@@ -10,7 +10,7 @@
           v-bind="attrs"
           v-on="on"
           small
-        >Create an account</v-btn>
+        >Create an account to {{type}}</v-btn>
       </template>
       <v-card>
         <v-card-title class="headline">Use Google's location service?</v-card-title>

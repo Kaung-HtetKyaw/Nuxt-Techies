@@ -14,10 +14,10 @@ export const rules = {
         v => (v && v.length <= 20) || "Password must be less than 20 characters"
       ],
       selectRules: [v => !!v || "Item is required"],
-      postCatRules: [
+      tagsRules: [
         v => !!v || "Item is required",
         v =>
-          (v && v.length <= 5) ||
+          (v && v.length <= 4) ||
           "You can only select maximum 5 categories for post"
       ],
       checkRules: [v => !!v || "You must agree to continue!"],

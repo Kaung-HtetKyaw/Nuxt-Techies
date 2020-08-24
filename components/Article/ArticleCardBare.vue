@@ -45,30 +45,6 @@
           <h3 class="mb-2 text-h6">{{ article.title }}</h3>
         </nuxt-link>
       </v-card-text>
-      <v-card-actions v-if="!!user">
-        <like-btn :data="article" type="article" :user="user">
-          <template v-slot="{ like, isLiked }">
-            <v-btn :ripple="false" text @click="like" class="opacity-7">
-              <v-icon v-if="!isLiked" left>mdi-heart-outline</v-icon>
-              <v-icon color="red" v-else left>mdi-heart</v-icon>
-              <span>{{ article.likesNo }}</span>
-            </v-btn>
-          </template>
-        </like-btn>
-
-        <v-btn text class="opacity-7">
-          <v-icon left>mdi-comment-outline</v-icon>
-          <span>{{ article.kids.length }}</span>
-        </v-btn>
-        <save-btn :id="article.id">
-          <template v-slot="{save,isSaved}">
-            <v-btn depressed color="white" :ripple="false" @click="save" class="opacity-7">
-              <v-icon v-if="!isSaved" left>mdi-bookmark</v-icon>
-              <v-icon color="blue" v-else left>mdi-bookmark-check</v-icon>
-            </v-btn>
-          </template>
-        </save-btn>
-      </v-card-actions>
     </div>
   </v-card>
 </template>
