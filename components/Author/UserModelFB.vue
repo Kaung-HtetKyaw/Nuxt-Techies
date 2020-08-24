@@ -18,8 +18,7 @@ export default {
     const ids = Array.isArray(this.id) ? this.id : [this.id];
     let users = [];
     return fetchUsersByID(ids)
-      .then((response) => {
-        users = response.map((res) => res.data());
+      .then((users) => {
         this.data = Array.isArray(this.id) ? users : users[0];
         this.loading = false;
         console.log(this.data);

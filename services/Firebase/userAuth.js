@@ -51,7 +51,10 @@ export function fetchUser(id) {
     .firestore()
     .collection("users")
     .doc(id)
-    .get();
+    .get()
+    .then(res => {
+      return res.data();
+    });
 }
 
 export function fetchUsersByID(ids) {

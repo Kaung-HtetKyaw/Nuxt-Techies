@@ -48,11 +48,7 @@ export const actions = {
     commit("SET_AUTHENTICATION", false);
   },
   fetchUser({ commit }, { id }) {
-    return fetchUser(id).then(res => {
-      const user = userFactory.createUser({
-        data: res.doc(),
-        type: "firebase"
-      });
+    return fetchUser(id).then(user => {
       commit("FETCH_USER", user);
       console.log(user);
       return user;

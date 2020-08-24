@@ -129,8 +129,8 @@ export default {
   },
   async fetch() {
     return fetchUser(this.article.by)
-      .then((res) => {
-        this.author = res.data();
+      .then((user) => {
+        this.author = user;
       })
       .catch((e) => console.log(e));
   },

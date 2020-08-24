@@ -82,11 +82,18 @@
         <div class="mb-2 d-flex justify-center align-center" v-if="!!user">
           <like-btn :data="article" type="article" :user="user">
             <template v-slot="{ like, isLiked }">
-              <v-btn :ripple="false" text @click="like" class="opacity-7">
-                <v-icon size="30" v-if="!isLiked" left>mdi-heart-outline</v-icon>
-                <v-icon size="30" color="red" v-else left>mdi-heart</v-icon>
-                <span>{{ article.likesNo }}</span>
-              </v-btn>
+              <div class="d-flex flex-column justify-center align-center">
+                <v-btn icon :ripple="false" text @click="like" class="opacity-7">
+                  <v-icon size="30" v-if="!isLiked" left>mdi-heart-outline</v-icon>
+                  <v-icon size="30" color="red" v-else left>mdi-heart</v-icon>
+                  <span>{{ !isLiked?article.likesNo:'' }}</span>
+                </v-btn>
+                <transition name="fade" mode="out-in">
+                  <liked-people v-if="isLiked" :peopleID="article.likes">
+                    <span class="text-caption">{{isLiked?'You and '+article.likesNo+' others':''}}</span>
+                  </liked-people>
+                </transition>
+              </div>
             </template>
           </like-btn>
         </div>
@@ -165,6 +172,7 @@ import LikeBtnFB from "@/components/Button/LikeBtnFB";
 import AuthorCard from "@/components/Author/AuthorCardArticle";
 import SignInModal from "@/components/Button/SignInModal";
 import TagSlider from "@/components/UI/TagSlider";
+import LikedPeople from "@/components/UI/LikedPeopleModal";
 import { defaultCommentObjFB } from "@/utils/constants";
 import { timeAgo } from "@/utils/utils";
 import { mapState, mapGetters } from "vuex";
@@ -179,6 +187,7 @@ export default {
     "author-card": AuthorCard,
     "sign-in": SignInModal,
     "tag-slider": TagSlider,
+    "liked-people": LikedPeople,
   },
   mixins: [authHydrated],
   async fetch() {
