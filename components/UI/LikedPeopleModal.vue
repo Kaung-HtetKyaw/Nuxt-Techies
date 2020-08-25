@@ -2,21 +2,41 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" scrollable max-width="300px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn depressed :ripple="false" text @click="dialog=!dialog">
+        <v-btn depressed :ripple="false" text @click="dialog = !dialog">
           <slot></slot>
         </v-btn>
       </template>
-      <v-card>
-        <v-card-title>Select Country</v-card-title>
+      <v-card class="rounded">
+        <v-card-title class="pa-2 text-center">
+          <h5 class="text-body-2 font-weight-medium">People who reacted to this post</h5>
+        </v-card-title>
         <v-divider></v-divider>
-        <v-card-text style="height: 300px;">
-          <div v-for="person in people" :key="person.uid">{{person.displayName}}</div>
-        </v-card-text>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
-        </v-card-actions>
+        <div v-if="$fetchState.pending">
+          <v-progress-circular indeterminate color="purple"></v-progress-circular>
+        </div>
+        <div v-else>
+          <v-card-text style="height: 300px;">
+            <v-list subheader>
+              <div v-for="person in people" :key="person.uid">
+                <nuxt-link :to="{name:'by',params:{by:person.uid}}">
+                  <v-list-item class="px-0">
+                    <v-list-item-avatar>
+                      <v-img :src="person.photo.url" :alt="person.displayName"></v-img>
+                    </v-list-item-avatar>
+                    <v-list-item-content>
+                      <v-list-item-title v-text="person.displayName"></v-list-item-title>
+                    </v-list-item-content>
+                    <v-list-item-icon>
+                      <v-icon color="red">mdi-heart</v-icon>
+                    </v-list-item-icon>
+                  </v-list-item>
+                </nuxt-link>
+
+                <v-divider></v-divider>
+              </div>
+            </v-list>
+          </v-card-text>
+        </div>
       </v-card>
     </v-dialog>
   </v-row>
@@ -33,12 +53,10 @@ export default {
   },
   async fetch() {
     const people = await fetchUsersByID(this.peopleID);
-    console.log(people);
     this.people = people;
   },
   data() {
     return {
-      dialogm1: "",
       dialog: false,
       people: [],
     };

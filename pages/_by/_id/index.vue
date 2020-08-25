@@ -90,7 +90,11 @@
                 </v-btn>
                 <transition name="fade" mode="out-in">
                   <liked-people v-if="isLiked" :peopleID="article.likes">
-                    <span class="text-caption">{{isLiked?'You and '+article.likesNo+' others':''}}</span>
+                    <span
+                      v-if="article.likesNo>1"
+                      class="text-caption"
+                    >{{isLiked?'You and '+article.likesNo+' others':''}}</span>
+                    <span v-else class="text-caption">{{isLiked?'You liked this article':''}}</span>
                   </liked-people>
                 </transition>
               </div>
