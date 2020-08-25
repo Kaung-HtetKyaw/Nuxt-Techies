@@ -23,13 +23,20 @@
                   <p>{{author.bio}}</p>
 
                   <div v-if="!!user">
-                    <v-btn
-                      small
-                      color="purple"
-                      elevation="0"
-                      :ripple="false"
-                      class="white--text"
-                    >Follow</v-btn>
+                    <follow-btn :object="author" v-if="user.uid!==author.uid">
+                      <template v-slot="{follow,isFollowed,loading}">
+                        <v-btn
+                          small
+                          color="purple"
+                          elevation="0"
+                          :ripple="false"
+                          @click="follow"
+                          :loading="loading"
+                          class="white--text"
+                        >{{isFollowed?'Following':'Follow'}}</v-btn>
+                      </template>
+                    </follow-btn>
+
                     <span v-for="key in Object.keys(author.profile_url)" :key="key">
                       <v-btn
                         :ripple="false"
@@ -58,6 +65,7 @@
 
 <script>
 import SignInModal from "@/components/Button/SignInModal";
+import FollowBtn from "@/components/Button/FollowModelBtn";
 import { authHydrated } from "@/mixins/Hydrated";
 export default {
   props: {
@@ -68,6 +76,7 @@ export default {
   },
   components: {
     "sign-in": SignInModal,
+    "follow-btn": FollowBtn,
   },
   mixins: [authHydrated],
 };

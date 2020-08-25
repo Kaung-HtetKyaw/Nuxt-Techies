@@ -24,24 +24,34 @@
                   <p class="text-subtitle-1 font-italic my-2">{{author.bio}}</p>
 
                   <div v-if="!!user">
-                    <v-btn
-                      v-if="user.uid===by"
-                      color="grey darken-4"
-                      elevation="0"
-                      :ripple="false"
-                      large
-                      class="white--text text-capitalize my-2"
-                      nuxt
-                      :to="{ name: 'by-settings', params: { by } }"
-                    >Edit Profile</v-btn>
-                    <v-btn
-                      v-else
-                      large
-                      color="grey darken-4"
-                      elevation="0"
-                      :ripple="false"
-                      class="white--text text-capitalize my-2"
-                    >Follow</v-btn>
+                    <div
+                      class="d-flex flex-column flex-md-row justify-center align-center justify-md-start align-md-center"
+                    >
+                      <v-btn
+                        v-if="user.uid===author.uid"
+                        color="grey darken-4 my-2 my-md-1"
+                        elevation="0"
+                        :ripple="false"
+                        large
+                        class="white--text text-capitalize my-2"
+                        nuxt
+                        :to="{ name: 'by-settings', params: { by:author.uid } }"
+                      >Edit Profile</v-btn>
+                      <follow-btn v-else :object="author">
+                        <template v-slot="{follow,isFollowed,loading}">
+                          <v-btn
+                            small
+                            color="purple"
+                            elevation="0"
+                            :ripple="false"
+                            :loading="loading"
+                            @click="follow"
+                            class="white--text my-2 my-md-1"
+                          >{{isFollowed?'Following':'Follow'}}</v-btn>
+                        </template>
+                      </follow-btn>
+                    </div>
+
                     <div class="my-2 text-center text-md-left">
                       <span v-for="key in Object.keys(author.profile_url)" :key="key">
                         <v-btn
@@ -89,6 +99,7 @@
 
 <script>
 import SignInModal from "@/components/Button/SignInModal";
+import FollowBtn from "@/components/Button/FollowModelBtn";
 import { authHydrated } from "@/mixins/Hydrated";
 import { timeAgo } from "@/utils/utils";
 export default {
@@ -97,13 +108,10 @@ export default {
       type: Object,
       required: true,
     },
-    by: {
-      type: String,
-      required: true,
-    },
   },
   components: {
     "sign-in": SignInModal,
+    "follow-btn": FollowBtn,
   },
   mixins: [authHydrated],
   computed: {

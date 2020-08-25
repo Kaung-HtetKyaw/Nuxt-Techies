@@ -49,8 +49,8 @@ export function replaceByID(array, item) {
   return array.splice(index, 1, item);
 }
 
-export function removeByID(array, id) {
-  const index = array.findIndex(el => el.id === id);
+export function removeByID(array, id, type = "id") {
+  const index = array.findIndex(el => el[type] === id);
   return array.splice(index, 1);
 }
 
@@ -71,5 +71,9 @@ export function isFile(obj) {
 }
 
 export function isSaved(array, id) {
+  return array.includes(id);
+}
+
+export function includes(array, id) {
   return array.includes(id);
 }

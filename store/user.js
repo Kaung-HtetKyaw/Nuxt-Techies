@@ -1,10 +1,12 @@
 import {
   fetchUser,
   createUser,
-  updateUser
+  updateUser,
+  updateUsers
 } from "@/services/Firebase/userAuth";
 
 import userFactory from "@/utils/factory/user";
+import { removeByID } from "~/utils/utils";
 
 export const state = () => {
   return { user: null, isAuthenticated: false, currentUser: null, users: [] };
@@ -27,13 +29,19 @@ export const mutations = {
   },
   UNSAVE_ARTICLE(state, { user }) {
     state.user = user;
+  },
+  FOLLOW_USER(state, { user }) {
+    state.user = user;
+  },
+  UNFOLLOW_USER(state, { user }) {
+    state.user = user;
   }
 };
 export const actions = {
   signIn({ commit }, { user }) {
-    return fetchUser(user.uid).then(doc => {
-      if (doc.exists) {
-        commit("SET_AUTH_USER", { ...doc.data() });
+    return fetchUser(user.uid).then(response => {
+      if (!!response) {
+        commit("SET_AUTH_USER", { ...response });
         commit("SET_AUTHENTICATION", true);
       } else {
         return createUser({ ...user }).then(() => {
@@ -50,7 +58,6 @@ export const actions = {
   fetchUser({ commit }, { id }) {
     return fetchUser(id).then(user => {
       commit("FETCH_USER", user);
-      console.log(user);
       return user;
     });
   },
@@ -73,6 +80,22 @@ export const actions = {
     user.saved.splice(index, 1);
     return updateUser(user).then(() => {
       commit("UNSAVE_ARTICLE", { user });
+    });
+  },
+  followUser({ commit, state }, { object }) {
+    const subject = { ...state.user };
+    object.followers.push(subject.uid);
+    subject.following.push(object.uid);
+    return updateUsers([subject, object]).then(() => {
+      commit("FOLLOW_USER", { user: subject });
+    });
+  },
+  unfollowUser({ commit, state }, { object }) {
+    const subject = { ...state.user };
+    removeByID(object.followers, subject.uid, "uid");
+    removeByID(subject.following, object.uid, "uid");
+    return updateUsers([subject, object]).then(() => {
+      commit("UNFOLLOW_USER", { user: subject });
     });
   }
 };

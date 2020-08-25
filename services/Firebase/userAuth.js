@@ -77,7 +77,9 @@ export function updateUser(user) {
     .doc(user.uid)
     .set(user);
 }
-
+export function updateUsers(users) {
+  return Promise.all(users.map(user => updateUser(user)));
+}
 function typesToFunName(string) {
   return `SignIn${capitalize(string)}FB`;
 }

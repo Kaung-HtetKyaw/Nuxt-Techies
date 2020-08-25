@@ -3,7 +3,14 @@
     <v-container>
       <v-row dense>
         <v-col cols="12" sm="12">
-          <profile-card :author="user" :by="by" />
+          <author-profile :id="by">
+            <template v-slot="{data:author,loading:loadingAuthor}">
+              <div>
+                <h1 v-if="loadingAuthor">#Loading.....</h1>
+                <profile-card v-else :author="author" />
+              </div>
+            </template>
+          </author-profile>
         </v-col>
       </v-row>
       <v-row dense class="my-6">
@@ -65,6 +72,7 @@ export default {
   components: {
     "article-list": ArticleListModelFB,
     "like-btn": LikeBtnFB,
+    "author-profile": UserModelFB,
     "profile-card": ProfileCard,
     "article-card": ArticleCard,
   },
