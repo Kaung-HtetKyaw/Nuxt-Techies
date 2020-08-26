@@ -1,5 +1,6 @@
 <script>
 import { mapState } from "vuex";
+import { authHydrated } from "@/mixins/Hydrated";
 export default {
   props: {
     lazy: { type: Boolean },
@@ -11,7 +12,7 @@ export default {
       },
     },
   },
-
+  mixins: { authHydrated },
   async fetch() {
     const articles = await this.$store.dispatch("article/getArticles", {
       params: this.params,
@@ -27,6 +28,7 @@ export default {
       this.lazyLoad = false;
       this.empty = true;
     }
+    this.$emit("dataReady", this.articles);
   },
   data() {
     return {

@@ -136,10 +136,8 @@ export default {
       }
       //function invocation context of success will be in the fileUpload function
       function success(url) {
-        console.log(url);
         vm.article.photo.url = url;
         vm.loading = false;
-        console.log(vm.article);
         return callback().then((res) => {
           vm.$router.push({
             name: "by-id",

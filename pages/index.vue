@@ -75,6 +75,7 @@ import NavigationDrawer from "@/components/UI/NavigationDrawer";
 import UserAvatar from "@/components/UI/UserAvatarDrawer";
 import { mapState } from "vuex";
 import { authHydrated } from "@/mixins/Hydrated";
+import { priortizeFollowingArticles } from "@/utils/sort";
 export default {
   components: {
     "article-list-model": ArticleListModel,
@@ -92,6 +93,7 @@ export default {
   data() {
     return { isHydrated: false };
   },
+
   computed: {
     ...mapState({
       isAuthenticated: (state) => state.user.isAuthenticated,

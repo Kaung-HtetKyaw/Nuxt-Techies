@@ -1,3 +1,5 @@
+import { normalizeArticles } from "~/services/Firebase/article";
+
 export const date_sort_asc = function(date1, date2) {
   // This is a comparison function that will result in dates being sorted in
   // ASCENDING order. As you can see, JavaScript's native comparison operators
@@ -14,3 +16,15 @@ export const date_sort_desc = function(date1, date2) {
   if (date1 < date2) return 1;
   return 0;
 };
+
+export function priortizeFollowingArticles(articles, followingID) {
+  let result = [];
+  const followingArticles = articles.filter(article => {
+    return followingID.includes(article.by);
+  });
+  const normalArticles = articles.filter(article => {
+    return !followingID.includes(article.by);
+  });
+  result = result.concat(followingArticles, normalArticles);
+  return result;
+}
