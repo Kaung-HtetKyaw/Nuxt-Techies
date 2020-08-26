@@ -17,11 +17,11 @@
         <v-col cols="12" sm="12" md="2"></v-col>
         <v-col cols="12" md="8" sm="12" class="pt-0">
           <article-list :lazy="true" :params="{type:'user',param:by}">
-            <template v-slot="{ articles, lazyLoadArticles, loading, empty }">
+            <template v-slot="{ articles, lazyLoadArticles, loading }">
               <v-container class="px-0 pt-0">
                 <v-col cols="12" sm="12" class="pt-0">
                   <v-container class="px-0 pt-0">
-                    <v-row dense>
+                    <v-row dense v-if="articles.length>0">
                       <v-col
                         v-for="(article, i) in articles"
                         v-observe-visibility="
@@ -45,8 +45,37 @@
                         </content-placeholders>
                       </v-col>
                     </v-row>
-                    <v-row dense v-if="empty">
-                      <h1>#Empty.....</h1>
+                    <v-row dense v-if="articles.length===0">
+                      <v-container class="white bs-border pa-4">
+                        <v-row dense>
+                          <v-col
+                            cols="12"
+                            sm="12"
+                            md="4"
+                            class="d-flex justify-center align-center"
+                          >
+                            <v-img
+                              max-width="150"
+                              src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR0LTsIqEjovrNZIj70z7b4kRbM5pO-8dxoyg&usqp=CAU"
+                            ></v-img>
+                          </v-col>
+                          <v-col
+                            cols="12"
+                            sm="12"
+                            md="8"
+                            class="d-flex flex-column justify-center align-center align-md-start"
+                          >
+                            <div class="opacity7 subtitle-1">
+                              <p>You haven't published any article anything yet.</p>
+                            </div>
+                            <div class="my-4 d-flex justify-sm-center justify-md-start">
+                              <router-link :to="{ name: 'new' }" class="router-link">
+                                <v-btn small elevation="0" color="info">Publish an article now</v-btn>
+                              </router-link>
+                            </div>
+                          </v-col>
+                        </v-row>
+                      </v-container>
                     </v-row>
                   </v-container>
                 </v-col>
