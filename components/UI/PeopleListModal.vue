@@ -1,14 +1,16 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" scrollable max-width="300px">
+    <v-dialog v-model="dialog" scrollable>
       <template v-slot:activator="{ on, attrs }">
-        <v-btn depressed :ripple="false" text @click="dialog = !dialog">
-          <slot></slot>
+        <v-btn depressed :ripple="false" elevation text @click="showDialog">
+          <slot name="button"></slot>
         </v-btn>
       </template>
       <v-card class="rounded">
         <v-card-title class="pa-2 text-center">
-          <h5 class="text-body-2 font-weight-medium">People who reacted to this post</h5>
+          <h5 class="text-body-2 font-weight-medium">
+            <slot name="header"></slot>
+          </h5>
         </v-card-title>
         <v-divider></v-divider>
         <div v-if="$fetchState.pending">
@@ -27,11 +29,10 @@
                       <v-list-item-title v-text="person.displayName"></v-list-item-title>
                     </v-list-item-content>
                     <v-list-item-icon>
-                      <v-icon color="red">mdi-heart</v-icon>
+                      <slot name="icon"></slot>
                     </v-list-item-icon>
                   </v-list-item>
                 </nuxt-link>
-
                 <v-divider></v-divider>
               </div>
             </v-list>
@@ -60,6 +61,13 @@ export default {
       dialog: false,
       people: [],
     };
+  },
+  methods: {
+    showDialog() {
+      if (this.people.length > 0) {
+        this.dialog = !this.dialog;
+      }
+    },
   },
 };
 </script>

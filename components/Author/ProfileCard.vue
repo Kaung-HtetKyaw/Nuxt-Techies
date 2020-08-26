@@ -79,11 +79,21 @@
                 md="2"
                 class="text-center text-md-left text-subtitle-2 text-md-subtitle-1"
               >
-                <div>
-                  <p>{{author.followers.length}} Followers</p>
+                <div class="mb-2 opacity-7">
+                  <people-list :peopleID="author.followers">
+                    <template #header>Followed By</template>
+                    <template #button>
+                      <span>{{author.followers.length}} Followers</span>
+                    </template>
+                  </people-list>
                 </div>
-                <div>
-                  <p>{{author.following.length}} Following</p>
+                <div class="mb-2 opacity-7">
+                  <people-list :peopleID="author.following">
+                    <template #header>Following</template>
+                    <template #button>
+                      <span>{{author.following.length}} Followers</span>
+                    </template>
+                  </people-list>
                 </div>
                 <div>
                   <p>Joined {{timeAgo}} ago</p>
@@ -100,6 +110,7 @@
 <script>
 import SignInModal from "@/components/Button/SignInModal";
 import FollowBtn from "@/components/Button/FollowModelBtn";
+import PeopleListModal from "@/components/UI/PeopleListModal";
 import { authHydrated } from "@/mixins/Hydrated";
 import { timeAgo } from "@/utils/utils";
 export default {
@@ -112,6 +123,7 @@ export default {
   components: {
     "sign-in": SignInModal,
     "follow-btn": FollowBtn,
+    "people-list": PeopleListModal,
   },
   mixins: [authHydrated],
   computed: {

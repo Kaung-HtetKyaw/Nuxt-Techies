@@ -89,12 +89,18 @@
                   <span>{{ !isLiked?article.likesNo:'' }}</span>
                 </v-btn>
                 <transition name="fade" mode="out-in">
-                  <liked-people v-if="isLiked" :peopleID="article.likes">
-                    <span
-                      v-if="article.likesNo>1"
-                      class="text-caption"
-                    >{{isLiked?'You and '+article.likesNo+' others':''}}</span>
-                    <span v-else class="text-caption">{{isLiked?'You liked this article':''}}</span>
+                  <liked-people v-if="isLiked" :peopleID="article.likes" class="pa-2">
+                    <template #header>People who reacted to this post</template>
+                    <template #button>
+                      <span
+                        v-if="article.likesNo>1"
+                        class="text-caption"
+                      >{{isLiked?'You and '+(article.likesNo-1)+' others':''}}</span>
+                      <span v-else class="text-caption">{{isLiked?'You liked this article':''}}</span>
+                    </template>
+                    <template #icon>
+                      <v-icon color="red">mdi-heart</v-icon>
+                    </template>
                   </liked-people>
                 </transition>
               </div>
@@ -176,7 +182,7 @@ import LikeBtnFB from "@/components/Button/LikeBtnFB";
 import AuthorCard from "@/components/Author/AuthorCardArticle";
 import SignInModal from "@/components/Button/SignInModal";
 import TagSlider from "@/components/UI/TagSlider";
-import LikedPeople from "@/components/UI/LikedPeopleModal";
+import LikedPeople from "@/components/UI/PeopleListModal";
 import { defaultCommentObjFB } from "@/utils/constants";
 import { timeAgo } from "@/utils/utils";
 import { mapState, mapGetters } from "vuex";

@@ -21,7 +21,6 @@ export default {
       .then((users) => {
         this.data = Array.isArray(this.id) ? users : users[0];
         this.loading = false;
-        console.log(this.data);
       })
       .catch(() => {
         this.loading = false;
