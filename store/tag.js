@@ -17,6 +17,7 @@ export const actions = {
     return fetchAllTags().then(res => {
       const tags = normalizeTag(res.docs);
       commit("SET_TAGS", { tags });
+
       return tags;
     });
   }

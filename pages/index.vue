@@ -15,26 +15,32 @@
         <v-col cols="12" md="6" sm="12" class="pt-0">
           <v-container class="px-0 pt-0">
             <v-row dense>
-              <article-list-model :lazy="true" :params="{type:'all'}">
+              <article-list-model
+                @dataReady="listenArticlesState"
+                :lazy="true"
+                :params="{type:'all'}"
+              >
                 <template v-slot="{ articles, lazyLoadArticles, loading, empty }">
                   <v-container class="px-0 pt-0">
                     <v-col cols="12" sm="12" class="pt-0">
                       <v-container class="px-0 pt-0">
                         <v-row dense>
-                          <v-col
-                            v-for="(article, i) in articles"
-                            v-observe-visibility="
+                          <transition-group name="vertical" tag="div" class="full-width">
+                            <v-col
+                              v-for="(article, i) in articles"
+                              v-observe-visibility="
                               i === articles.length - 1
                                 ? lazyLoadArticles
                                 : false
                             "
-                            :key="article.id"
-                            cols="12"
-                            sm="12"
-                            class="pt-0"
-                          >
-                            <article-card :article="article" />
-                          </v-col>
+                              :key="article.id"
+                              cols="12"
+                              sm="12"
+                              class="pt-0"
+                            >
+                              <article-card :article="article" />
+                            </v-col>
+                          </transition-group>
                         </v-row>
                         <v-row dense v-if="loading">
                           <v-col cols="12" sm="12" v-for="i in 10" :key="i">
@@ -93,7 +99,9 @@ export default {
   data() {
     return { isHydrated: false };
   },
-
+  methods: {
+    listenArticlesState() {},
+  },
   computed: {
     ...mapState({
       isAuthenticated: (state) => state.user.isAuthenticated,

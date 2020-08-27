@@ -1,6 +1,7 @@
 <script>
 import { mapState } from "vuex";
 import { authHydrated } from "@/mixins/Hydrated";
+import { priortizeFollowingArticles } from "@/utils/sort";
 export default {
   props: {
     lazy: { type: Boolean },
@@ -12,7 +13,7 @@ export default {
       },
     },
   },
-  mixins: { authHydrated },
+  mixins: [authHydrated],
   async fetch() {
     const articles = await this.$store.dispatch("article/getArticles", {
       params: this.params,
@@ -28,15 +29,16 @@ export default {
       this.lazyLoad = false;
       this.empty = true;
     }
+    //emit ready custom event to parent
     this.$emit("dataReady", this.articles);
   },
   data() {
     return {
       lazyLoad: false,
       empty: false,
-      loading: false,
     };
   },
+
   methods: {
     lazyLoadArticles(isVisible) {
       if (isVisible && !this.$fetchState.pending && !this.empty) {
@@ -53,8 +55,17 @@ export default {
   },
   computed: {
     ...mapState({
-      articles: (state) => state.article.articles,
+      storedArticles: (state) => state.article.articles,
     }),
+    articles() {
+      if (this.user) {
+        return priortizeFollowingArticles(
+          this.storedArticles,
+          this.user.following
+        );
+      }
+      return this.storedArticles;
+    },
   },
   render() {
     return this.$scopedSlots.default({

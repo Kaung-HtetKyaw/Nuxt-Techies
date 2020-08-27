@@ -11,8 +11,9 @@ export const state = () => {
 export const mutations = {};
 export const actions = {
   //auth state change listener
-  async nuxtServerInit({ dispatch }) {
+  async nuxtServerInit({ dispatch }, user) {
     dispatch("tag/fetchAllTags", { root: true });
+    dispatch("authStateListener", user);
   },
   async authStateListener({ dispatch }, user) {
     if (user.authUser) {

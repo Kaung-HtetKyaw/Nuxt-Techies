@@ -34,12 +34,10 @@ export default {
       },
     });
     this.md = marked(this.content);
-    console.log(this.md);
   },
   watch: {
     content(value) {
       this.md = marked(value);
-      console.log("changed md", this.md);
     },
   },
 };
