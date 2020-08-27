@@ -3,7 +3,7 @@ import "firebase/firestore";
 import articleFactory from "@/utils/factory/articles";
 
 //*Fetch Methods
-let limit = 3;
+let limit = 10;
 
 let fetchMethods = {
   all: fetchAll,
@@ -52,6 +52,21 @@ export function fetchTag({ param }) {
     .collection("articles")
     .orderBy("timestamp", "desc")
     .where("tags", "array-contains", param);
+}
+export function fetchTags(tags) {
+  console.log(tags);
+  return firebase
+    .firestore()
+    .collection("articles")
+    .where("tags", "array-contains-any", tags)
+    .get()
+    .then(response => {
+      console.log(response.docs);
+      const article = normalizeArticles(response.docs);
+      console.log("shit");
+      console.log(article);
+      return article;
+    });
 }
 export function fetchUser({ param }) {
   return firebase

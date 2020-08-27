@@ -10,6 +10,16 @@
       </content-placeholders>
     </div>
     <div v-else>
+      <related-articles :tags="article.tags" :articleToExclude="article">
+        <template v-slot="{loading,relatedArticles}">
+          <div>
+            <h1 v-if="loading">#Loading Related Articles...</h1>
+            <div v-else>
+              <h1 v-for="article in relatedArticles" :key="article.id">{{article.title}}</h1>
+            </div>
+          </div>
+        </template>
+      </related-articles>
       <div class="white pa-sm-6 pa-md-12 rounded-xl article-view bs-border">
         <div class="pa-4">
           <h1
@@ -183,6 +193,7 @@ import AuthorCard from "@/components/Author/AuthorCardArticle";
 import SignInModal from "@/components/Button/SignInModal";
 import TagSlider from "@/components/UI/TagSlider";
 import LikedPeople from "@/components/UI/PeopleListModal";
+import RelatedArticlesModel from "@/components/Article/RelatedArticlesModel";
 import { defaultCommentObjFB } from "@/utils/constants";
 import { timeAgo } from "@/utils/utils";
 import { mapState, mapGetters } from "vuex";
@@ -198,6 +209,7 @@ export default {
     "sign-in": SignInModal,
     "tag-slider": TagSlider,
     "liked-people": LikedPeople,
+    "related-articles": RelatedArticlesModel,
   },
   mixins: [authHydrated],
   async fetch() {

@@ -96,6 +96,7 @@ import ProfileCard from "@/components/Author/ProfileCard";
 import ArticleCard from "@/components/Article/ArticleCardBlockBrief";
 import UserModelFB from "@/components/Author/UserModelFB";
 import { mapState } from "vuex";
+
 export default {
   middleware: ["auth"],
   components: {

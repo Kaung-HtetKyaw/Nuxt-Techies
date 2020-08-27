@@ -77,3 +77,29 @@ export function isSaved(array, id) {
 export function includes(array, id) {
   return array.includes(id);
 }
+
+export function excludeItems(items, itemsToExclude) {
+  let result = items;
+  let normalizedItemsToExclude = Array.isArray(itemsToExclude)
+    ? itemsToExclude
+    : [itemsToExclude];
+  normalizedItemsToExclude.forEach(el => {
+    result = result.filter(item => item.id !== el.id);
+  });
+  return result;
+}
+
+export function randomItem(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+export function randomItems([...arr], n = 1) {
+  let m = arr.length;
+  while (m) {
+    const i = Math.floor(Math.random() * m--);
+    const temp = arr[i];
+    arr[i] = arr[m];
+    arr[m] = temp;
+  }
+  return arr.slice(0, n);
+}
