@@ -16,7 +16,7 @@ export function defaultArticleObjFB() {
     description: "",
     likesNo: 0,
     title: "",
-    topics: [],
+    topics: "",
     by: "",
     content: "",
     type: "article"
@@ -66,5 +66,20 @@ export function defaultCommentObjFB() {
     message: "",
     type: "comment",
     by: ""
+  };
+}
+
+export function defaultTopicObjFB() {
+  const timestamp = Date.now();
+  return {
+    about: {
+      by: "",
+      description: "",
+      timestamp
+    },
+    cover:
+      "https://blogs.sas.com/content/sastraining/files/2015/03/black_background.png",
+    members: [],
+    name: ""
   };
 }

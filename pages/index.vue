@@ -94,7 +94,7 @@ export default {
     "user-info": NavigationDrawer,
     "user-avatar": UserAvatar,
   },
-  middleware: ["log"],
+
   mixins: [authHydrated],
   data() {
     return { isHydrated: false };

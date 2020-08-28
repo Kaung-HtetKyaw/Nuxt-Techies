@@ -101,9 +101,9 @@ export default {
               to: { name: "by", params: { by: vm.user.uid } },
             },
             {
-              icon: "mdi-cog",
-              title: "Dummy",
-              to: "dummy",
+              icon: "mdi-account-group",
+              title: "Topics",
+              to: { name: "topics" },
             },
           ]
         : defaultItem;
