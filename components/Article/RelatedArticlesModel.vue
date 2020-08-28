@@ -4,17 +4,13 @@ import { mapState } from "vuex";
 import { fetchTags } from "@/services/Firebase/article";
 export default {
   props: {
-    tags: {
-      type: Array,
-      required: true,
-    },
     articleToExclude: {
       type: Object,
       required: true,
     },
   },
   async fetch() {
-    const articles = await fetchTags(this.tags);
+    const articles = await fetchTags(this.articleToExclude.tags);
     this.relatedArticles = randomItems(
       excludeItems(articles, this.articleToExclude),
       2

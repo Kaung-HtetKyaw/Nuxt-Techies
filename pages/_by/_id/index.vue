@@ -10,16 +10,6 @@
       </content-placeholders>
     </div>
     <div v-else>
-      <related-articles :tags="article.tags" :articleToExclude="article">
-        <template v-slot="{loading,relatedArticles}">
-          <div>
-            <h1 v-if="loading">#Loading Related Articles...</h1>
-            <div v-else>
-              <h1 v-for="article in relatedArticles" :key="article.id">{{article.title}}</h1>
-            </div>
-          </div>
-        </template>
-      </related-articles>
       <div class="white pa-sm-6 pa-md-12 rounded-xl article-view bs-border">
         <div class="pa-4">
           <h1
@@ -136,6 +126,33 @@
           </template>
         </author-profile>
       </div>
+      <div class="white bs-border my-3 pa-md-8 pa-sm-4">
+        <v-container>
+          <v-row dense>
+            <v-col cols="12" sm="12">
+              <h3 class="text-h4 text-center font-weight-bold">Read Next</h3>
+            </v-col>
+          </v-row>
+          <v-row dense>
+            <v-col cols="12" sm="12">
+              <related-articles :articleToExclude="article">
+                <template v-slot="{loading,relatedArticles}">
+                  <div>
+                    <h1 v-if="loading">#Loading Related Articles...</h1>
+                    <div v-else>
+                      <related-articles-card
+                        v-for="relatedArticle in relatedArticles"
+                        :key="relatedArticle.id"
+                        :article="relatedArticle"
+                      ></related-articles-card>
+                    </div>
+                  </div>
+                </template>
+              </related-articles>
+            </v-col>
+          </v-row>
+        </v-container>
+      </div>
       <div>
         <div v-if="!!user" class="white pa-md-8 pa-sm-4 bs-border">
           <v-container>
@@ -194,6 +211,7 @@ import SignInModal from "@/components/Button/SignInModal";
 import TagSlider from "@/components/UI/TagSlider";
 import LikedPeople from "@/components/UI/PeopleListModal";
 import RelatedArticlesModel from "@/components/Article/RelatedArticlesModel";
+import RelatedArticlesCard from "@/components/Article/ArticleCardBlockRelated";
 import { defaultCommentObjFB } from "@/utils/constants";
 import { timeAgo } from "@/utils/utils";
 import { mapState, mapGetters } from "vuex";
@@ -210,6 +228,7 @@ export default {
     "tag-slider": TagSlider,
     "liked-people": LikedPeople,
     "related-articles": RelatedArticlesModel,
+    "related-articles-card": RelatedArticlesCard,
   },
   mixins: [authHydrated],
   async fetch() {
