@@ -13,6 +13,17 @@ export function fetchAllTopics() {
     });
 }
 
+export function createTopic(params) {
+  return firebase
+    .firestore()
+    .collection("topics")
+    .add({ ...params.data })
+    .then(res => {
+      const topic = normalizeTopics({ id: res.id, ...params.data });
+      return topic;
+    });
+}
+
 export function normalizeTopics(topics) {
   if (Array.isArray(topics)) {
     let arr = [];

@@ -71,14 +71,19 @@ export function defaultCommentObjFB() {
 
 export function defaultTopicObjFB() {
   const timestamp = Date.now();
+  const id = uniqueId();
   return {
     about: {
       by: "",
       description: "",
       timestamp
     },
-    cover:
-      "https://blogs.sas.com/content/sastraining/files/2015/03/black_background.png",
+    cover: {
+      id,
+      url:
+        "https://blogs.sas.com/content/sastraining/files/2015/03/black_background.png"
+    },
+
     members: [],
     name: ""
   };

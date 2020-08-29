@@ -94,7 +94,6 @@ export default {
     "user-info": NavigationDrawer,
     "user-avatar": UserAvatar,
   },
-
   mixins: [authHydrated],
   data() {
     return { isHydrated: false };

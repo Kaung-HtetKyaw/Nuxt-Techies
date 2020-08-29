@@ -80,8 +80,7 @@ export const actions = {
     });
   },
   createArticle({ commit }, params) {
-    return createArticle(params).then(res => {
-      const article = normalizeArticles({ id: res.id, ...params.data });
+    return createArticle(params).then(article => {
       commit("ADD_ARTICLE", { article });
       return article;
     });

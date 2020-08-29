@@ -63,8 +63,6 @@ export function fetchTags(tags) {
     .then(response => {
       console.log(response.docs);
       const article = normalizeArticles(response.docs);
-      console.log("shit");
-      console.log(article);
       return article;
     });
 }
@@ -108,7 +106,11 @@ export function createArticle(params) {
   return firebase
     .firestore()
     .collection("articles")
-    .add({ ...params.data });
+    .add({ ...params.data })
+    .then(res => {
+      const article = normalizeArticles({ id: res.id, ...params.data });
+      return article;
+    });
 }
 
 //*Update Methods
