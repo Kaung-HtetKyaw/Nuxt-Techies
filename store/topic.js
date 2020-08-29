@@ -1,4 +1,10 @@
-import { fetchAllTopics, createTopic } from "@/services/Firebase/topic";
+import {
+  fetchAllTopics,
+  createTopic,
+  updateTopic
+} from "@/services/Firebase/topic";
+import { replaceByID, removeByID } from "@/utils/utils";
+import { updateUser } from "~/services/Firebase/userAuth";
 
 export const strict = false;
 export const state = () => {
@@ -13,6 +19,9 @@ export const mutations = {
   },
   ADD_TOPIC(state, { topic }) {
     state.topics.push(topic);
+  },
+  UPDATE_TOPIC(state, { topic }) {
+    replaceByID(state.topics, topic);
   }
 };
 export const actions = {
@@ -26,6 +35,12 @@ export const actions = {
     return createTopic(params).then(topic => {
       commit("ADD_TOPIC", { topic });
       return topic;
+    });
+  },
+  updateTopic({ commit }, params) {
+    return updateTopic(params).then(() => {
+      commit("UPDATE_TOPIC", { topic: { ...params.data } });
+      return { ...params.data };
     });
   }
 };

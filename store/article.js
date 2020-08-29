@@ -87,8 +87,6 @@ export const actions = {
   },
   updateArticle({ commit, state }, params) {
     return updateArticle(params).then(res => {
-      console.log("article", params.data.kids);
-      console.log("before update", { ...state.article });
       commit("UPDATE_ARTICLE", { article: { ...params.data } });
       return params.data;
     });

@@ -24,6 +24,14 @@ export function createTopic(params) {
     });
 }
 
+export function updateTopic(params) {
+  return firebase
+    .firestore()
+    .collection("topics")
+    .doc(params.id)
+    .set({ ...params.data });
+}
+
 export function normalizeTopics(topics) {
   if (Array.isArray(topics)) {
     let arr = [];
