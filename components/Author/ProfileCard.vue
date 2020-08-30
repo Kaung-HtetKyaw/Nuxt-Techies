@@ -109,7 +109,7 @@
 
 <script>
 import SignInModal from "@/components/Button/SignInModal";
-import FollowBtn from "@/components/Button/FollowModelBtn";
+import FollowBtn from "@/components/Button/FollowUserModelBtn";
 import PeopleListModal from "@/components/UI/PeopleListModal";
 import { authHydrated } from "@/mixins/Hydrated";
 import { timeAgo } from "@/utils/utils";

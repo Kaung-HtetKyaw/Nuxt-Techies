@@ -65,7 +65,7 @@
 
 <script>
 import SignInModal from "@/components/Button/SignInModal";
-import FollowBtn from "@/components/Button/FollowModelBtn";
+import FollowBtn from "@/components/Button/FollowUserModelBtn";
 import { authHydrated } from "@/mixins/Hydrated";
 export default {
   props: {

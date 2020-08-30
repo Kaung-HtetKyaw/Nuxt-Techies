@@ -67,6 +67,11 @@ const defaultItem = [
     to: "/t",
     auth: false,
   },
+  {
+    icon: "mdi-account-group",
+    title: "Topics",
+    to: { name: "topics" },
+  },
 ];
 export default {
   mixins: [authHydrated],
@@ -104,6 +109,11 @@ export default {
               icon: "mdi-account-group",
               title: "Topics",
               to: { name: "topics" },
+            },
+            {
+              icon: "mdi-account-multiple-plus",
+              title: "Create new Topic",
+              to: { name: "topics-new" },
             },
           ]
         : defaultItem;
