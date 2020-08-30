@@ -31,9 +31,16 @@ export const actions = {
       return topics;
     });
   },
-  createTopic({ commit }, params) {
+  createTopic({ commit, rootState, dispatch }, params) {
+    const user = { ...rootState.user.user };
+    params.data.members.push(user.uid);
+
     return createTopic(params).then(topic => {
+      console.log(topic);
+      user.topics.push(topic.id);
       commit("ADD_TOPIC", { topic });
+      console.log(user);
+      dispatch("user/updateUser", { data: user }, { root: true });
       return topic;
     });
   },

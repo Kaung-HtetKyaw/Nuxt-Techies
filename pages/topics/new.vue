@@ -4,7 +4,7 @@
       <template v-slot="{writeFB}">
         <v-container>
           <v-row dense>
-            <v-col cols="12" sm="12" md="8" offset-md="2" class="white pa-4 pa-md-8 bs-border">
+            <v-col cols="12" sm="12" md="8" offset-md="2" class="white pa-1 pa-md-8 bs-border">
               <div>
                 <div class="text-h6 text-md-h4 text-center font-weight-medium">
                   <span>Create a Topic</span>
@@ -82,8 +82,6 @@ export default {
   },
   created() {
     this.topic.about.by = this.user.uid;
-    this.topic.members.push(this.user.uid);
-    console.log(this.topic);
   },
   methods: {
     createTopic(callback) {

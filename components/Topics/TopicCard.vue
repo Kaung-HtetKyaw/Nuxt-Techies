@@ -29,12 +29,24 @@
         </nuxt-link>
       </v-card-text>
       <v-card-actions v-if="!!user">
-        <v-btn depressed block color="grey lighten-2" :ripple="false">Follow</v-btn>
+        <follow-btn :topic="topic">
+          <template v-slot="{follow,loading:following,isFollowed}">
+            <v-btn
+              depressed
+              :loading="following"
+              :ripple="false"
+              color="grey lighten-2"
+              block
+              @click="follow"
+            >{{isFollowed?'Following':'Follow'}}</v-btn>
+          </template>
+        </follow-btn>
       </v-card-actions>
     </div>
   </v-card>
 </template>
 <script>
+import FollowTopicsModelBtn from "@/components/Button/FollowTopicsModelBtn";
 import { mapGetters } from "vuex";
 import { fetchUser } from "@/services/Firebase/userAuth";
 import { isEmptyObj, timeAgo } from "@/utils/utils";
@@ -47,6 +59,9 @@ export default {
     },
   },
   mixins: [authHydrated],
+  components: {
+    "follow-btn": FollowTopicsModelBtn,
+  },
   data() {
     return {};
   },

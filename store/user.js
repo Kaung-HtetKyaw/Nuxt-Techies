@@ -35,6 +35,12 @@ export const mutations = {
   },
   UNFOLLOW_USER(state, { user }) {
     state.user = user;
+  },
+  FOLLOW_TOPIC(state, { user }) {
+    state.user = user;
+  },
+  UNFOLLOW_TOPIC(state, { user }) {
+    state.user = user;
   }
 };
 export const actions = {
@@ -96,6 +102,32 @@ export const actions = {
     removeByID(subject.following, object.uid, "uid");
     return updateUsers([subject, object]).then(() => {
       commit("UNFOLLOW_USER", { user: subject });
+    });
+  },
+  followTopic({ commit, state, dispatch }, { topic }) {
+    const user = { ...state.user };
+    topic.members.push(user.uid);
+    user.topics.push(topic.id);
+    return updateUser(user).then(() => {
+      commit("FOLLOW_TOPIC", { user });
+      return dispatch(
+        "topic/updateTopic",
+        { data: topic, id: topic.id },
+        { root: true }
+      );
+    });
+  },
+  unfollowTopic({ commit, state, dispatch }, { topic }) {
+    const user = { ...state.user };
+    removeByID(topic.members, user.uid);
+    removeByID(user.topics, topic.id);
+    return updateUser(user).then(() => {
+      commit("UNFOLLOW_TOPIC", { user });
+      return dispatch(
+        "topic/updateTopic",
+        { data: topic, id: topic.id },
+        { root: true }
+      );
     });
   }
 };

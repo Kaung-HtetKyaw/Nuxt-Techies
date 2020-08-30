@@ -44,13 +44,23 @@ function pluralize(time, label) {
   return `${roundedTime} ${label}s`;
 }
 
-export function replaceByID(array, item) {
-  const index = array.findIndex(el => el.id === item.id);
+export function replaceByID(array, item, type = "id") {
+  const index = array.findIndex(el => {
+    if (isPlainObject(el) && isPlainObject(item)) {
+      return el[type] === item[type];
+    }
+    return el === item;
+  });
   return array.splice(index, 1, item);
 }
 
 export function removeByID(array, id, type = "id") {
-  const index = array.findIndex(el => el[type] === id);
+  const index = array.findIndex(el => {
+    if (isPlainObject(el)) {
+      return el[type] === id;
+    }
+    return el === id;
+  });
   return array.splice(index, 1);
 }
 
