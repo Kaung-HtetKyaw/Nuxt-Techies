@@ -99,19 +99,27 @@ export const actions = {
       //fetch the article first if it was not stored
       if (storedArticle) {
         return deleteArticle(id).then(() => {
-          const topicID = article.topics;
+          const topicID = storedArticle.topics;
           commit("DELETE_ARTICLE", { id });
-          dispatch("topic/removeArticleFromTopic", { articleID: id, topicID });
+          dispatch(
+            "topic/removeArticleFromTopic",
+            { articleID: id, topicID },
+            { root: true }
+          );
         });
       } else {
         return fetchArticle(id).then(article => {
           return deleteArticle(id).then(() => {
             const topicID = article.topics;
             commit("DELETE_ARTICLE", { id });
-            dispatch("topic/removeArticleFromTopic", {
-              articleID: id,
-              topicID
-            });
+            dispatch(
+              "topic/removeArticleFromTopic",
+              {
+                articleID: id,
+                topicID
+              },
+              { root: true }
+            );
           });
         });
       }
