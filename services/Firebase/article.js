@@ -20,8 +20,6 @@ export function fetchArticle(id) {
     .get()
     .then(res => {
       const article = normalizeArticles(res);
-      console.log("shit");
-      console.log(article);
       return article;
     });
 }
@@ -54,14 +52,12 @@ export function fetchTag({ param }) {
     .where("tags", "array-contains", param);
 }
 export function fetchTags(tags) {
-  console.log(tags);
   return firebase
     .firestore()
     .collection("articles")
     .where("tags", "array-contains-any", tags)
     .get()
     .then(response => {
-      console.log(response.docs);
       const article = normalizeArticles(response.docs);
       return article;
     });

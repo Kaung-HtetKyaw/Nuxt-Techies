@@ -29,10 +29,9 @@ export const mutations = {
   UPDATE_ARTICLE(state, { article }) {
     replaceByID(state.articles, article);
   },
-  DELETE_ARTICLE(state, { ids }) {
-    ids.forEach(id => {
-      removeByID(state.articles, id);
-    });
+  DELETE_ARTICLE(state, { id }) {
+    removeByID(state.articles, id);
+
     state.article = {};
   },
   SET_LAST_VISIBLE(state, lastVisible) {
@@ -93,10 +92,29 @@ export const actions = {
       return params.data;
     });
   },
-  deleteArticle({ commit }, params) {
+  deleteArticle({ commit, dispatch, getters }, params) {
     const ids = Array.isArray(params.id) ? params.id : [params.id];
-    return deleteArticles(ids).then(() => {
-      commit("DELETE_ARTICLE", { ids });
+    ids.forEach(id => {
+      const storedArticle = getters.getArticleByID(id);
+      //fetch the article first if it was not stored
+      if (storedArticle) {
+        return deleteArticle(id).then(() => {
+          const topicID = article.topics;
+          commit("DELETE_ARTICLE", { id });
+          dispatch("topic/removeArticleFromTopic", { articleID: id, topicID });
+        });
+      } else {
+        return fetchArticle(id).then(article => {
+          return deleteArticle(id).then(() => {
+            const topicID = article.topics;
+            commit("DELETE_ARTICLE", { id });
+            dispatch("topic/removeArticleFromTopic", {
+              articleID: id,
+              topicID
+            });
+          });
+        });
+      }
     });
   },
   likeArticle({ commit, getters }, { id, by }) {

@@ -7,7 +7,9 @@
       <div>
         <h1>Articles</h1>
         <div v-for="article in articles" :key="article.id">
-          <h1>{{article.title}}</h1>
+          <nuxt-link :to="{name:'by-id',params:{by:article.by,id:article.id}}">
+            <h1>{{article.title}}</h1>
+          </nuxt-link>
         </div>
       </div>
     </div>

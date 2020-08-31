@@ -36,10 +36,8 @@ export const actions = {
     params.data.members.push(user.uid);
 
     return createTopic(params).then(topic => {
-      console.log(topic);
       user.topics.push(topic.id);
       commit("ADD_TOPIC", { topic });
-      console.log(user);
       dispatch("user/updateUser", { data: user }, { root: true });
       return topic;
     });
@@ -49,6 +47,12 @@ export const actions = {
       commit("UPDATE_TOPIC", { topic: { ...params.data } });
       return { ...params.data };
     });
+  },
+  deleteTopic() {},
+  removeArticleFromTopic({ dispatch, getters }, { articleID, topicID }) {
+    const topic = { ...getters.getTopicByID(topicID) };
+    removeByID(topic.kids, articleID);
+    dispatch("updateTopic", { data: topic, id: topic.id });
   }
 };
 
