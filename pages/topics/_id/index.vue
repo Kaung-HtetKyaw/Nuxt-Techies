@@ -4,6 +4,7 @@
       <h1>{{topic.name}}</h1>
       <v-btn nuxt :to="{name:'topics-id-new',params:{id:topicID}}">Create an article</v-btn>
       <v-btn nuxt :to="{name:'topics-id-edit',params:{id:topicID}}">Edit a topic</v-btn>
+      <v-btn nuxt :to="{name:'topics-id-delete',params:{id:topicID}}">Delete a topic</v-btn>
       <div>
         <h1>Articles</h1>
         <div v-for="article in articles" :key="article.id">

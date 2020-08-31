@@ -1,8 +1,10 @@
 import {
   fetchAllTopics,
   createTopic,
-  updateTopic
+  updateTopic,
+  deleteTopic
 } from "@/services/Firebase/topic";
+import { deleteArticles } from "@/services/Firebase/article";
 import { replaceByID, removeByID } from "@/utils/utils";
 import { updateUser } from "~/services/Firebase/userAuth";
 
@@ -22,6 +24,9 @@ export const mutations = {
   },
   UPDATE_TOPIC(state, { topic }) {
     replaceByID(state.topics, topic);
+  },
+  DELETE_TOPIC(state, { id }) {
+    removeByID(state.topics, id);
   }
 };
 export const actions = {
@@ -48,7 +53,13 @@ export const actions = {
       return { ...params.data };
     });
   },
-  deleteTopic() {},
+  deleteTopic({ commit, getters, dispatch }, params) {
+    const topic = { ...getters.getTopicByID(params.id) };
+    return deleteTopic(params.id).then(() => {
+      commit("DELETE_TOPIC", { id: params.id });
+      return deleteArticles(topic.kids);
+    });
+  },
   removeArticleFromTopic({ dispatch, getters }, { articleID, topicID }) {
     const topic = { ...getters.getTopicByID(topicID) };
     removeByID(topic.kids, articleID);

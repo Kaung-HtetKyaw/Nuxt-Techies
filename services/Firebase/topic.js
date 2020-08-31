@@ -32,6 +32,14 @@ export function updateTopic(params) {
     .set({ ...params.data });
 }
 
+export function deleteTopic(id) {
+  return firebase
+    .firestore()
+    .collection("topics")
+    .doc(id)
+    .delete();
+}
+
 export function normalizeTopics(topics) {
   if (Array.isArray(topics)) {
     let arr = [];
