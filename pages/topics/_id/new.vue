@@ -1,10 +1,176 @@
 <template>
-  <h1>Create an article about this topic</h1>
+  <div>
+    <create-article collection="article" type="create" :params="{data:article}">
+      <template v-slot="{writeFB}">
+        <div>
+          <v-container>
+            <v-row dense v-if="!valid">
+              <v-alert border="left" color="red " dark>Article title can't be empty</v-alert>
+            </v-row>
+            <v-row dense>
+              <v-col cols="12" sm="12" md="9" class="white bs-border">
+                <v-card color="white" elevation="0">
+                  <v-tabs v-model="tab" background-color="transparent" color="purple" grow>
+                    <v-tab v-for="item in tabItems" :key="item.title">{{ item.title }}</v-tab>
+                  </v-tabs>
+                  <v-tabs-items v-model="tab">
+                    <v-tab-item v-for="item in tabItems" :key="item.title">
+                      <div>
+                        <v-container>
+                          <v-row dense>
+                            <v-col cols="12" sm="12" class="pa-sm-3 pa-md-6">
+                              <component
+                                v-bind:is="item.component"
+                                :article="article"
+                                :file="file"
+                                @articleChanged="listenArticleChange"
+                                @fileChaged="listenFileChange"
+                              ></component>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                      </div>
+                    </v-tab-item>
+                  </v-tabs-items>
+                </v-card>
+              </v-col>
+              <v-col cols="12" sm="0" md="3"></v-col>
+            </v-row>
+            <v-row dense>
+              <v-col cols="12" sm="12" md="9">
+                <div>
+                  <v-btn
+                    color="purple"
+                    class="white--text"
+                    depressed
+                    :loading="loading"
+                    @click="createArticle(writeFB)"
+                  >Publish</v-btn>
+                  <v-btn
+                    depressed
+                    color="indigo lighten-4"
+                    class="white--text"
+                    @click="cancelArticle"
+                  >Cancel</v-btn>
+                </div>
+              </v-col>
+            </v-row>
+          </v-container>
+        </div>
+      </template>
+    </create-article>
+  </div>
 </template>
 
 <script>
-export default {};
+import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
+import ArticleForm from "@/components/Form/ArticleForm";
+import ArticlePreview from "@/components/Article/ArticlePreview";
+import { defaultArticleObjFB } from "@/utils/constants";
+import { isFile } from "@/utils/utils";
+import { fileUpload } from "@/services/Firebase/file";
+import { mapState, mapGetters } from "vuex";
+export default {
+  layout: "form",
+  components: {
+    articleForm: ArticleForm,
+    articlePreview: ArticlePreview,
+    "create-article": WriteModelFB,
+  },
+  middleware: ["auth"],
+  data() {
+    return {
+      tab: null,
+      article: { ...defaultArticleObjFB() },
+      file: {},
+      valid: true,
+      loading: false,
+      tabItems: [
+        {
+          title: "Write",
+          component: "articleForm",
+        },
+        {
+          title: "Preview",
+          component: "articlePreview",
+        },
+      ],
+    };
+  },
+  methods: {
+    listenArticleChange(article) {
+      this.article = article;
+    },
+    listenFileChange(file) {
+      this.file = file;
+    },
+    createArticle(callback) {
+      let vm = this;
+      vm.loading = true;
+      vm.valid = true;
+      vm.article.topics = vm.topicID;
+      //terminate if title is empty
+      if (!vm.article.title) {
+        vm.loading = false;
+        vm.valid = false;
+        return;
+      }
+      //update the image only when user choose it
+      // console.log("vm file", this.file);
+      // console.log("file empty", isEmptyObj(this.file));
+      if (isFile(this.file)) {
+        fileUpload({
+          folder: "articles",
+          file: this.file,
+          id: this.article.photo.id,
+          success,
+        });
+      } else {
+        success("");
+      }
+      //function invocation context of success will be in the fileUpload function
+      function success(url) {
+        vm.article.photo.url = url;
+        vm.loading = false;
+        return callback().then((res) => {
+          //add article id to topics kids
+          let topic = { ...vm.topic };
+          topic.kids.push(res.id);
+          //update the topic kids
+          return vm.$store
+            .dispatch("topic/updateTopic", { data: topic, id: topic.id })
+            .then(() => {
+              vm.$router.push({
+                name: "by-id",
+                params: { by: res.by, id: res.id },
+              });
+            });
+        });
+      }
+    },
+    cancelArticle() {
+      this.$router.push("/");
+    },
+  },
+  created() {
+    this.article.by = this.by;
+  },
+  computed: {
+    ...mapState({
+      by: (state) => state.user.user.uid,
+    }),
+    ...mapGetters({
+      getTopicByID: "topic/getTopicByID",
+    }),
+    topicID() {
+      return this.$route.params.id;
+    },
+    topic() {
+      return this.getTopicByID(this.topicID);
+    },
+  },
+};
 </script>
 
 <style>
-</style>
+</style> 

@@ -84,6 +84,7 @@ export function defaultTopicObjFB() {
         "https://blogs.sas.com/content/sastraining/files/2015/03/black_background.png"
     },
     members: [],
-    name: ""
+    name: "",
+    kids: []
   };
 }

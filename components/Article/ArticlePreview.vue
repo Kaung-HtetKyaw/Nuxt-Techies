@@ -36,6 +36,7 @@
 
         <v-sheet
           height="400px"
+          v-if="article.photo.url"
           :style="{
             backgroundImage: `url(${article.photo.url})`,
             

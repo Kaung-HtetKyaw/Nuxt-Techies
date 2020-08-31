@@ -66,6 +66,7 @@
             >Delete</v-btn>
           </div>
           <v-sheet
+            v-if="article.photo.url"
             height="400px"
             :style="{
             backgroundImage: `url(${article.photo.url})`,
@@ -133,7 +134,7 @@
               <h3 class="text-h4 text-center font-weight-bold">Read Next</h3>
             </v-col>
           </v-row>
-          <v-row dense >
+          <v-row dense>
             <v-col cols="12" sm="12">
               <related-articles :articleToExclude="article">
                 <template v-slot="{loading,relatedArticles}">

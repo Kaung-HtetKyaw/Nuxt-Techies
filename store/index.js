@@ -14,6 +14,7 @@ export const actions = {
   async nuxtServerInit({ dispatch }, user) {
     dispatch("tag/fetchAllTags", { root: true });
     dispatch("authStateListener", user);
+    dispatch("topic/fetchAllTopics", { root: true });
   },
   async authStateListener({ dispatch }, user) {
     if (user.authUser) {
