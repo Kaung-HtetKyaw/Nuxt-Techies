@@ -113,3 +113,17 @@ export function randomItems([...arr], n = 1) {
   }
   return arr.slice(0, n);
 }
+
+export function getArticleCoversID(articles) {
+  let cover_id;
+  if (Array.isArray(articles)) {
+    articles.forEach(article => {
+      if (article.photo.url) {
+        cover_id.push(article.photo.id);
+      }
+    });
+  } else {
+    cover_id = articles.photo.url ? articles.photo.id : "";
+  }
+  return cover_id;
+}
