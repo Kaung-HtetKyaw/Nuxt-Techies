@@ -4,7 +4,8 @@ import {
   createArticle,
   updateArticle,
   fetchArticle,
-  deleteArticle
+  deleteArticle,
+  deleteArticles
 } from "@/services/Firebase/article";
 import { replaceByID, removeByID } from "@/utils/utils";
 
@@ -28,8 +29,10 @@ export const mutations = {
   UPDATE_ARTICLE(state, { article }) {
     replaceByID(state.articles, article);
   },
-  DELETE_ARTICLE(state, { id }) {
-    removeByID(state.articles, id);
+  DELETE_ARTICLE(state, { ids }) {
+    ids.forEach(id => {
+      removeByID(state.articles, id);
+    });
     state.article = {};
   },
   SET_LAST_VISIBLE(state, lastVisible) {
@@ -91,8 +94,9 @@ export const actions = {
     });
   },
   deleteArticle({ commit }, params) {
-    return deleteArticle(params.id).then(() => {
-      commit("DELETE_ARTICLE", { id: params.id });
+    const ids = Array.isArray(params.id) ? params.id : [params.id];
+    return deleteArticles(ids).then(() => {
+      commit("DELETE_ARTICLE", { ids });
     });
   },
   likeArticle({ commit, getters }, { id, by }) {

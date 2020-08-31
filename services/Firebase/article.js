@@ -130,3 +130,7 @@ export function deleteArticle(id) {
     .doc(id)
     .delete();
 }
+
+export function deleteArticles(ids) {
+  return Promise.all(ids.map(id => deleteArticle(id)));
+}
