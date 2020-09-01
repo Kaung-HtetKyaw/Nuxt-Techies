@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container>
+    <v-container class="pa-0">
       <v-row dense>
         <v-col cols="12" sm="12">
           <author-profile :id="by">
@@ -15,11 +15,11 @@
       </v-row>
       <v-row dense class="my-6">
         <v-col cols="12" sm="12" md="2"></v-col>
-        <v-col cols="12" md="8" sm="12" class="pt-0">
+        <v-col cols="12" md="8" sm="12" class="pa-0">
           <article-list :lazy="true" :params="{type:'user',param:by}">
             <template v-slot="{ articles, lazyLoadArticles, loading }">
-              <v-container class="px-0 pt-0">
-                <v-col cols="12" sm="12" class="pt-0">
+              <v-container class="px-0 pa-0">
+                <v-col cols="12" sm="12" class="pa-0">
                   <v-container class="px-0 pt-0">
                     <v-row dense v-if="articles.length>0">
                       <v-col

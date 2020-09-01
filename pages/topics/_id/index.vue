@@ -7,6 +7,31 @@
             <topic-card :topic="topic"></topic-card>
             <div>
               <v-container class="pa-0">
+                <v-row dense v-if="!!user">
+                  <v-col cosl="12" sm="12">
+                    <v-card outlined rounded height="100px" class="bs-border">
+                      <div class="full-height d-flex justify-center align-center">
+                        <v-list-item class="d-flex justify-center align-center">
+                          <nuxt-link :to="{ name: 'by', params: { by: user.uid } }">
+                            <v-avatar size="40">
+                              <img :src="user.photo.url" :alt="user.displayName" />
+                            </v-avatar>
+                          </nuxt-link>
+
+                          <v-list-item-title class="ml-4 body-1">
+                            <v-btn
+                              nuxt
+                              :to="{name:'topics-id-new',params:{id:topic.id}}"
+                              color="grey lighten-2"
+                              block
+                              depressed
+                            >Creat an article</v-btn>
+                          </v-list-item-title>
+                        </v-list-item>
+                      </div>
+                    </v-card>
+                  </v-col>
+                </v-row>
                 <v-row dense>
                   <v-col cols="12" sm="12" md="4">
                     <about-card :topic="topic"></about-card>
@@ -78,6 +103,7 @@ import UserModel from "@/components/Author/UserModelFB";
 import TopicAboutCard from "@/components/Topics/TopicAboutCard";
 import { mapState, mapGetters } from "vuex";
 import { fetchArticlesByID } from "@/services/Firebase/article";
+import { authHydrated } from "@/mixins/Hydrated";
 export default {
   components: {
     "article-list": ArticleListModel,
@@ -86,6 +112,7 @@ export default {
     "author-card": UserModel,
     "about-card": TopicAboutCard,
   },
+  mixins: [authHydrated],
   async fetch() {
     if (!this.topic) {
       return this.$store.dispatch("topic/fetchAllTopics");
