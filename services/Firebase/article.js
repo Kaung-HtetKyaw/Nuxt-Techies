@@ -9,7 +9,8 @@ let fetchMethods = {
   all: fetchAll,
   tag: fetchTag,
   user: fetchUser,
-  popular: fetchPopular
+  popular: fetchPopular,
+  topic: fetchTopic
 };
 
 export function fetchArticle(id) {
@@ -68,6 +69,14 @@ export function fetchUser({ param }) {
     .collection("articles")
     .orderBy("timestamp", "desc")
     .where("by", "==", param);
+}
+
+export function fetchTopic({ param }) {
+  return firebase
+    .firestore()
+    .collection("articles")
+    .orderBy("timestamp", "desc")
+    .where("topics", "==", param);
 }
 
 export function normalizeArticles(articles) {

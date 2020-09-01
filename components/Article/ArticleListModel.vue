@@ -9,7 +9,9 @@ export default {
       type: Object,
       required: true,
       validator: function (value) {
-        return ["all", "user", "tag", "popular"].indexOf(value.type) !== -1;
+        return (
+          ["all", "user", "tag", "popular", "topic"].indexOf(value.type) !== -1
+        );
       },
     },
   },

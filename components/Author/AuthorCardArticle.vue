@@ -17,9 +17,7 @@
                   class="text-center text-md-left text-sm-subtitle-1 text-md-h5 font-weight-medium purple--text"
                 >{{author.displayName}}</p>
 
-                <div
-                  class="d-flex flex-column justify-center align-center align-md-start font-italic"
-                >
+                <div class="d-flex flex-column justify-center align-center align-md-start">
                   <p>{{author.bio}}</p>
 
                   <div v-if="!!user">
