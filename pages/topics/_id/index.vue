@@ -1,13 +1,10 @@
 <template>
   <div>
-    <v-container>
+    <v-container class="pa-0">
       <v-row dense>
-        <v-col cols="12" sm="12" md="10" offset-md="1">
+        <v-col cols="12" sm="12" md="12">
           <div v-if="!$fetchState.pending">
-            <h1>{{topic.name}}</h1>
-            <v-btn nuxt :to="{name:'topics-id-new',params:{id:topicID}}">Create an article</v-btn>
-            <v-btn nuxt :to="{name:'topics-id-edit',params:{id:topicID}}">Edit a topic</v-btn>
-            <v-btn nuxt :to="{name:'topics-id-delete',params:{id:topicID}}">Delete a topic</v-btn>
+            <topic-card :topic="topic"></topic-card>
             <div>
               <h1>Articles</h1>
               <article-list :lazy="true" :params="{type:'topic',param:topicID}">
@@ -41,11 +38,13 @@
 
 <script>
 import ArticleListModel from "@/components/Article/ArticleListModel";
+import TopicCardDetail from "@/components/Topics/TopicCardDetail";
 import { mapState, mapGetters } from "vuex";
 import { fetchArticlesByID } from "@/services/Firebase/article";
 export default {
   components: {
     "article-list": ArticleListModel,
+    "topic-card": TopicCardDetail,
   },
   async fetch() {
     if (!this.topic) {
