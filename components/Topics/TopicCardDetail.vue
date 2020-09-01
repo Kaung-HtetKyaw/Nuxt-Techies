@@ -73,19 +73,10 @@
         </v-card-actions>-->
       </div>
     </v-card>
-    <author-card :id="topic.about.by">
-      <template v-slot="{data:creator,loading:fetchingCreator}">
-        <div>
-          <span v-if="fetchingCreator">#Loading.....</span>
-          <span v-else>{{creator.displayName}}</span>
-        </div>
-      </template>
-    </author-card>
   </div>
 </template>
 
 <script>
-import UserModel from "@/components/Author/UserModelFB";
 import FollowBtn from "@/components/Button/FollowTopicsModelBtn";
 import { authHydrated } from "@/mixins/Hydrated";
 import { timeAgo } from "@/utils/utils";
@@ -97,7 +88,6 @@ export default {
     },
   },
   components: {
-    "author-card": UserModel,
     "follow-btn": FollowBtn,
   },
   mixins: [authHydrated],

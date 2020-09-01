@@ -36,7 +36,7 @@
                               :key="article.id"
                               cols="12"
                               sm="12"
-                              class="pt-0"
+                              class="pa-0"
                             >
                               <article-card :article="article" />
                             </v-col>
