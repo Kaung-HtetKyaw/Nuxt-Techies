@@ -6,7 +6,12 @@
           <author-profile :id="by">
             <template v-slot="{data:author,loading:loadingAuthor}">
               <div>
-                <h1 v-if="loadingAuthor">#Loading.....</h1>
+                <div v-if="loadingAuthor">
+                  <content-placeholders :rounded="true">
+                    <content-placeholders-img />
+                    <content-placeholders-heading />
+                  </content-placeholders>
+                </div>
                 <profile-card v-else :author="author" />
               </div>
             </template>

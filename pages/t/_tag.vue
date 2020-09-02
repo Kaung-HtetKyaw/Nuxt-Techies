@@ -51,7 +51,7 @@
                       </v-col>
                     </v-row>
                     <v-row dense v-if="empty">
-                      <empty-aler></empty-aler>
+                      <empty-alert></empty-alert>
                     </v-row>
                   </v-container>
                 </v-col>

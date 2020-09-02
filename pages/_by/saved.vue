@@ -26,9 +26,9 @@
                 </p>
               </div>
               <div class="my-4 d-flex justify-sm-center justify-md-start">
-                <router-link :to="{ name: 'postsfeed' }" class="router-link">
+                <nuxt-link to="/" class="router-link">
                   <v-btn small elevation="0" color="info">Posts worth saving</v-btn>
-                </router-link>
+                </nuxt-link>
               </div>
             </v-col>
           </v-row>

@@ -1,6 +1,14 @@
 <template>
   <div>
     <transition-group name="list" tag="div">
+      <v-list-item v-for="(item) in authorityItem" :key="item.title" :to="item.to" router exact>
+        <v-list-item-action>
+          <v-icon>{{ item.icon }}</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title v-text="item.title" />
+        </v-list-item-content>
+      </v-list-item>
       <v-list-item v-for="(item) in items" :key="item.title" :to="item.to" router exact>
         <v-list-item-action>
           <v-icon>{{ item.icon }}</v-icon>
@@ -73,6 +81,13 @@ const defaultItem = [
     to: { name: "topics" },
   },
 ];
+const authorityItem = [
+  {
+    icon: "mdi-account-tie",
+    title: "Admin Dashboard",
+    to: { name: "dashboard" },
+  },
+];
 export default {
   mixins: [authHydrated],
   components: {
@@ -117,6 +132,9 @@ export default {
             },
           ]
         : defaultItem;
+    },
+    authorityItem() {
+      return authorityItem;
     },
   },
 };
