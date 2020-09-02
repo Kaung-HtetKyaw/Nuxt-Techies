@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <v-alert outlined text>
-      <v-icon>mdi-emoticon-sad-outline</v-icon>End of result
-    </v-alert>
+  <div class="full-width d-flex justify-center align-center">
+    <v-alert dense rounded icon="mdi-emoticon-sad-outline" outlined text>End of result</v-alert>
   </div>
 </template>
 

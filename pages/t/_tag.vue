@@ -51,7 +51,7 @@
                       </v-col>
                     </v-row>
                     <v-row dense v-if="empty">
-                      <h1>#Empty.....</h1>
+                      <empty-aler></empty-aler>
                     </v-row>
                   </v-container>
                 </v-col>
@@ -68,11 +68,13 @@
 <script>
 import ArticleListModelFB from "@/components/Article/ArticleListModel";
 import ArticleCard from "@/components/Article/ArticleCardBlockBrief";
+import EmptyAlert from "@/components/Alert/EmptyAlert";
 import { mapGetters } from "vuex";
 export default {
   components: {
     "article-list-model": ArticleListModelFB,
     "article-card": ArticleCard,
+    "empty-alert": EmptyAlert,
   },
   data() {
     return {
