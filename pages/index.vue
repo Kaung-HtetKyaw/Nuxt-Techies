@@ -51,7 +51,7 @@
                           </v-col>
                         </v-row>
                         <v-row dense v-if="empty">
-                          <h1>#Empty.....</h1>
+                          <empty-alert></empty-alert>
                         </v-row>
                       </v-container>
                     </v-col>
@@ -79,6 +79,7 @@ import UserModelFB from "@/components/Author/UserModelFB";
 import TagGroup from "@/components/UI/TagGroup";
 import NavigationDrawer from "@/components/UI/NavigationDrawer";
 import UserAvatar from "@/components/UI/UserAvatarDrawer";
+import EmptyAlert from "@/components/Alert/EmptyAlert";
 import { mapState } from "vuex";
 import { authHydrated } from "@/mixins/Hydrated";
 import { priortizeFollowingArticles } from "@/utils/sort";
@@ -93,6 +94,7 @@ export default {
     "tag-group": TagGroup,
     "user-info": NavigationDrawer,
     "user-avatar": UserAvatar,
+    "empty-alert": EmptyAlert,
   },
   mixins: [authHydrated],
   data() {
