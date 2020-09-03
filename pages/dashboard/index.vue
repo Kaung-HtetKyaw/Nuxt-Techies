@@ -6,6 +6,7 @@
         <div>
           <h1 v-if="loading">#Loading</h1>
           <div v-else>
+            <data-table type="articles" :data="articles"></data-table>
             <h1 v-for="article in articles" :key="article.id">{{article.title}}</h1>
           </div>
         </div>
@@ -16,10 +17,12 @@
 
 <script>
 import ArticleListModel from "@/components/Article/ArticleListModel";
+import DataTable from "@/components/Table/DataTable";
 export default {
   middleware: ["auth", "driver"],
   components: {
     "article-list": ArticleListModel,
+    "data-table": DataTable,
   },
 };
 </script>

@@ -106,10 +106,13 @@ export const actions = {
   },
   followTopic({ commit, state, dispatch }, { topic }) {
     const user = { ...state.user };
+    console.log(user);
     topic.members.push(user.uid);
     user.topics.push(topic.id);
+    //update user
     return updateUser(user).then(() => {
       commit("FOLLOW_TOPIC", { user });
+      //update topic
       return dispatch(
         "topic/updateTopic",
         { data: topic, id: topic.id },

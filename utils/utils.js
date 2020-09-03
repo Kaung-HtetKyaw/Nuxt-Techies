@@ -135,3 +135,29 @@ export function isDriver(user) {
 export function isAdmin(user) {
   return user.claims.a ? true : false;
 }
+
+export function dataItemArticles(items) {
+  let articles = Array.isArray(items) ? [...items] : [{ ...items }];
+  return articles.map(article => {
+    let result = {};
+    result.id = article.id;
+    result.by = article.by;
+    result.title = article.title;
+    result.kids = article.kids.length;
+    result.created = `${timeAgo(article.timestamp)} ago`;
+    return result;
+  });
+}
+
+export function dataItemUsers(items) {
+  let users = Array.isArray(items) ? [...items] : [{ ...items }];
+  return users.map(user => {
+    let result = {};
+    result.id = user.id;
+    result.displayName = user.displayName;
+    result.followers = user.followers;
+    result.followiing = user.followiing;
+    result.joined_at = `${timeAgo(user.joined_at)} ago`;
+    return result;
+  });
+}
