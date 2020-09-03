@@ -44,7 +44,7 @@
             </template>
           </author-profile>
           <div
-            v-if="!!user&&user.uid===article.by"
+            v-if="!!user&&user.uid===article.by||isDriver"
             class="d-flex flex-column justify-space-around align-center my-6"
           >
             <v-btn
@@ -214,9 +214,10 @@ import LikedPeople from "@/components/UI/PeopleListModal";
 import RelatedArticlesModel from "@/components/Article/RelatedArticlesModel";
 import RelatedArticlesCard from "@/components/Article/ArticleCardBlockRelated";
 import { defaultCommentObjFB } from "@/utils/constants";
-import { timeAgo } from "@/utils/utils";
+import { timeAgo, isDriver } from "@/utils/utils";
 import { mapState, mapGetters } from "vuex";
 import { authHydrated } from "@/mixins/Hydrated";
+
 export default {
   components: {
     "vue-markdown": MarkDown,
@@ -282,6 +283,9 @@ export default {
     ...mapGetters({
       getTagByID: "tag/getTagByID",
     }),
+    isDriver() {
+      return isDriver(this.user);
+    },
   },
 };
 </script>

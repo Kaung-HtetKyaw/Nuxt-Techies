@@ -134,7 +134,8 @@ export default {
         : defaultItem;
     },
     authorityItem() {
-      return authorityItem;
+      const user = this.user;
+      return user ? (user.claims.d || user.claims.a ? authorityItem : []) : [];
     },
   },
 };

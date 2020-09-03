@@ -127,3 +127,11 @@ export function getArticleCoversID(articles) {
   }
   return cover_id;
 }
+
+export function isDriver(user) {
+  return user.claims.d ? true : user.claims.a ? true : false;
+}
+
+export function isAdmin(user) {
+  return user.claims.a ? true : false;
+}

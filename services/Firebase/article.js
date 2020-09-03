@@ -31,6 +31,18 @@ export async function fetchArticlesByType({ params, lvState }) {
   return normalizeFetch({ params, lvState });
 }
 
+export function fetchArticlesByLimit(limit) {
+  return firebase
+    .firestore()
+    .collection("articles")
+    .limit(limit)
+    .get()
+    .then(res => {
+      const article = normalizeArticles(res.docs);
+      return article;
+    });
+}
+
 export function fetchAll({ param }) {
   return firebase
     .firestore()
