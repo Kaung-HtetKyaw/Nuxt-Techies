@@ -15,7 +15,7 @@ export const state = () => {
     isAuthenticated: false,
     currentUser: null,
     users: [],
-    lvState: null
+    lastVisible: null
   };
 };
 export const mutations = {
@@ -57,7 +57,7 @@ export const mutations = {
     state.user = user;
   },
   SET_LAST_VISIBLE(state, lvState) {
-    state.lvState = lvState;
+    state.lastVisible = lvState;
   }
 };
 export const actions = {

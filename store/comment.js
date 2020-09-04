@@ -13,7 +13,7 @@ export const strict = false;
 export const state = () => {
   return {
     comments: [],
-    lvState: null
+    lastVisible: null
   };
 };
 
@@ -41,7 +41,7 @@ export const mutations = {
     state.comments = [];
   },
   SET_LAST_VISIBLE(state, lvState) {
-    state.lvState = lvState;
+    state.lastVisible = lvState;
   }
 };
 export const actions = {

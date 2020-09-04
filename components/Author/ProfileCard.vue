@@ -128,8 +128,7 @@ export default {
   mixins: [authHydrated],
   computed: {
     timeAgo() {
-      const dateAsMilliSec = new Date(this.author.joined_at).getTime();
-      return timeAgo(dateAsMilliSec);
+      return timeAgo(user.joined_at);
     },
   },
 };

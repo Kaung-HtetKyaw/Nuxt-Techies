@@ -50,7 +50,6 @@ let limit = 10;
 
 let fetchMethods = {
   all: fetchAll,
-  popular: fetchPopular,
   topic: fetchTopic
 };
 
@@ -65,14 +64,6 @@ export function fetchAll({ param }) {
     .orderBy("joined_at", "desc");
 }
 
-export function fetchPopular() {
-  return firebase
-    .firestore()
-    .collection("users")
-    .orderBy("joined_at", "desc")
-    .orderBy("followers", "desc");
-}
-
 export function fetchTopic({ param }) {
   return firebase
     .firestore()
@@ -82,6 +73,7 @@ export function fetchTopic({ param }) {
 }
 
 function normalizeFetch({ params, lvState }) {
+  console.log("lv", lvState);
   if (lvState) {
     return fetchMethods[params.type]({ param: params.param })
       .startAfter(lvState)
