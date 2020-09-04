@@ -84,7 +84,7 @@ export function createComment(commentData) {
       const comment = commentFactory.createComment({
         data: { id: res.id, ...commentData }
       });
-      console.log("service", comment);
+
       return comment;
     });
 }
@@ -102,7 +102,6 @@ export function updateComment(params) {
 }
 
 export function deleteComment(id) {
-  console.log("servic", id);
   return firebase
     .firestore()
     .collection("comments")

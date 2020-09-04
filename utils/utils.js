@@ -164,7 +164,7 @@ export function dataItemUsers(items) {
 
 export function dataItemComments(items) {
   let comments = Array.isArray(items) ? [...items] : [{ ...items }];
-  console.log("comments: ", comments);
+
   return comments.map(comment => {
     let result = {};
     result.id = comment.id;

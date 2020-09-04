@@ -73,7 +73,6 @@ export function fetchTopic({ param }) {
 }
 
 function normalizeFetch({ params, lvState }) {
-  console.log("lv", lvState);
   if (lvState) {
     return fetchMethods[params.type]({ param: params.param })
       .startAfter(lvState)
