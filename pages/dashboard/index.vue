@@ -5,10 +5,9 @@
       <article-list :lazy="false" :params="{type:'all'}">
         <template v-slot="{articles,loading}">
           <div>
-            <h1 v-if="loading">#Loading</h1>
-            <div v-else>
+            <div>
               <h1 class="text-center my-2">Articles</h1>
-              <data-table type="articles" :data="articles"></data-table>
+              <data-table :loading="loading" type="articles" :data="articles"></data-table>
               <div class="d-flex justify-center align-center my-4">
                 <v-btn
                   nuxt
@@ -28,10 +27,9 @@
       <user-list :lazy="false" :params="{type:'all'}">
         <template v-slot="{users,loading}">
           <div>
-            <h1 v-if="loading">#Loading</h1>
-            <div v-else>
+            <div>
               <h1 class="text-center my-2">Users</h1>
-              <data-table type="users" :data="users"></data-table>
+              <data-table :loading="loading" type="users" :data="users"></data-table>
               <div class="d-flex justify-center align-center my-4">
                 <v-btn
                   nuxt
@@ -46,18 +44,41 @@
         </template>
       </user-list>
     </div>
+    <div class="my-4">
+      <comment-list :lazy="false" :params="{type:'all'}">
+        <template v-slot="{comments,loading}">
+          <div>
+            <div>
+              <h1 class="text-center my-2">Comments</h1>
+              <data-table :loading="loading" type="comments" :data="comments"></data-table>
+              <div class="d-flex justify-center align-center my-4">
+                <v-btn
+                  nuxt
+                  color="purple"
+                  class="white--text"
+                  depressed
+                  :to="{name:'dashboard-comments'}"
+                >See all Comments</v-btn>
+              </div>
+            </div>
+          </div>
+        </template>
+      </comment-list>
+    </div>
   </div>
 </template>
 
 <script>
 import ArticleListModel from "@/components/Article/ArticleListModel";
 import UserListModel from "@/components/CRUD_Model/UserListModel";
+import CommentListModel from "@/components/CRUD_Model/CommentListModel";
 import DataTable from "@/components/Table/DataTable";
 export default {
   middleware: ["auth", "driver"],
   components: {
     "article-list": ArticleListModel,
     "user-list": UserListModel,
+    "comment-list": CommentListModel,
     "data-table": DataTable,
   },
 };

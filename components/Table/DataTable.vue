@@ -1,15 +1,31 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="dataItems"
-    :items-per-page="itemsPerPage"
-    item-key="id"
-    class="elevation-1"
-  ></v-data-table>
+  <div>
+    <v-data-table
+      v-if="loading"
+      :headers="headers"
+      :loading="loading"
+      loading-text="Loading....Please wait"
+      class="elevation-1"
+    ></v-data-table>
+    <v-data-table
+      v-else
+      :headers="headers"
+      :items="dataItems"
+      :items-per-page="itemsPerPage"
+      item-key="id"
+      :loading="loading"
+      loading-text="Loading....Please wait"
+      class="elevation-1"
+    ></v-data-table>
+  </div>
 </template>
 
 <script>
-import { dataItemArticles, dataItemUsers } from "@/utils/utils";
+import {
+  dataItemArticles,
+  dataItemUsers,
+  dataItemComments,
+} from "@/utils/utils";
 export default {
   props: {
     data: {
@@ -23,6 +39,10 @@ export default {
     type: {
       type: String,
       required: true,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -38,6 +58,9 @@ export default {
         case "users":
           dataItems = dataItemUsers(this.data);
           break;
+        case "comments":
+          dataItems = dataItemComments(this.data);
+          break;
       }
       return dataItems;
     },
@@ -49,6 +72,9 @@ export default {
           break;
         case "users":
           headers = userHeaders;
+          break;
+        case "comments":
+          headers = commentHeaders;
           break;
       }
       return headers;
@@ -77,5 +103,17 @@ const userHeaders = [
   { text: "Followers", value: "followers" },
   { text: "Following", value: "following" },
   { text: "Joined at", value: "joined_at" },
+];
+const commentHeaders = [
+  {
+    text: "Comments",
+    align: "start",
+    sortable: true,
+    value: "id",
+  },
+  { text: "By", value: "by" },
+  { text: "Replies", value: "kids" },
+  { text: "Likes", value: "likes" },
+  { text: "Created", value: "created" },
 ];
 </script>

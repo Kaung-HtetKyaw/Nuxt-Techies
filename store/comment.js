@@ -4,18 +4,27 @@ import {
   createComment,
   updateComment,
   deleteComment,
-  deleteComments
+  deleteComments,
+  fetchCommentsByType
 } from "@/services/Firebase/comment";
 import { removeByID, replaceByID } from "@/utils/utils";
 
 export const strict = false;
 export const state = () => {
   return {
-    comments: []
+    comments: [],
+    lvState: null
   };
 };
 
 export const mutations = {
+  FETCH_COMMENTS(state, { comments, lazy }) {
+    if (lazy) {
+      state.comments = state.comments.concat(comments);
+    } else {
+      state.comments = comments;
+    }
+  },
   SET_COMMENTS(state, { comments }) {
     comments.forEach(comment => state.comments.push(comment));
   },
@@ -30,9 +39,29 @@ export const mutations = {
   },
   CLEAR_COMMENTS(state) {
     state.comments = [];
+  },
+  SET_LAST_VISIBLE(state, lvState) {
+    state.lvState = lvState;
   }
 };
 export const actions = {
+  getComments({ commit, state }, { lazy, params }) {
+    if (!lazy) {
+      commit("SET_LAST_VISIBLE", null);
+    }
+    const lvState = state.lastVisible;
+    return fetchCommentsByType({ params, lvState })
+      .then(comments => {
+        //referencing querysnapshot has circular references so it wont work
+        //instead get the data by timestamp
+        if (comments.length > 0) {
+          commit("SET_LAST_VISIBLE", comments[comments.length - 1].timestamp);
+        }
+        commit("FETCH_COMMENTS", { comments, lazy });
+        return comments;
+      })
+      .catch(e => console.log(e));
+  },
   fetchComment({ commit, dispatch }, ids) {
     if (ids.length === 0) {
       return;

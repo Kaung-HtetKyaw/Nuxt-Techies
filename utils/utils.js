@@ -161,3 +161,16 @@ export function dataItemUsers(items) {
     return result;
   });
 }
+
+export function dataItemComments(items) {
+  let comments = Array.isArray(items) ? [...items] : [{ ...items }];
+  console.log("comments: ", comments);
+  return comments.map(comment => {
+    let result = {};
+    result.id = comment.id;
+    result.kids = comment.kids.length;
+    result.likes = comment.likes.length;
+    result.created = `${timeAgo(comment.timestamp)} ago`;
+    return result;
+  });
+}

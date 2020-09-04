@@ -2,6 +2,63 @@ import * as firebase from "firebase/app";
 import "firebase/firestore";
 import commentFactory from "@/utils/factory/comment";
 
+let fetchMethods = {
+  all: fetchAll,
+  user: fetchUser
+};
+const limit = 10;
+export async function fetchCommentsByType({ params, lvState }) {
+  return normalizeFetch({ params, lvState });
+}
+function fetchAll({ param }) {
+  return firebase
+    .firestore()
+    .collection("comments")
+    .orderBy("timestamp", "desc");
+}
+
+export function fetchUser({ param }) {
+  return firebase
+    .firestore()
+    .collection("articles")
+    .orderBy("timestamp", "desc")
+    .where("by", "==", param);
+}
+
+function normalizeFetch({ params, lvState }) {
+  if (lvState) {
+    return fetchMethods[params.type]({ param: params.param })
+      .startAfter(lvState)
+      .limit(limit)
+      .get()
+      .then(response => {
+        const comments = normalizeComments(response.docs);
+
+        return comments;
+      });
+  }
+  return fetchMethods[params.type]({ param: params.param })
+    .limit(limit)
+    .get()
+    .then(response => {
+      const comments = normalizeComments(response.docs);
+      return comments;
+    });
+}
+
+export function normalizeComments(comments) {
+  if (Array.isArray(comments)) {
+    let arr = [];
+    comments.forEach(comment => {
+      let comment_obj = commentFactory.createComment({ data: comment });
+      arr.push({ ...comment_obj });
+    });
+    return arr;
+  }
+  const comment = commentFactory.createComment({ data: comments });
+  return comment;
+}
+
 export function fetchComment(id) {
   return firebase
     .firestore()
