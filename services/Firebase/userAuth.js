@@ -46,6 +46,78 @@ export function currentUserFB() {
 }
 
 //fetch user
+let limit = 10;
+
+let fetchMethods = {
+  all: fetchAll,
+  popular: fetchPopular,
+  topic: fetchTopic
+};
+
+export async function fetchUsersByType({ params, lvState }) {
+  return normalizeFetch({ params, lvState });
+}
+
+export function fetchAll({ param }) {
+  return firebase
+    .firestore()
+    .collection("users")
+    .orderBy("joined_at", "desc");
+}
+
+export function fetchPopular() {
+  return firebase
+    .firestore()
+    .collection("users")
+    .orderBy("joined_at", "desc")
+    .orderBy("followers", "desc");
+}
+
+export function fetchTopic({ param }) {
+  return firebase
+    .firestore()
+    .collection("users")
+    .orderBy("joined_at", "desc")
+    .where("topics", "array-contains", param);
+}
+
+function normalizeFetch({ params, lvState }) {
+  if (lvState) {
+    return fetchMethods[params.type]({ param: params.param })
+      .startAfter(lvState)
+      .limit(limit)
+      .get()
+      .then(response => {
+        const users = normalizeUsers(response.docs);
+
+        return users;
+      });
+  }
+  return fetchMethods[params.type]({ param: params.param })
+    .limit(limit)
+    .get()
+    .then(response => {
+      const users = normalizeUsers(response.docs);
+
+      return users;
+    });
+}
+
+export function normalizeUsers(users) {
+  if (Array.isArray(users)) {
+    let arr = [];
+    users.forEach(user => {
+      console.log(user.data());
+      let user_obj = userFactory.createUser({ data: user });
+      arr.push({ ...user_obj });
+    });
+    return arr;
+  }
+
+  const user = userFactory.createUser({ data: users });
+  return user;
+}
+
 export function fetchUser(id) {
   return firebase
     .firestore()

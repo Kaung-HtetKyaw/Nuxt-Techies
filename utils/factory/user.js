@@ -18,9 +18,16 @@ class UserFactory {
 
 class FireBase {
   constructor(data) {
-    this.normalizeUser(data);
-    this.photo.url = data.photoURL;
-    this.joined_at = data.metadata.creationTime;
+    if (typeof data.data === "function") {
+      this.normalizeUser(data.data());
+    } else {
+      this.normalizeUser(data);
+    }
+
+    this.photo.url = this.photo.url ? this.photo.url : data.photoURL;
+    this.joined_at = this.joined_at
+      ? this.joined_at
+      : data.metadata.creationTime;
   }
   normalizeUser(data) {
     const keys = Object.keys(data);

@@ -110,11 +110,19 @@ function normalizeFetch({ params, lvState }) {
     return fetchMethods[params.type]({ param: params.param })
       .startAfter(lvState)
       .limit(limit)
-      .get();
+      .get()
+      .then(response => {
+        const articles = normalizeArticles(response.docs);
+        return articles;
+      });
   }
   return fetchMethods[params.type]({ param: params.param })
     .limit(limit)
-    .get();
+    .get()
+    .then(response => {
+      const articles = normalizeArticles(response.docs);
+      return articles;
+    });
 }
 
 //*Create Methods

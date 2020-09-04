@@ -2,16 +2,30 @@ import {
   fetchUser,
   createUser,
   updateUser,
-  updateUsers
+  updateUsers,
+  fetchUsersByType
 } from "@/services/Firebase/userAuth";
 
 import userFactory from "@/utils/factory/user";
 import { removeByID } from "~/utils/utils";
 
 export const state = () => {
-  return { user: null, isAuthenticated: false, currentUser: null, users: [] };
+  return {
+    user: null,
+    isAuthenticated: false,
+    currentUser: null,
+    users: [],
+    lvState: null
+  };
 };
 export const mutations = {
+  SET_USERS(state, { users, lazy }) {
+    if (lazy) {
+      state.users = state.users.concat(users);
+    } else {
+      state.users = users;
+    }
+  },
   SET_AUTH_USER(state, user) {
     state.user = user;
   },
@@ -41,9 +55,29 @@ export const mutations = {
   },
   UNFOLLOW_TOPIC(state, { user }) {
     state.user = user;
+  },
+  SET_LAST_VISIBLE(state, lvState) {
+    state.lvState = lvState;
   }
 };
 export const actions = {
+  getUsers({ commit, state }, { lazy, params }) {
+    if (!lazy) {
+      commit("SET_LAST_VISIBLE", null);
+    }
+    const lvState = state.lastVisible;
+    return fetchUsersByType({ params, lvState })
+      .then(users => {
+        //referencing querysnapshot has circular references so it wont work
+        //instead get the data by timestamp
+        if (users.length > 0) {
+          commit("SET_LAST_VISIBLE", users[users.length - 1].joined_at);
+        }
+        commit("SET_USERS", { users, lazy });
+        return users;
+      })
+      .catch(e => console.log(e));
+  },
   signIn({ commit }, { user }) {
     return fetchUser(user.uid).then(response => {
       if (!!response) {

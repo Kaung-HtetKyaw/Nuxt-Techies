@@ -155,9 +155,10 @@ export function dataItemUsers(items) {
     let result = {};
     result.id = user.id;
     result.displayName = user.displayName;
-    result.followers = user.followers;
-    result.followiing = user.followiing;
-    result.joined_at = `${timeAgo(user.joined_at)} ago`;
+    result.followers = user.followers.length;
+    result.following = user.following.length;
+    console.log(user);
+    result.joined_at = `${timeAgo(new Date(user.joined_at).getTime())} ago`;
     return result;
   });
 }

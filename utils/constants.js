@@ -38,6 +38,7 @@ export const defaultUserObjFB = {
   topics: [],
   uid: "",
   type: "user",
+  joined_at: Date.now(),
   profile_url: {
     facebook: "",
     github: "",

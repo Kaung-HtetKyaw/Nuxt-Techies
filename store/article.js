@@ -54,8 +54,7 @@ export const actions = {
     }
     const lvState = state.lastVisible;
     return fetchArticlesByType({ params, lvState })
-      .then(response => {
-        const articles = normalizeArticles(response.docs);
+      .then(articles => {
         //referencing querysnapshot has circular references so it wont work
         //instead get the data by timestamp
         if (articles.length > 0) {
