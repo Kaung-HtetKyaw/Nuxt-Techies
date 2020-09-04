@@ -107,7 +107,6 @@ export function normalizeUsers(users) {
   if (Array.isArray(users)) {
     let arr = [];
     users.forEach(user => {
-      console.log(user.data());
       let user_obj = userFactory.createUser({ data: user });
       arr.push({ ...user_obj });
     });

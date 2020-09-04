@@ -157,7 +157,6 @@ export function dataItemUsers(items) {
     result.displayName = user.displayName;
     result.followers = user.followers.length;
     result.following = user.following.length;
-    console.log(user);
     result.joined_at = `${timeAgo(new Date(user.joined_at).getTime())} ago`;
     return result;
   });
