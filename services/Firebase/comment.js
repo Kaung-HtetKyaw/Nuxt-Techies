@@ -1,6 +1,7 @@
 import * as firebase from "firebase/app";
 import "firebase/firestore";
 import commentFactory from "@/utils/factory/comment";
+import { normalizeDataFB, normalizeFetchFB } from "@/utils/fb";
 
 let fetchMethods = {
   all: fetchAll,
@@ -8,7 +9,7 @@ let fetchMethods = {
 };
 const limit = 10;
 export async function fetchCommentsByType({ params, lvState }) {
-  return normalizeFetch({ params, lvState });
+  return normalizeFetchFB({ params, lvState }, fetchMethods, "comment", 10);
 }
 function fetchAll({ param }) {
   return firebase
@@ -23,40 +24,6 @@ export function fetchUser({ param }) {
     .collection("articles")
     .orderBy("timestamp", "desc")
     .where("by", "==", param);
-}
-
-function normalizeFetch({ params, lvState }) {
-  if (lvState) {
-    return fetchMethods[params.type]({ param: params.param })
-      .startAfter(lvState)
-      .limit(limit)
-      .get()
-      .then(response => {
-        const comments = normalizeComments(response.docs);
-
-        return comments;
-      });
-  }
-  return fetchMethods[params.type]({ param: params.param })
-    .limit(limit)
-    .get()
-    .then(response => {
-      const comments = normalizeComments(response.docs);
-      return comments;
-    });
-}
-
-export function normalizeComments(comments) {
-  if (Array.isArray(comments)) {
-    let arr = [];
-    comments.forEach(comment => {
-      let comment_obj = commentFactory.createComment({ data: comment });
-      arr.push({ ...comment_obj });
-    });
-    return arr;
-  }
-  const comment = commentFactory.createComment({ data: comments });
-  return comment;
 }
 
 export function fetchComment(id) {
@@ -81,9 +48,10 @@ export function createComment(commentData) {
     .collection("comments")
     .add({ ...commentData })
     .then(res => {
-      const comment = commentFactory.createComment({
-        data: { id: res.id, ...commentData }
-      });
+      const comment = normalizeDataFB(
+        { id: res.id, ...commentData },
+        "comment"
+      );
 
       return comment;
     });
@@ -95,7 +63,7 @@ export function updateComment(params) {
     .doc(params.id)
     .set({ ...params.data })
     .then(() => {
-      const comment = commentFactory.createComment({ data: params.data });
+      const comment = normalizeDataFB({ ...params.data }, "comment");
       return comment;
     })
     .catch(e => console.log(e));

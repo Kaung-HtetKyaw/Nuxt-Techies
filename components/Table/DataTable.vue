@@ -26,6 +26,7 @@ import {
   dataItemUsers,
   dataItemComments,
   dataItemReports,
+  dataItemTags,
 } from "@/utils/utils";
 export default {
   props: {
@@ -65,6 +66,9 @@ export default {
         case "reports":
           dataItems = dataItemReports(this.data);
           break;
+        case "tags":
+          dataItems = dataItemTags(this.data);
+          break;
       }
       return dataItems;
     },
@@ -82,6 +86,9 @@ export default {
           break;
         case "reports":
           headers = reportHeaders;
+          break;
+        case "tags":
+          headers = tagHeaders;
           break;
       }
       return headers;
@@ -134,5 +141,15 @@ const reportHeaders = [
   { text: "Reported Item", value: "reported_item" },
   { text: "Reported Type", value: "reported_type" },
   { text: "Created", value: "timestamp" },
+];
+const tagHeaders = [
+  {
+    text: "Tags",
+    align: "start",
+    sortable: true,
+    value: "id",
+  },
+  { text: "Text Color", value: "text_color" },
+  { text: "Bg Color", value: "bg_color" },
 ];
 </script>

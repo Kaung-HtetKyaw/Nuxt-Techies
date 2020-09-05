@@ -128,7 +128,7 @@ export default {
   mixins: [authHydrated],
   computed: {
     timeAgo() {
-      return timeAgo(user.joined_at);
+      return timeAgo(this.author.joined_at);
     },
   },
 };

@@ -86,6 +86,27 @@
         </template>
       </report-list>
     </div>
+    <div class="my-4">
+      <tag-list :lazy="false" :params="{type:'all'}">
+        <template v-slot="{tags,loading}">
+          <div>
+            <div>
+              <h1 class="text-center my-2">Tags</h1>
+              <data-table :loading="loading" type="tags" :data="tags"></data-table>
+              <div class="d-flex justify-center align-center my-4">
+                <v-btn
+                  nuxt
+                  color="purple"
+                  class="white--text"
+                  depressed
+                  :to="{name:'dashboard-tags'}"
+                >See all Tags</v-btn>
+              </div>
+            </div>
+          </div>
+        </template>
+      </tag-list>
+    </div>
   </div>
 </template>
 
@@ -94,6 +115,7 @@ import ArticleListModel from "@/components/Article/ArticleListModel";
 import UserListModel from "@/components/CRUD_Model/UserListModel";
 import CommentListModel from "@/components/CRUD_Model/CommentListModel";
 import ReportListModel from "@/components/CRUD_Model/ReportListModel";
+import TagListModel from "@/components/CRUD_Model/TagListModel";
 import DataTable from "@/components/Table/DataTable";
 export default {
   middleware: ["auth", "driver"],
@@ -102,6 +124,7 @@ export default {
     "user-list": UserListModel,
     "comment-list": CommentListModel,
     "report-list": ReportListModel,
+    "tag-list": TagListModel,
     "data-table": DataTable,
   },
 };

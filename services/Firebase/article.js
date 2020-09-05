@@ -1,6 +1,7 @@
 import * as firebase from "firebase/app";
 import "firebase/firestore";
 import articleFactory from "@/utils/factory/articles";
+import { normalizeDataFB, normalizeFetchFB } from "@/utils/fb";
 
 //*Fetch Methods
 let limit = 10;
@@ -20,7 +21,7 @@ export function fetchArticle(id) {
     .doc(id)
     .get()
     .then(res => {
-      const article = normalizeArticles(res);
+      const article = normalizeDataFB(res, "article");
       return article;
     });
 }
@@ -28,7 +29,7 @@ export function fetchArticlesByID(ids) {
   return Promise.all(ids.map(id => fetchArticle(id)));
 }
 export async function fetchArticlesByType({ params, lvState }) {
-  return normalizeFetch({ params, lvState });
+  return normalizeFetchFB({ params, lvState }, fetchMethods, "article", 10);
 }
 
 export function fetchArticlesByLimit(limit) {
@@ -38,7 +39,7 @@ export function fetchArticlesByLimit(limit) {
     .limit(limit)
     .get()
     .then(res => {
-      const article = normalizeArticles(res.docs);
+      const article = normalizeDataFB(res.docs, "article");
       return article;
     });
 }
@@ -71,7 +72,7 @@ export function fetchTags(tags) {
     .where("tags", "array-contains-any", tags)
     .get()
     .then(response => {
-      const article = normalizeArticles(response.docs);
+      const article = normalizeDataFB(response.docs, "article");
       return article;
     });
 }
@@ -91,40 +92,6 @@ export function fetchTopic({ param }) {
     .where("topics", "==", param);
 }
 
-export function normalizeArticles(articles) {
-  if (Array.isArray(articles)) {
-    let arr = [];
-    articles.forEach(article => {
-      let article_obj = articleFactory.createArticle({ data: article });
-      arr.push({ ...article_obj });
-    });
-    return arr;
-  }
-
-  const article = articleFactory.createArticle({ data: articles });
-  return article;
-}
-
-function normalizeFetch({ params, lvState }) {
-  if (lvState) {
-    return fetchMethods[params.type]({ param: params.param })
-      .startAfter(lvState)
-      .limit(limit)
-      .get()
-      .then(response => {
-        const articles = normalizeArticles(response.docs);
-        return articles;
-      });
-  }
-  return fetchMethods[params.type]({ param: params.param })
-    .limit(limit)
-    .get()
-    .then(response => {
-      const articles = normalizeArticles(response.docs);
-      return articles;
-    });
-}
-
 //*Create Methods
 
 export function createArticle(params) {
@@ -133,7 +100,10 @@ export function createArticle(params) {
     .collection("articles")
     .add({ ...params.data })
     .then(res => {
-      const article = normalizeArticles({ id: res.id, ...params.data });
+      const article = normalizeDataFB(
+        { id: res.id, ...params.data },
+        "article"
+      );
       return article;
     });
 }

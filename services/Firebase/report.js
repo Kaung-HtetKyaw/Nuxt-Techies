@@ -1,6 +1,7 @@
 import * as firebase from "firebase/app";
 import "firebase/firestore";
 import reportFactory from "@/utils/factory/report";
+import { normalizeDataFB, normalizeFetchFB } from "@/utils/fb";
 
 let fetchMethods = {
   all: fetchAll,
@@ -8,7 +9,7 @@ let fetchMethods = {
 };
 const limit = 10;
 export async function fetchReportsByType({ params, lvState }) {
-  return normalizeFetch({ params, lvState });
+  return normalizeFetchFB({ params, lvState }, fetchMethods, "report", 10);
 }
 function fetchAll({ param }) {
   return firebase
@@ -25,40 +26,6 @@ export function fetchUser({ param }) {
     .where("by", "==", param);
 }
 
-function normalizeFetch({ params, lvState }) {
-  if (lvState) {
-    return fetchMethods[params.type]({ param: params.param })
-      .startAfter(lvState)
-      .limit(limit)
-      .get()
-      .then(response => {
-        const reports = normalizeComments(response.docs);
-
-        return reports;
-      });
-  }
-  return fetchMethods[params.type]({ param: params.param })
-    .limit(limit)
-    .get()
-    .then(response => {
-      const reports = normalizeComments(response.docs);
-      return reports;
-    });
-}
-
-export function normalizeComments(reports) {
-  if (Array.isArray(reports)) {
-    let arr = [];
-    reports.forEach(report => {
-      let report_obj = reportFactory.createReport({ data: report });
-      arr.push({ ...report_obj });
-    });
-    return arr;
-  }
-  const report = reportFactory.createReport({ data: reports });
-  return report;
-}
-
 export function fetchReport(id) {
   return firebase
     .firestore()
@@ -66,9 +33,7 @@ export function fetchReport(id) {
     .doc(id)
     .get()
     .then(response => {
-      const report = reportFactory.createReport({
-        data: response
-      });
+      const report = normalizeDataFB(response, "report");
       return report;
     });
 }
@@ -81,9 +46,7 @@ export function createReport(reportData) {
     .collection("reports")
     .add({ ...reportData })
     .then(res => {
-      const report = reportFactory.createReport({
-        data: { id: res.id, ...reportData }
-      });
+      const report = normalizeDataFB({ id: res.id, ...reportData }, "report");
 
       return report;
     });

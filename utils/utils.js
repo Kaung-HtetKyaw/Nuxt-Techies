@@ -179,12 +179,26 @@ export function dataItemComments(items) {
 export function dataItemReports(items) {
   let reports = Array.isArray(items) ? [...items] : [{ ...items }];
   return reports.map(report => {
+    console.log(report);
     let result = {};
     result.id = report.id;
     result.by = report.by;
     result.reported_type = report.reported_item.type;
     result.reported_item = report.reported_item.id;
     result.timestamp = `${timeAgo(report.timestamp)} ago`;
+    return result;
+  });
+}
+
+export function dataItemTags(items) {
+  let tags = Array.isArray(items) ? [...items] : [{ ...items }];
+  return tags.map(tag => {
+    let result = {};
+    result.id = tag.id;
+    result.by = tag.name;
+    result.text_color = tag.text_color;
+    result.bg_color = tag.bg_color;
+
     return result;
   });
 }
