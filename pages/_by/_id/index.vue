@@ -284,7 +284,7 @@ export default {
       getTagByID: "tag/getTagByID",
     }),
     isDriver() {
-      return isDriver(this.user);
+      return this.user ? isDriver(this.user) : false;
     },
   },
 };
