@@ -56,7 +56,6 @@ export function normalizeFetchFB(
       .limit(limit)
       .get()
       .then(response => {
-        console.log(`${type}: `, response.docs);
         const items = normalizeDataFB(response.docs, type);
         return items;
       });

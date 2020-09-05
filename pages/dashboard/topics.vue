@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>This is admin tag page</h1>
-    <h1 v-for="tag in tags" :key="tag.id">{{tag.name}}</h1>
+    <h1>This is admin topic page</h1>
+    <h1 v-for="topic in topics" :key="topic.id">{{topic.name}}</h1>
   </div>
 </template>
 
@@ -11,7 +11,7 @@ export default {
   middleware: ["auth", "admin"],
   computed: {
     ...mapState({
-      tags: (state) => state.tag.tags,
+      topics: (state) => state.topic.topics,
     }),
   },
 };

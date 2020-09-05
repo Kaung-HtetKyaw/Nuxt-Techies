@@ -87,25 +87,34 @@
       </report-list>
     </div>
     <div class="my-4">
-      <tag-list :lazy="false" :params="{type:'all'}">
-        <template v-slot="{tags,loading}">
-          <div>
-            <div>
-              <h1 class="text-center my-2">Tags</h1>
-              <data-table :loading="loading" type="tags" :data="tags"></data-table>
-              <div class="d-flex justify-center align-center my-4">
-                <v-btn
-                  nuxt
-                  color="purple"
-                  class="white--text"
-                  depressed
-                  :to="{name:'dashboard-tags'}"
-                >See all Tags</v-btn>
-              </div>
-            </div>
-          </div>
-        </template>
-      </tag-list>
+      <div>
+        <h1 class="text-center my-2">Tags</h1>
+        <data-table type="tags" :data="tags"></data-table>
+        <div class="d-flex justify-center align-center my-4">
+          <v-btn
+            nuxt
+            color="purple"
+            class="white--text"
+            depressed
+            :to="{name:'dashboard-tags'}"
+          >See all Tags</v-btn>
+        </div>
+      </div>
+    </div>
+    <div class="my-4">
+      <div>
+        <h1 class="text-center my-2">Topics</h1>
+        <data-table type="topics" :data="topics"></data-table>
+        <div class="d-flex justify-center align-center my-4">
+          <v-btn
+            nuxt
+            color="purple"
+            class="white--text"
+            depressed
+            :to="{name:'dashboard-topics'}"
+          >See all Topics</v-btn>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -117,6 +126,7 @@ import CommentListModel from "@/components/CRUD_Model/CommentListModel";
 import ReportListModel from "@/components/CRUD_Model/ReportListModel";
 import TagListModel from "@/components/CRUD_Model/TagListModel";
 import DataTable from "@/components/Table/DataTable";
+import { mapState } from "vuex";
 export default {
   middleware: ["auth", "driver"],
   components: {
@@ -126,6 +136,12 @@ export default {
     "report-list": ReportListModel,
     "tag-list": TagListModel,
     "data-table": DataTable,
+  },
+  computed: {
+    ...mapState({
+      tags: (state) => state.tag.tags.slice(0, 10),
+      topics: (state) => state.topic.topics.slice(0, 10),
+    }),
   },
 };
 </script>

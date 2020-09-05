@@ -27,7 +27,8 @@ import {
   dataItemComments,
   dataItemReports,
   dataItemTags,
-} from "@/utils/utils";
+  dataItemTopics,
+} from "@/utils/dataTable";
 export default {
   props: {
     data: {
@@ -69,6 +70,9 @@ export default {
         case "tags":
           dataItems = dataItemTags(this.data);
           break;
+        case "topics":
+          dataItems = dataItemTopics(this.data);
+          break;
       }
       return dataItems;
     },
@@ -89,6 +93,9 @@ export default {
           break;
         case "tags":
           headers = tagHeaders;
+          break;
+        case "topics":
+          headers = topicHeaders;
           break;
       }
       return headers;
@@ -151,5 +158,18 @@ const tagHeaders = [
   },
   { text: "Text Color", value: "text_color" },
   { text: "Bg Color", value: "bg_color" },
+];
+const topicHeaders = [
+  {
+    text: "Topics",
+    align: "start",
+    sortable: true,
+    value: "id",
+  },
+  { text: "Name", value: "name" },
+  { text: "By", value: "by" },
+  { text: "Members", value: "members" },
+  { text: "Articles", value: "kids" },
+  { text: "Created", value: "created" },
 ];
 </script>
