@@ -19,7 +19,6 @@ class CommentFactory {
 class FireBase {
   constructor(data) {
     this.id = data.id;
-
     if (typeof data.data === "function") {
       this.normalizeComment(data.data());
     } else {
@@ -27,7 +26,6 @@ class FireBase {
     }
   }
   normalizeComment(data) {
-    console.log("data", data);
     const keys = Object.keys(data);
     for (const key in defaultComment) {
       if (keys.includes(key)) {

@@ -65,6 +65,27 @@
         </template>
       </comment-list>
     </div>
+    <div class="my-4">
+      <report-list :lazy="false" :params="{type:'all'}">
+        <template v-slot="{reports,loading}">
+          <div>
+            <div>
+              <h1 class="text-center my-2">Reports</h1>
+              <data-table :loading="loading" type="reports" :data="reports"></data-table>
+              <div class="d-flex justify-center align-center my-4">
+                <v-btn
+                  nuxt
+                  color="purple"
+                  class="white--text"
+                  depressed
+                  :to="{name:'dashboard-reports'}"
+                >See all Reports</v-btn>
+              </div>
+            </div>
+          </div>
+        </template>
+      </report-list>
+    </div>
   </div>
 </template>
 
@@ -72,6 +93,7 @@
 import ArticleListModel from "@/components/Article/ArticleListModel";
 import UserListModel from "@/components/CRUD_Model/UserListModel";
 import CommentListModel from "@/components/CRUD_Model/CommentListModel";
+import ReportListModel from "@/components/CRUD_Model/ReportListModel";
 import DataTable from "@/components/Table/DataTable";
 export default {
   middleware: ["auth", "driver"],
@@ -79,6 +101,7 @@ export default {
     "article-list": ArticleListModel,
     "user-list": UserListModel,
     "comment-list": CommentListModel,
+    "report-list": ReportListModel,
     "data-table": DataTable,
   },
 };

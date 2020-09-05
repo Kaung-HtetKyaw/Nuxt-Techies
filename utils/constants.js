@@ -89,3 +89,17 @@ export function defaultTopicObjFB() {
     kids: []
   };
 }
+
+export function defaultReportObj() {
+  const timestamp = Date.now();
+  return {
+    by: "",
+    message: "",
+    reported_item: {
+      id: "",
+      type: ""
+    },
+    timestamp,
+    type: "report"
+  };
+}

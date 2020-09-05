@@ -153,7 +153,7 @@ export function dataItemUsers(items) {
   let users = Array.isArray(items) ? [...items] : [{ ...items }];
   return users.map(user => {
     let result = {};
-    result.id = user.id;
+    result.uid = user.uid;
     result.displayName = user.displayName;
     result.followers = user.followers.length;
     result.following = user.following.length;
@@ -168,9 +168,23 @@ export function dataItemComments(items) {
   return comments.map(comment => {
     let result = {};
     result.id = comment.id;
+    result.by = comment.by;
     result.kids = comment.kids.length;
     result.likes = comment.likes.length;
     result.created = `${timeAgo(comment.timestamp)} ago`;
+    return result;
+  });
+}
+
+export function dataItemReports(items) {
+  let reports = Array.isArray(items) ? [...items] : [{ ...items }];
+  return reports.map(report => {
+    let result = {};
+    result.id = report.id;
+    result.by = report.by;
+    result.reported_type = report.reported_item.type;
+    result.reported_item = report.reported_item.id;
+    result.timestamp = `${timeAgo(report.timestamp)} ago`;
     return result;
   });
 }

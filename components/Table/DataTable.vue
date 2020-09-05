@@ -25,6 +25,7 @@ import {
   dataItemArticles,
   dataItemUsers,
   dataItemComments,
+  dataItemReports,
 } from "@/utils/utils";
 export default {
   props: {
@@ -61,6 +62,9 @@ export default {
         case "comments":
           dataItems = dataItemComments(this.data);
           break;
+        case "reports":
+          dataItems = dataItemReports(this.data);
+          break;
       }
       return dataItems;
     },
@@ -75,6 +79,9 @@ export default {
           break;
         case "comments":
           headers = commentHeaders;
+          break;
+        case "reports":
+          headers = reportHeaders;
           break;
       }
       return headers;
@@ -99,7 +106,7 @@ const userHeaders = [
     sortable: true,
     value: "displayName",
   },
-  { text: "ID", value: "id" },
+  { text: "ID", value: "uid" },
   { text: "Followers", value: "followers" },
   { text: "Following", value: "following" },
   { text: "Joined at", value: "joined_at" },
@@ -115,5 +122,17 @@ const commentHeaders = [
   { text: "Replies", value: "kids" },
   { text: "Likes", value: "likes" },
   { text: "Created", value: "created" },
+];
+const reportHeaders = [
+  {
+    text: "Reports",
+    align: "start",
+    sortable: true,
+    value: "id",
+  },
+  { text: "By", value: "by" },
+  { text: "Reported Item", value: "reported_item" },
+  { text: "Reported Type", value: "reported_type" },
+  { text: "Created", value: "timestamp" },
 ];
 </script>

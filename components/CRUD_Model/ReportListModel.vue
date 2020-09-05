@@ -1,7 +1,6 @@
 <script>
 import { mapState } from "vuex";
 import { authHydrated } from "@/mixins/Hydrated";
-import { priortizeFollowingArticles } from "@/utils/sort";
 export default {
   props: {
     lazy: { type: Boolean },
@@ -9,21 +8,19 @@ export default {
       type: Object,
       required: true,
       validator: function (value) {
-        return (
-          ["all", "user", "tag", "popular", "topic"].indexOf(value.type) !== -1
-        );
+        return ["all", "user"].indexOf(value.type) !== -1;
       },
     },
   },
   mixins: [authHydrated],
   async fetch() {
-    const articles = await this.$store.dispatch("article/getArticles", {
+    const reports = await this.$store.dispatch("report/getReports", {
       params: this.params,
       lazy: this.lazyLoad,
     });
 
     //set lazy loading state
-    if (articles.length > 0) {
+    if (reports.length > 0) {
       if (this.lazy) {
         this.lazyLoad = this.lazy;
       }
@@ -32,7 +29,7 @@ export default {
       this.empty = true;
     }
     //emit ready custom event to parent
-    this.$emit("dataReady", this.articles);
+    this.$emit("dataReady", this.storedReports);
   },
   data() {
     return {
@@ -42,7 +39,7 @@ export default {
   },
 
   methods: {
-    lazyLoadArticles(isVisible) {
+    lazyLoadReports(isVisible) {
       if (isVisible && !this.$fetchState.pending && !this.empty) {
         this.$fetch();
       }
@@ -57,23 +54,14 @@ export default {
   },
   computed: {
     ...mapState({
-      storedArticles: (state) => state.article.articles,
+      storedReports: (state) => state.report.reports,
     }),
-    articles() {
-      if (this.user && (this.user.claims.a || this.claims.d)) {
-        return priortizeFollowingArticles(
-          this.storedArticles,
-          this.user.following
-        );
-      }
-      return this.storedArticles;
-    },
   },
   render() {
     return this.$scopedSlots.default({
       loading: this.$fetchState.pending,
-      articles: this.articles,
-      lazyLoadArticles: this.lazyLoadArticles,
+      reports: this.storedReports,
+      lazyLoadReports: this.lazyLoadReports,
       empty: this.empty,
     });
   },
