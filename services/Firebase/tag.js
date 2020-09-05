@@ -1,6 +1,5 @@
 import * as firebase from "firebase/app";
 import "firebase/firestore";
-import tagFactory from "@/utils/factory/tag";
 import { normalizeDataFB, normalizeFetchFB } from "@/utils/fb";
 
 export function fetchAllTags() {
@@ -17,10 +16,38 @@ export function fetchAllTags() {
 let fetchMethods = {
   all: fetchAll
 };
-const limit = 10;
+
 export async function fetchTagsByType({ params, lvState }) {
   return normalizeFetchFB({ params, lvState }, fetchMethods, "tag", 10);
 }
 function fetchAll({ param }) {
   return firebase.firestore().collection("tags");
+}
+
+export function createTag(params) {
+  return firebase
+    .firestore()
+    .collection("tags")
+    .add({ ...params.data })
+    .then(res => {
+      const tag = normalizeDataFB({ id: res.id, ...params.data }, "tag");
+      console.log("normalize", tag);
+      return tag;
+    });
+}
+
+export function updateTag(params) {
+  return firebase
+    .firestore()
+    .collection("tags")
+    .doc(params.id)
+    .set({ ...params.data });
+}
+
+export function deleteTag(id) {
+  return firebase
+    .firestore()
+    .collection("tags")
+    .doc(id)
+    .delete();
 }

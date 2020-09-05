@@ -1,6 +1,7 @@
 import * as firebase from "firebase/app";
 import "firebase/firestore";
 import topicFactory from "@/utils/factory/topic";
+import { normalizeDataFB, normalizeFetchFB } from "@/utils/fb";
 
 export function fetchAllTopics() {
   return firebase
@@ -8,7 +9,7 @@ export function fetchAllTopics() {
     .collection("topics")
     .get()
     .then(response => {
-      const topics = normalizeTopics(response.docs);
+      const topics = normalizeDataFB(response.docs, "topic");
       return topics;
     });
 }
@@ -19,7 +20,7 @@ export function createTopic(params) {
     .collection("topics")
     .add({ ...params.data })
     .then(res => {
-      const topic = normalizeTopics({ id: res.id, ...params.data });
+      const topic = normalizeDataFB({ id: res.id, ...params.data }, "topic");
       return topic;
     });
 }
@@ -38,18 +39,4 @@ export function deleteTopic(id) {
     .collection("topics")
     .doc(id)
     .delete();
-}
-
-export function normalizeTopics(topics) {
-  if (Array.isArray(topics)) {
-    let arr = [];
-    topics.forEach(topic => {
-      let topic_obj = topicFactory.createTopic({ data: topic });
-      arr.push({ ...topic_obj });
-    });
-    return arr;
-  }
-
-  const topic = topicFactory.createTopic({ data: topics });
-  return topic;
 }

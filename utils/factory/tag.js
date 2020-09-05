@@ -1,5 +1,5 @@
-import { defaultTagObj } from "@/utils/constants";
-let defaultTag = defaultTagObj;
+import { defaultTagObjFB } from "@/utils/constants";
+let defaultTag = defaultTagObjFB();
 
 class TagFactory {
   constructor() {
@@ -17,6 +17,7 @@ class TagFactory {
 
 class FireBase {
   constructor(data) {
+    console.log(data);
     this.id = data.id;
     if (typeof data.data === "function") {
       this.normalizeTag(data.data());
@@ -26,11 +27,11 @@ class FireBase {
   }
   normalizeTag(data) {
     const keys = Object.keys(data);
-    for (const key in defaultTagObj) {
+    for (const key in defaultTag) {
       if (keys.includes(key)) {
         this[key] = data[key];
       } else {
-        this[key] = defaultTagObj[key];
+        this[key] = defaultTag[key];
       }
     }
   }

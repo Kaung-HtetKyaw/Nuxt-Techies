@@ -1,4 +1,11 @@
-import { fetchAllTags, fetchTagsByType } from "@/services/Firebase/tag";
+import {
+  fetchAllTags,
+  fetchTagsByType,
+  createTag,
+  updateTag,
+  deleteTag
+} from "@/services/Firebase/tag";
+import { replaceByID, removeByID } from "@/utils/utils";
 
 export const strict = false;
 export const state = () => {
@@ -15,6 +22,15 @@ export const mutations = {
     } else {
       state.tags = tags;
     }
+  },
+  ADD_TAG(state, { tag }) {
+    state.tags.push(tag);
+  },
+  UPDATE_TAG(state, { tag }) {
+    replaceByID(state.tags, tag);
+  },
+  DELETE_TAG(state, { id }) {
+    removeByID(state.tags, id);
   },
   SET_LAST_VISIBLE(state, lvState) {
     state.lastVisible = lvState;
@@ -43,6 +59,23 @@ export const actions = {
     return fetchAllTags().then(tags => {
       commit("SET_TAGS", { tags });
       return tags;
+    });
+  },
+  createTag({ commit }, params) {
+    return createTag(params).then(tag => {
+      commit("ADD_TAG", { tag });
+      return tag;
+    });
+  },
+  updateTag({ commit }, params) {
+    return updateTag(params).then(() => {
+      commit("UPDATE_TAG", { tag: { ...params.data } });
+      return { ...params.data };
+    });
+  },
+  deleteTag({ commit, getters }, params) {
+    return deleteTag(params.id).then(() => {
+      commit("DELETE_TOPIC", { id: params.id });
     });
   }
 };

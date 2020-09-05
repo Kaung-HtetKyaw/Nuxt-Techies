@@ -48,15 +48,22 @@ export const defaultUserObjFB = {
   }
 };
 
-export const defaultTagObj = {
-  bg_color: "#333",
-  text_color: "#eee",
-  kids: [],
-  name: "No Tag",
-  type: "tag",
-  description: "",
-  logo: ""
-};
+export function defaultTagObjFB() {
+  const timestamp = Date.now();
+  const id = uniqueId();
+  return {
+    name: "",
+    description: "",
+    bg_color: "#333",
+    text_color: "#eee",
+    timestamp,
+    logo: {
+      id,
+      url:
+        "https://i7.uihere.com/icons/468/830/426/hashtag-39e4f6e81bcca2594958c95d0122711a.png"
+    }
+  };
+}
 
 export function defaultCommentObjFB() {
   const timestamp = Date.now();

@@ -4,8 +4,8 @@
       <v-row dense class="white pa-6" :style="{boxShadow:`5px 6px 0px ${tag.bg_color}`}">
         <v-col cols="12" sm="12" md="12" class="d-flex justify-center align-center">
           <div class="d-flex flex-row align-center">
-            <span v-if="!!tag.logo" class="pa-4">
-              <v-img width="80px" :src="tag.logo"></v-img>
+            <span v-if="!!tag.logo.url" class="pa-4">
+              <v-img width="80px" :src="tag.logo.url"></v-img>
             </span>
             <span
               class="text-h5 text-md-h3 font-weight-medium text-capitalize black--text pa-4"
@@ -86,6 +86,7 @@ export default {
       getTagByID: "tag/getTagByID",
     }),
     tag() {
+      console.log(this.$route.params.tag);
       return this.getTagByID(this.$route.params.tag);
     },
   },

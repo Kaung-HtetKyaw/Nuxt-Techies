@@ -87,6 +87,11 @@ const authorityItem = [
     title: "Admin Dashboard",
     to: { name: "dashboard" },
   },
+  {
+    icon: "#",
+    title: "Create tag",
+    to: { name: "dashboard-tags-new" },
+  },
 ];
 export default {
   mixins: [authHydrated],

@@ -40,7 +40,7 @@ export function normalizeDataFB(items, type) {
     });
     return arr;
   }
-  const item = commentFactory.createComment({ data: items });
+  const item = factory[`create${capitalize(type)}`]({ data: items });
   return item;
 }
 
@@ -65,7 +65,6 @@ export function normalizeFetchFB(
     .get()
     .then(response => {
       const items = normalizeDataFB(response.docs, type);
-      console.log(`${type}: `, items);
       return items;
     });
 }
