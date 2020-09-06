@@ -86,7 +86,6 @@ export default {
       getTagByID: "tag/getTagByID",
     }),
     tag() {
-      console.log(this.$route.params.tag);
       return this.getTagByID(this.$route.params.tag);
     },
   },

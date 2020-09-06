@@ -59,8 +59,7 @@ export function defaultTagObjFB() {
     timestamp,
     logo: {
       id,
-      url:
-        "https://i7.uihere.com/icons/468/830/426/hashtag-39e4f6e81bcca2594958c95d0122711a.png"
+      url: ""
     }
   };
 }

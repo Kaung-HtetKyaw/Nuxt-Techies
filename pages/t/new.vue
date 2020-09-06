@@ -45,12 +45,16 @@
                     </div>
                     <img :src="tag.logo.url" :alt="tag.name" />
                   </div>
-                  <div>
-                    <h1>Text</h1>
+                  <div class="full-width d-flex flex-column justify-center align-center">
+                    <h1
+                      class="text-h6 text-md-h4 text-center font-weight-medium my-4"
+                    >Select Logo Text Color</h1>
                     <color-picker @colorPick="setTextColor"></color-picker>
                   </div>
-                  <div>
-                    <h1>Bg</h1>
+                  <div class="full-width d-flex flex-column justify-center align-center">
+                    <h1
+                      class="text-h6 text-md-h4 text-center font-weight-medium my-4"
+                    >Select Logo Background Color</h1>
                     <color-picker @colorPick="setBackgroundColor"></color-picker>
                   </div>
                 </div>

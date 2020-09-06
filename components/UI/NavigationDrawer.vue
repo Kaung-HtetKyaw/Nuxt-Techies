@@ -90,7 +90,7 @@ const authorityItem = [
   {
     icon: "#",
     title: "Create tag",
-    to: { name: "dashboard-tags-new" },
+    to: { name: "t-new" },
   },
 ];
 export default {

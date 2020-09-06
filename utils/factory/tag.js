@@ -17,7 +17,6 @@ class TagFactory {
 
 class FireBase {
   constructor(data) {
-    console.log(data);
     this.id = data.id;
     if (typeof data.data === "function") {
       this.normalizeTag(data.data());
