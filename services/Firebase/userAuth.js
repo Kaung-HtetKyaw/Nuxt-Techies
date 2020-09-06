@@ -20,21 +20,21 @@ export function signInFB(types) {
 
 export function signInGoogleFB() {
   var provider = new firebase.auth.GoogleAuthProvider();
-  return firebase.auth().signInWithPopup(provider);
+  return firebase.auth().signInWithRedirect(provider);
 }
 
 export function signInTwitterFB() {
   let provider = new firebase.auth.TwitterAuthProvider();
-  firebase.auth().signInWithPopup(provider);
+  firebase.auth().signInWithRedirect(provider);
 }
 export function signInGithubFB() {
   let provider = new firebase.auth.GithubAuthProvider();
-  return firebase.auth().signInWithPopup(provider);
+  return firebase.auth().signInWithRedirect(provider);
 }
 
 export function signInFacebookFB() {
   let provider = new firebase.auth.FacebookAuthProvider();
-  return firebase.auth().signInWithPopup(provider);
+  return firebase.auth().signInWithRedirect(provider);
 }
 
 export function signOutFB() {
