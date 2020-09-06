@@ -2,8 +2,8 @@
   <nuxt-link :to="{ name: 't-tag', params: { tag: tag } }">
     <span
       :style="{
-                backgroundColor: `${tagObject.bg_color}`,
-                color: `${tagObject.text_color}`
+                backgroundColor: `${tagObject.bg_color.hex}`,
+                color: `${tagObject.text_color.hex}`
               }"
       class="hover-blue rounded px-2 py-1 font-weight-medium"
     >{{ tagObject.name }}</span>

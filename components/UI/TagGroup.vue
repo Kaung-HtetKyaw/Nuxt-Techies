@@ -14,7 +14,7 @@
           router
           exact
         >
-          <v-btn block text :color="tag.bg_color" class="px-0">
+          <v-btn block text :color="tag.bg_color.hex" class="px-0">
             <v-list-item-content class="pa-0">
               <v-list-item-title class="text-capitalize text-left">#{{ tag.name }}</v-list-item-title>
             </v-list-item-content>

@@ -3,7 +3,7 @@
     <nuxt-link class="hover-blue" :to="{name:'t-tag',params:{tag:tag.id}}">
       <v-card
         class="mx-auto full-height rounded pa-4"
-        :style="{borderTop:`10px solid ${tag.bg_color}`}"
+        :style="{borderTop:`10px solid ${tag.bg_color.hex}`}"
         outlined
       >
         <v-list-item>

@@ -7,10 +7,17 @@
 <script>
 export default {
   props: {
-    type: {
-      type: String,
-      default: "hex",
+    color: {
+      type: Object,
+      required: false,
     },
+  },
+  created() {
+    if (this.color) {
+      console.log(this.picker);
+      this.picker = { ...this.color };
+      console.log(this.picker);
+    }
   },
   data() {
     return {
@@ -19,7 +26,8 @@ export default {
   },
   watch: {
     picker: function (v1, v2) {
-      this.$emit("colorPick", v1[this.type]);
+      console.log(v1);
+      this.$emit("colorPick", v1);
     },
   },
 };

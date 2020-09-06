@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container>
-      <v-row dense class="white pa-6" :style="{boxShadow:`5px 6px 0px ${tag.bg_color}`}">
+      <v-row dense class="white pa-6" :style="{boxShadow:`5px 6px 0px ${tag.bg_color.hex}`}">
         <v-col cols="12" sm="12" md="12" class="d-flex justify-center align-center">
           <div class="d-flex flex-row align-center">
             <span v-if="!!tag.logo.url" class="pa-4">
@@ -11,6 +11,29 @@
               class="text-h5 text-md-h3 font-weight-medium text-capitalize black--text pa-4"
             >{{tag.name}}</span>
           </div>
+        </v-col>
+        <v-col
+          v-if="isDriver"
+          cols="12"
+          sm="12"
+          class="d-flex flex-column flex-md-row justify-center justify-md-center align-center align-md-center"
+        >
+          <v-btn
+            text
+            depressed
+            color="purple"
+            nuxt
+            :to="{name:'t-tag-edit',params:{tag:tagID}}"
+            class="my-2"
+          >Edit</v-btn>
+          <v-btn
+            text
+            depressed
+            color="red"
+            nuxt
+            :to="{name:'t-tag-delete',params:{tag:tagID}}"
+            class="my-2"
+          >Delete</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -70,12 +93,15 @@ import ArticleListModelFB from "@/components/Article/ArticleListModel";
 import ArticleCard from "@/components/Article/ArticleCardBlockBrief";
 import EmptyAlert from "@/components/Alert/EmptyAlert";
 import { mapGetters } from "vuex";
+import { authHydrated } from "@/mixins/Hydrated";
+import { authority } from "@/mixins/authority";
 export default {
   components: {
     "article-list-model": ArticleListModelFB,
     "article-card": ArticleCard,
     "empty-alert": EmptyAlert,
   },
+  mixins: [authHydrated, authority],
   data() {
     return {
       articles: [],
@@ -87,6 +113,9 @@ export default {
     }),
     tag() {
       return this.getTagByID(this.$route.params.tag);
+    },
+    tagID() {
+      return this.$route.params.tag;
     },
   },
 };
