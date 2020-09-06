@@ -6,7 +6,6 @@ import {
 } from "@/services/Firebase/topic";
 import { deleteArticles } from "@/services/Firebase/article";
 import { replaceByID, removeByID } from "@/utils/utils";
-import { updateUser } from "~/services/Firebase/userAuth";
 
 export const strict = false;
 export const state = () => {
@@ -38,6 +37,7 @@ export const actions = {
   },
   createTopic({ commit, rootState, dispatch }, params) {
     const user = { ...rootState.user.user };
+    //follow topic after creation
     params.data.members.push(user.uid);
 
     return createTopic(params).then(topic => {
@@ -53,7 +53,7 @@ export const actions = {
       return { ...params.data };
     });
   },
-  deleteTopic({ commit, getters, dispatch }, params) {
+  deleteTopic({ commit, getters }, params) {
     const topic = { ...getters.getTopicByID(params.id) };
     return deleteTopic(params.id).then(() => {
       commit("DELETE_TOPIC", { id: params.id });

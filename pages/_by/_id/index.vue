@@ -127,7 +127,7 @@
           </template>
         </author-profile>
       </div>
-      <div class="white bs-border my-3 pa-md-8 pa-sm-4">
+      <div v-if="article.tags.length>0" class="white bs-border my-3 pa-md-8 pa-sm-4">
         <v-container>
           <v-row dense>
             <v-col cols="12" sm="12">
@@ -275,6 +275,7 @@ export default {
 
   computed: {
     id() {
+      console.log(this.$route);
       return this.$route.params.id;
     },
     by() {

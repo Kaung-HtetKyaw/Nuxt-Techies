@@ -43,7 +43,7 @@
                         class="text-sm-subtitle-2 text-md-h6 grey--text lighten-1 ml-3"
                       >Add a Logo image</span>
                     </div>
-                    <img :src="tag.logo.url" :alt="tag.name" />
+                    <img :src="tag.logo.url" />
                   </div>
                   <div class="full-width d-flex flex-column justify-center align-center">
                     <h1

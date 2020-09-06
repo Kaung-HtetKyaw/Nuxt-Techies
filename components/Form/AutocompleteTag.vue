@@ -21,7 +21,7 @@
         close
         @click="data.select"
         @click:close="remove(data.item)"
-        :style="{backgroundColor:`${data.item.bg_color}`,color:`${data.item.text_color}`}"
+        :style="{backgroundColor:`${data.item.bg_color.hex}`,color:`${data.item.text_color.hex}`}"
       >{{ data.item.name }}</v-chip>
     </template>
     <template v-slot:item="data">
@@ -31,7 +31,7 @@
       <template v-else>
         <v-list-item-content
           class="bs-border"
-          :style="{backgroundColor:`${data.item.bg_color}`,color:`${data.item.text_color}`}"
+          :style="{backgroundColor:`${data.item.bg_color.hex}`,color:`${data.item.text_color.hex}`}"
         >
           <v-list-item-title class="d-flex justify-center align-center" v-html="data.item.name"></v-list-item-title>
         </v-list-item-content>

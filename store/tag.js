@@ -5,6 +5,7 @@ import {
   updateTag,
   deleteTag
 } from "@/services/Firebase/tag";
+import { fetchArticlesByType } from "@/services/Firebase/article";
 import { replaceByID, removeByID } from "@/utils/utils";
 
 export const strict = false;
@@ -73,9 +74,23 @@ export const actions = {
       return { ...params.data };
     });
   },
-  deleteTag({ commit, getters }, params) {
+  deleteTag({ commit, dispatch }, params) {
+    const tagID = params.id;
     return deleteTag(params.id).then(() => {
-      commit("DELETE_TOPIC", { id: params.id });
+      commit("DELETE_TAG", { id: tagID });
+      return fetchArticlesByType({
+        params: { type: "tag", param: tagID },
+        lvState: false
+      }).then(articles => {
+        articles.forEach(article => {
+          removeByID(article.tags, tagID);
+          dispatch(
+            "article/updateArticle",
+            { data: article, id: article.id },
+            { root: true }
+          );
+        });
+      });
     });
   }
 };

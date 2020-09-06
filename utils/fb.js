@@ -61,7 +61,6 @@ export function normalizeFetchFB(
       });
   }
   return fetchMethods[params.type]({ param: params.param })
-    .limit(limit)
     .get()
     .then(response => {
       const items = normalizeDataFB(response.docs, type);
