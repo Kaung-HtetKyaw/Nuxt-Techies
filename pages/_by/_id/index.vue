@@ -43,28 +43,39 @@
               </div>
             </template>
           </author-profile>
-          <div
-            v-if="!!user&&user.uid===article.by||isDriver"
-            class="d-flex flex-column justify-space-around align-center my-6"
-          >
-            <v-btn
-              color="purple"
-              class="white--text my-3"
-              elevation="0"
-              :ripple="false"
-              nuxt
-              :to="{ name: 'by-id-edit', params: { id, by } }"
-            >Edit</v-btn>
-            <v-btn
-              text
-              color="red"
-              class="white--text my-3"
-              elevation="0"
-              :ripple="false"
-              nuxt
-              :to="{ name: 'by-id-delete', params: { id, by } }"
-            >Delete</v-btn>
+          <div class="d-flex flex-column justify-space-around align-center my-6">
+            <div v-if="!!user&&user.uid===article.by||isDriver">
+              <v-btn
+                color="purple"
+                class="white--text my-3"
+                elevation="0"
+                :ripple="false"
+                nuxt
+                :to="{ name: 'by-id-edit', params: { id, by } }"
+              >Edit</v-btn>
+              <v-btn
+                text
+                color="red"
+                class="white--text my-3"
+                elevation="0"
+                :ripple="false"
+                nuxt
+                :to="{ name: 'by-id-delete', params: { id, by } }"
+              >Delete</v-btn>
+            </div>
+            <div>
+              <v-btn
+                text
+                color="red"
+                class="white--text my-3"
+                elevation="0"
+                :ripple="false"
+                nuxt
+                :to="{ name: 'by-id-report', params: { id, by } }"
+              >Report</v-btn>
+            </div>
           </div>
+
           <v-sheet
             v-if="article.photo.url"
             height="400px"
@@ -275,7 +286,6 @@ export default {
 
   computed: {
     id() {
-      console.log(this.$route);
       return this.$route.params.id;
     },
     by() {

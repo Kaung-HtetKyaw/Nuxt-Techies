@@ -3,7 +3,7 @@
     <nav class="nav-border-bottom">
       <default-nav />
     </nav>
-    <v-main class="bg white ">
+    <v-main class="bg white">
       <v-container>
         <transition name="vertical" mode="out-in">
           <nuxt />
@@ -21,8 +21,9 @@
 import DefaultNav from "@/components/Nav/DefaultNav";
 
 export default {
+  scrollToTop: true,
   components: {
-    DefaultNav
+    DefaultNav,
   },
   data() {
     return {
@@ -34,25 +35,25 @@ export default {
         {
           icon: "mdi-apps",
           title: "Welcome",
-          to: "/"
+          to: "/",
         },
         {
           icon: "mdi-chart-bubble",
           title: "Inspire",
-          to: "/inspire"
+          to: "/inspire",
         },
         {
           icon: "mdi-chart-bubble",
           title: "Test",
-          to: "/test"
-        }
+          to: "/test",
+        },
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: "Vuetify.js"
+      title: "Vuetify.js",
     };
-  }
+  },
 };
 </script>
 <style scoped></style>

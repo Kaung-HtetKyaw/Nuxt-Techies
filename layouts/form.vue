@@ -16,6 +16,7 @@
 <script>
 import PlainNav from "@/components/Nav/PlainNav";
 export default {
+  scrollToTop: true,
   components: {
     "plain-nav": PlainNav,
   },

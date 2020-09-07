@@ -17,7 +17,7 @@
                       <h1
                         class="d-inline-block pa-2 text-h6 text-md-4"
                         :style="
-                  [data.tags.length>0?{backgroundColor:`${getTagByID(data.tags[0]).bg_color}`,color:`${getTagByID(data.tags[0]).text_color}`}:null]
+                  [data.tags.length>0?{backgroundColor:`${getTagByID(data.tags[0]).bg_color.hex}`,color:`${getTagByID(data.tags[0]).text_color.hex}`}:null]
                   "
                       >{{data.title}}</h1>
                     </div>

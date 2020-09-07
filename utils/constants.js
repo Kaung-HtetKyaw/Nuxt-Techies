@@ -103,7 +103,7 @@ export function defaultReportObj() {
     message: "",
     reported_item: {
       id: "",
-      type: ""
+      type: "article"
     },
     timestamp,
     type: "report"

@@ -160,7 +160,6 @@ export default {
     const comment = this.getCommentByID(this.id);
 
     return fetchUser(comment.by).then((res) => {
-      console.log(res);
       const author = res;
       this.comment = comment;
       this.author = author;

@@ -59,8 +59,8 @@ export function dataItemTags(items) {
     let result = {};
     result.id = tag.id;
     result.by = tag.name;
-    result.text_color = tag.text_color;
-    result.bg_color = tag.bg_color;
+    result.text_color = tag.text_color.hex;
+    result.bg_color = tag.bg_color.hex;
 
     return result;
   });

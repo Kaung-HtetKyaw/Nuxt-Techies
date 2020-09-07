@@ -44,10 +44,12 @@ export function createReport(reportData) {
   return firebase
     .firestore()
     .collection("reports")
-    .add({ ...reportData })
+    .add({ ...reportData.data })
     .then(res => {
-      const report = normalizeDataFB({ id: res.id, ...reportData }, "report");
-
+      const report = normalizeDataFB(
+        { id: res.id, ...reportData.data },
+        "report"
+      );
       return report;
     });
 }

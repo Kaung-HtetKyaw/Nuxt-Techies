@@ -1,4 +1,8 @@
-import { fetchReportsByType } from "@/services/Firebase/report";
+import {
+  fetchReportsByType,
+  createReport,
+  deleteReport
+} from "@/services/Firebase/report";
 import { removeByID, replaceByID } from "@/utils/utils";
 
 export const strict = false;
@@ -16,6 +20,9 @@ export const mutations = {
     } else {
       state.reports = reports;
     }
+  },
+  ADD_REPORT(state, { report }) {
+    state.reports.push(report);
   },
   SET_LAST_VISIBLE(state, lvState) {
     state.lastVisible = lvState;
@@ -38,6 +45,12 @@ export const actions = {
         return reports;
       })
       .catch(e => console.log(e));
+  },
+  createReport({ commit }, params) {
+    return createReport(params).then(report => {
+      commit("ADD_REPORT", { report });
+      return report;
+    });
   }
 };
 

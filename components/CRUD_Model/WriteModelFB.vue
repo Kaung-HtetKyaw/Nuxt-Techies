@@ -27,7 +27,6 @@ export default {
     };
   },
   async created() {
-    console.log(this.type);
     if (this.params.id && this.params.fetch) {
       this.loading = true;
       await this.$store

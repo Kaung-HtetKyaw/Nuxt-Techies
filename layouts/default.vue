@@ -20,6 +20,7 @@ import DefaultNav from "@/components/Nav/DefaultNav";
 import Footer from "@/components/UI/Footer";
 
 export default {
+  scrollToTop: true,
   components: {
     DefaultNav,
     Footer,
