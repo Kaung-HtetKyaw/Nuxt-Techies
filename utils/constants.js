@@ -26,7 +26,7 @@ export function defaultArticleObjFB() {
 export const defaultUserObjFB = {
   displayName: "Unknown",
   bio: "",
-  claims: { c: true },
+  claims: { c: true, type: "customer" },
   photo: {
     id: "",
     url:
