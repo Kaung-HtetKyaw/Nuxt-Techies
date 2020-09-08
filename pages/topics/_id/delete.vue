@@ -1,15 +1,45 @@
 <template>
   <div>
-    <h1>Delete a topic</h1>
     <delete-topic type="delete" collection="topic" :params="{id:topicID,fetch:false}">
       <template v-slot="{writeFB}">
         <div>
-          <div>
-            <h1 v-if="deleting">#DELETING........</h1>
-            <h1 v-else>{{topic.name}}</h1>
-          </div>
-
-          <v-btn @click="deleteTopic(writeFB)" :loading="deleting">Delete Topics</v-btn>
+          <v-container class="white bs-border">
+            <v-row dense class="text-center">
+              <v-col cols="12" sm="12" md="8" offset-md="2">
+                <div class="d-flex flex-column justify-center align-center">
+                  <div class="my-2">
+                    <v-container>
+                      <v-row dense class="white">
+                        <v-col cols="12" sm="12" md="12" class="d-flex justify-center align-center">
+                          <img :src="topic.cover.url" :alt="topic.name" />
+                        </v-col>
+                        <v-col cols="12" sm="12" md="12" class="d-flex justify-center align-center">
+                          <h3 class="text-h5 text-md-h4 font-weight-medium">{{topic.name}}</h3>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </div>
+                  <div class="my-2 font-weight-medium">
+                    <h1
+                      class="text-h6 text-md-h5 font-weight-medium"
+                    >Are you sure you want to delete this topic?</h1>
+                    <p
+                      class="text-body-1 opacity-7"
+                    >Deleting a topic will premanently delete all articles for the topic</p>
+                  </div>
+                  <div class="my-2">
+                    <v-btn
+                      color="red"
+                      class="white--text"
+                      depressed
+                      :loading="deleting"
+                      @click="deleteTopic(writeFB)"
+                    >Delete Topic</v-btn>
+                  </div>
+                </div>
+              </v-col>
+            </v-row>
+          </v-container>
         </div>
       </template>
     </delete-topic>

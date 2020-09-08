@@ -89,8 +89,11 @@
               </v-container>
             </div>
           </div>
-          <div v-else>
-            <h1>#Loading</h1>
+          <div v-else class="full-width white">
+            <content-placeholders v-for="n in 3 " :key="n" :rounded="true">
+              <content-placeholders-img />
+              <content-placeholders-text :lines="3" />
+            </content-placeholders>
           </div>
         </v-col>
       </v-row>
