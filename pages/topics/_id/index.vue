@@ -111,6 +111,7 @@ import EmptyAlert from "@/components/Alert/EmptyAlert";
 import { mapState, mapGetters } from "vuex";
 import { fetchArticlesByID } from "@/services/Firebase/article";
 import { authHydrated } from "@/mixins/Hydrated";
+import { clearArticles } from "@/mixins/clearDataBeforeDestroyed";
 export default {
   components: {
     "article-list": ArticleListModel,
@@ -120,7 +121,7 @@ export default {
     "about-card": TopicAboutCard,
     "empty-alert": EmptyAlert,
   },
-  mixins: [authHydrated],
+  mixins: [authHydrated, clearArticles],
   async fetch() {
     if (!this.topic) {
       return this.$store.dispatch("topic/fetchAllTopics");

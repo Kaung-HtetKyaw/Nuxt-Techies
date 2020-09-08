@@ -82,6 +82,7 @@ import UserAvatar from "@/components/UI/UserAvatarDrawer";
 import EmptyAlert from "@/components/Alert/EmptyAlert";
 import { mapState } from "vuex";
 import { authHydrated } from "@/mixins/Hydrated";
+import { clearArticles } from "@/mixins/clearDataBeforeDestroyed";
 import { priortizeFollowingArticles } from "@/utils/sort";
 export default {
   components: {
@@ -96,7 +97,7 @@ export default {
     "user-avatar": UserAvatar,
     "empty-alert": EmptyAlert,
   },
-  mixins: [authHydrated],
+  mixins: [authHydrated, clearArticles],
   data() {
     return { isHydrated: false };
   },

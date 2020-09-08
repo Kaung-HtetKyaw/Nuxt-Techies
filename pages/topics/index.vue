@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1 class="text-center text-md-left">Topics</h1>
     <div v-if="$fetchState.pending" class="full-width white">
       <content-placeholders v-for="n in 3" :key="n" :rounded="true">
         <content-placeholders-img />
@@ -9,6 +8,7 @@
     </div>
 
     <div v-else>
+      <h1 class="text-center text-md-left">Topics</h1>
       <v-container class="px-0">
         <v-row dense>
           <v-col cols="12" sm="12" md="4" v-for="topic in topics" :key="topic.id">

@@ -1,6 +1,6 @@
 <template>
   <v-card class="article-card-block bs-border my-2" outlined>
-    <div v-if="banner&&!!article.topics">
+    <div v-if="banner&&topics.length>0&&!!article.topics">
       <article-banner class="px-4" :topicID="article.topics"></article-banner>
       <v-divider></v-divider>
     </div>
@@ -109,7 +109,7 @@ import { mapGetters } from "vuex";
 import { fetchUser } from "@/services/Firebase/userAuth";
 import { isEmptyObj, timeAgo } from "@/utils/utils";
 import { defaultUserObjFB } from "@/utils/constants";
-import { authHydrated } from "@/mixins/Hydrated";
+import { authHydrated, topicsHydrated } from "@/mixins/Hydrated";
 import LikeBtnFB from "@/components/Button/LikeBtnFB";
 import TagSlider from "@/components/UI/TagSlider";
 import SaveBtn from "@/components/Button/SaveArticleModelFB";
@@ -131,7 +131,7 @@ export default {
     "save-btn": SaveBtn,
     "article-banner": ArticleBanner,
   },
-  mixins: [authHydrated],
+  mixins: [authHydrated, topicsHydrated],
   data() {
     return {
       author: {},

@@ -1,8 +1,10 @@
 <template>
   <div>
     <div class="py-2 text-body-2 font-weight-medium">
-      From
-      <span class="purple--text">{{topic.name}}</span>
+      <nuxt-link :to="{name:'topics-id',params:{id:topicID}}">
+        <span class="black--text">From</span>
+        <span class="purple--text">{{topic.name}}</span>
+      </nuxt-link>
     </div>
   </div>
 </template>
