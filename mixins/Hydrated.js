@@ -38,3 +38,23 @@ export const tagsHydrated = {
     this.isHydrated = true;
   }
 };
+
+export const topicsHydrated = {
+  data() {
+    return {
+      isHydrated: false
+    };
+  },
+  computed: {
+    ...mapState({
+      storedTopics: state => state.topic.topics
+    }),
+    topics() {
+      return this.isHydrated ? this.storedTopics : [];
+    }
+  },
+
+  mounted() {
+    this.isHydrated = true;
+  }
+};

@@ -1,5 +1,10 @@
 <template>
   <v-card class="article-card-block bs-border my-2" outlined>
+    <div v-if="banner&&!!article.topics">
+      <article-banner class="px-4" :topicID="article.topics"></article-banner>
+      <v-divider></v-divider>
+    </div>
+
     <nuxt-link
       :to="{
         name: 'by-id',
@@ -19,7 +24,7 @@
       ></v-sheet>
     </nuxt-link>
 
-    <div class="px-6 py-3">
+    <div class="px-4 py-3">
       <v-card-text class="px-0">
         <div>
           <div v-if="isEmptyObj">
@@ -108,17 +113,23 @@ import { authHydrated } from "@/mixins/Hydrated";
 import LikeBtnFB from "@/components/Button/LikeBtnFB";
 import TagSlider from "@/components/UI/TagSlider";
 import SaveBtn from "@/components/Button/SaveArticleModelFB";
+import ArticleBanner from "@/components/UI/ArticleBanner";
 export default {
   props: {
     article: {
       type: Object,
       required: true,
     },
+    banner: {
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
     "like-btn": LikeBtnFB,
     "tag-slider": TagSlider,
     "save-btn": SaveBtn,
+    "article-banner": ArticleBanner,
   },
   mixins: [authHydrated],
   data() {

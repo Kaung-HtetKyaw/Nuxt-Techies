@@ -38,7 +38,7 @@
                               sm="12"
                               class="pa-0"
                             >
-                              <article-card :article="article" />
+                              <article-card :banner="true" :article="article" />
                             </v-col>
                           </transition-group>
                         </v-row>
