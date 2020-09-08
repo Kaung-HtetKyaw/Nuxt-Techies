@@ -125,9 +125,12 @@
           <template v-slot="{ data: author, loading: loadingAuthor }">
             <div>
               <transition name="fade" mode="out-in">
-                <div v-if="loadingAuthor">
+                <div v-if="loadingAuthor" class="full-width white">
                   <transition name="fade" mode="out-in">
-                    <p>#Loading...</p>
+                    <content-placeholders :rounded="true">
+                      <content-placeholders-img />
+                      <content-placeholders-heading />
+                    </content-placeholders>
                   </transition>
                 </div>
                 <div v-else>
@@ -138,25 +141,32 @@
           </template>
         </author-profile>
       </div>
-      <div v-if="article.tags.length>0" class="white bs-border my-3 pa-md-8 pa-sm-4">
+      <div v-if="article.tags.length>0">
         <v-container>
-          <v-row dense>
-            <v-col cols="12" sm="12">
-              <h3 class="text-h4 text-center font-weight-bold">Read Next</h3>
-            </v-col>
-          </v-row>
           <v-row dense>
             <v-col cols="12" sm="12">
               <related-articles :articleToExclude="article">
                 <template v-slot="{loading,relatedArticles}">
                   <div>
-                    <h1 v-if="loading">#Loading Related Articles...</h1>
+                    <div v-if="loading">
+                      <content-placeholders :rounded="true">
+                        <content-placeholders-img />
+                        <content-placeholders-heading />
+                      </content-placeholders>
+                    </div>
+
                     <div v-else>
-                      <related-articles-card
-                        v-for="relatedArticle in relatedArticles"
-                        :key="relatedArticle.id"
-                        :article="relatedArticle"
-                      ></related-articles-card>
+                      <div
+                        v-if="relatedArticles.length>0"
+                        class="white bs-border my-3 pa-md-8 pa-sm-4"
+                      >
+                        <h3 class="text-h4 text-center font-weight-bold">Read Next</h3>
+                        <related-articles-card
+                          v-for="relatedArticle in relatedArticles"
+                          :key="relatedArticle.id"
+                          :article="relatedArticle"
+                        ></related-articles-card>
+                      </div>
                     </div>
                   </div>
                 </template>

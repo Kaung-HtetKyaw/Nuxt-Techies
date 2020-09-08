@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1>This is tags Page</h1>
+    <h1 class="text-h5 text-md-h3 font-weight-bold">Top Tags</h1>
     <v-container class="px-0">
       <v-row v-if="$fetchState.pending">
-        <v-col cols="12" sm="12" md="4" v-for="i in 12" :key="i">
+        <v-col cols="12" sm="12" md="4" v-for="i in 12" :key="i" class="white">
           <content-placeholders rounded>
             <content-placeholders-img />
             <content-placeholders-text :lines="3" />

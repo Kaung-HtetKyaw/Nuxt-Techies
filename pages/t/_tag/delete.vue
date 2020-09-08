@@ -12,7 +12,7 @@
                       <v-container>
                         <v-row
                           dense
-                          class="white pa-6"
+                          class="white pa-6 bs-border"
                           :style="{boxShadow:`5px 6px 0px ${tag.bg_color.hex}`}"
                         >
                           <v-col

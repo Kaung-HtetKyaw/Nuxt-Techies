@@ -66,7 +66,7 @@
                       </v-col>
                     </v-row>
                     <v-row dense v-if="loading">
-                      <v-col cols="12" sm="12" v-for="i in 10" :key="i">
+                      <v-col cols="12" sm="12" v-for="i in 10" :key="i" class="white">
                         <content-placeholders rounded>
                           <content-placeholders-img />
                           <content-placeholders-text :lines="3" />

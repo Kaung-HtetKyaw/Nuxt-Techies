@@ -7,12 +7,12 @@
       }"
     >
       <v-sheet
+        v-if="article.photo.url"
         height="200px"
         :style="{
           backgroundImage: `url(${
             article.photo.url
-              ? article.photo.url
-              : 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1200px-No_image_available.svg.png'
+             
           })`
         }"
         class="center-background-img"
