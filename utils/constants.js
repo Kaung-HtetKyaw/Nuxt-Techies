@@ -109,3 +109,10 @@ export function defaultReportObj() {
     type: "report"
   };
 }
+
+export const signInLogo = {
+  google:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1004px-Google_%22G%22_Logo.svg.png",
+  facebook: "https://cdn.worldvectorlogo.com/logos/facebook-icon.svg",
+  github: "https://cdn.worldvectorlogo.com/logos/github-icon-1.svg"
+};

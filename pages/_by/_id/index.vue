@@ -43,35 +43,37 @@
             </template>
           </author-profile>
           <div class="d-flex flex-column justify-space-around align-center my-6">
-            <div v-if="!!user&&user.uid===article.by||isDriver">
-              <v-btn
-                color="purple"
-                class="white--text my-3"
-                elevation="0"
-                :ripple="false"
-                nuxt
-                :to="{ name: 'by-id-edit', params: { id, by } }"
-              >Edit</v-btn>
-              <v-btn
-                text
-                color="red"
-                class="white--text my-3"
-                elevation="0"
-                :ripple="false"
-                nuxt
-                :to="{ name: 'by-id-delete', params: { id, by } }"
-              >Delete</v-btn>
-            </div>
-            <div>
-              <v-btn
-                text
-                color="red"
-                class="white--text my-3"
-                elevation="0"
-                :ripple="false"
-                nuxt
-                :to="{ name: 'by-id-report', params: { id, by } }"
-              >Report</v-btn>
+            <div v-if="!!user">
+              <div v-if="user.uid===article.by||isDriver">
+                <v-btn
+                  color="purple"
+                  class="white--text my-3"
+                  elevation="0"
+                  :ripple="false"
+                  nuxt
+                  :to="{ name: 'by-id-edit', params: { id, by } }"
+                >Edit</v-btn>
+                <v-btn
+                  text
+                  color="red"
+                  class="white--text my-3"
+                  elevation="0"
+                  :ripple="false"
+                  nuxt
+                  :to="{ name: 'by-id-delete', params: { id, by } }"
+                >Delete</v-btn>
+              </div>
+              <div>
+                <v-btn
+                  text
+                  color="red"
+                  class="white--text my-3"
+                  elevation="0"
+                  :ripple="false"
+                  nuxt
+                  :to="{ name: 'by-id-report', params: { id, by } }"
+                >Report</v-btn>
+              </div>
             </div>
           </div>
 
