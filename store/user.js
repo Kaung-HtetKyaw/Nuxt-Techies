@@ -7,7 +7,7 @@ import {
 } from "@/services/Firebase/userAuth";
 
 import userFactory from "@/utils/factory/user";
-import { removeByID } from "~/utils/utils";
+import { removeByID, replaceByID } from "~/utils/utils";
 
 export const state = () => {
   return {
@@ -36,7 +36,11 @@ export const mutations = {
     state.isAuthenticated = isAuthenticated;
   },
   UPDATE_USER(state, { user }) {
-    state.user = user;
+    if (state.user.uid === user.uid) {
+      state.user = user;
+    } else {
+      replaceByID(state.users, user, "uid");
+    }
   },
   SAVE_ARTICLE(state, { user }) {
     state.user = user;
@@ -166,5 +170,8 @@ export const actions = {
         { root: true }
       );
     });
+  },
+  changeClaim({ dispatch }, { user }) {
+    dispatch("updateUser", { data: user, id: user.uid });
   }
 };

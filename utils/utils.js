@@ -190,6 +190,10 @@ export function dataItemReports(items) {
   });
 }
 
+export function shuffle(array) {
+  array.sort(() => Math.random() - 0.5);
+}
+
 export function dataItemTags(items) {
   let tags = Array.isArray(items) ? [...items] : [{ ...items }];
   return tags.map(tag => {
@@ -201,4 +205,36 @@ export function dataItemTags(items) {
 
     return result;
   });
+}
+
+export function getUserType(user) {
+  let claim;
+  switch (Object.keys(user.claims)[0]) {
+    case "d":
+      claim = { d: true, type: "driver" };
+      break;
+    case "a":
+      claim = { a: true, type: "admin" };
+      break;
+    default:
+      claim = { c: true, type: "customer" };
+      break;
+  }
+  return claim;
+}
+
+export function typeToClaim(type) {
+  let claim;
+  switch (type) {
+    case "driver":
+      claim = { d: true, type: "driver" };
+      break;
+    case "admin":
+      claim = { a: true, type: "admin" };
+      break;
+    default:
+      claim = { c: true, type: "customer" };
+      break;
+  }
+  return claim;
 }

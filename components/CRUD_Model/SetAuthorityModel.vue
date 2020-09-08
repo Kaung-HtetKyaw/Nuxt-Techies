@@ -1,5 +1,5 @@
 <script>
-import { updateUser } from "@/services/Firebase/userAuth";
+import { typeToClaim } from "@/utils/utils";
 export default {
   props: {
     type: {
@@ -24,29 +24,18 @@ export default {
       let claim = { ...this.claim };
       user.claims = claim;
       this.loading = true;
-      return updateUser(user)
+      return this.$store
+        .dispatch("user/changeClaim", { user })
         .then(() => {
           this.loading = false;
-          this.changedType = this.type;
+          this.$emit("changedClaim", claim);
         })
         .catch((e) => console.log(e));
     },
   },
   computed: {
     claim() {
-      let claim;
-      switch (this.type) {
-        case "driver":
-          claim = { d: true, type: "driver" };
-          break;
-        case "admin":
-          claim = { a: true, type: "admin" };
-          break;
-        default:
-          claim = { c: true, type: "customer" };
-          break;
-      }
-      return claim;
+      return typeToClaim(this.type);
     },
   },
 
@@ -54,7 +43,6 @@ export default {
     return this.$scopedSlots.default({
       loading: this.loading,
       setUserAsAuthority: this.setUserAsAuthority,
-      changedType: this.changedType,
     });
   },
 };

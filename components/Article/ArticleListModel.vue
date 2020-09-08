@@ -60,7 +60,7 @@ export default {
       storedArticles: (state) => state.article.articles,
     }),
     articles() {
-      if (this.user && (this.user.claims.a || this.claims.d)) {
+      if (this.user && (this.user.claims.a || this.user.claims.d)) {
         return priortizeFollowingArticles(
           this.storedArticles,
           this.user.following
