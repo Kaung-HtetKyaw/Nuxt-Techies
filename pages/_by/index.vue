@@ -9,7 +9,7 @@
                 <div v-if="loadingAuthor" class="white">
                   <content-placeholders :rounded="true">
                     <content-placeholders-img />
-                    <content-placeholders-heading />
+                    <content-placeholders-text :lines="3" />
                   </content-placeholders>
                 </div>
                 <profile-card v-else :author="author" />

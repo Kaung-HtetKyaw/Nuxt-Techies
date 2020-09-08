@@ -1,7 +1,13 @@
 <template>
   <div>
     <h1 class="text-center text-md-left">Topics</h1>
-    <h1 v-if="$fetchState.pending">#Loading.......</h1>
+    <div v-if="$fetchState.pending" class="full-width white">
+      <content-placeholders v-for="n in 3" :key="n" :rounded="true">
+        <content-placeholders-img />
+        <content-placeholders-text :lines="3" />
+      </content-placeholders>
+    </div>
+
     <div v-else>
       <v-container class="px-0">
         <v-row dense>

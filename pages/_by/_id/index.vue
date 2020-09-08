@@ -2,7 +2,6 @@
   <div>
     <div v-if="$fetchState.pending">
       <content-placeholders :rounded="true">
-        <content-placeholders-heading />
         <content-placeholders-img />
         <content-placeholders-text :lines="3" />
         <content-placeholders-text :lines="3" />
@@ -151,7 +150,7 @@
                     <div v-if="loading">
                       <content-placeholders :rounded="true">
                         <content-placeholders-img />
-                        <content-placeholders-heading />
+                        <content-placeholders-text :lines="3" />
                       </content-placeholders>
                     </div>
 
