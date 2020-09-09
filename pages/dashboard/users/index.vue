@@ -1,15 +1,17 @@
 <template>
   <div>
-    <h1>This is admin article page</h1>
-
     <user-list :lazy="true" :params="{type:'all'}">
-      <template v-slot="{users,lazyLoadUsers,loading,empty}">
+      <template v-slot="{users,lazyLoadUsers,loading}">
         <div>
-          <h1 v-if="loading">#Loading.....</h1>
-          <div v-else>
+          <div v-if="!loading">
             <v-card
-              v-for="user in users"
+              v-for="(user,i) in users"
               :key="user.uid"
+              v-observe-visibility="
+                              i === users.length - 1
+                                ? lazyLoadUsers
+                                : false
+                            "
               class="mx-auto"
               outlined
               elevation="0"
@@ -21,13 +23,19 @@
                   <v-container>
                     <v-row>
                       <v-col cols="12" sm="12" md="6" class="px-0">
-                        <nuxt-link :to="{name:'by',params:{by:user.uid}}" class="d-inline-block">
+                        <nuxt-link
+                          :to="{name:'dashboard-users-id',params:{id:user.uid}}"
+                          class="d-inline-block"
+                        >
                           <v-list-item-avatar color="grey darken-3">
                             <v-img class="elevation-6" :src="user.photo.url"></v-img>
                           </v-list-item-avatar>
                         </nuxt-link>
 
-                        <nuxt-link :to="{name:'by',params:{by:user.uid}}" class="d-inline-block">
+                        <nuxt-link
+                          :to="{name:'dashboard-users-id',params:{id:user.uid}}"
+                          class="d-inline-block"
+                        >
                           <v-list-item-content>
                             <v-list-item-title>
                               {{user.displayName}}
@@ -73,6 +81,11 @@
               </v-card-actions>
               <v-divider></v-divider>
             </v-card>
+          </div>
+          <div v-else>
+            <content-placeholders v-for="n in 5" :key="n" class="white">
+              <content-placeholders-text :lines="2" />
+            </content-placeholders>
           </div>
         </div>
       </template>
