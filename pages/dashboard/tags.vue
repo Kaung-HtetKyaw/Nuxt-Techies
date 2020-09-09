@@ -10,6 +10,7 @@
 import { mapState } from "vuex";
 export default {
   middleware: ["auth", "admin"],
+  layout: "dashboard",
   computed: {
     ...mapState({
       tags: (state) => state.tag.tags,

@@ -19,6 +19,7 @@
 <script>
 import ReportListModel from "@/components/CRUD_Model/ReportListModel";
 export default {
+  layout: "dashboard",
   components: {
     "report-list": ReportListModel,
   },

@@ -238,3 +238,8 @@ export function typeToClaim(type) {
   }
   return claim;
 }
+
+export function pathToBreadCrumb(path) {
+  let paths = path.split("/").slice(1);
+  return paths.join(" >> ");
+}

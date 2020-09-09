@@ -9,6 +9,7 @@
 import { mapState } from "vuex";
 export default {
   middleware: ["auth", "admin"],
+  layout: "dashboard",
   computed: {
     ...mapState({
       topics: (state) => state.topic.topics,

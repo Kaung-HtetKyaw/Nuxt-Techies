@@ -19,6 +19,7 @@
 <script>
 import ArticleListModel from "@/components/Article/ArticleListModel";
 export default {
+  layout: "dashboard",
   components: {
     "article-list": ArticleListModel,
   },

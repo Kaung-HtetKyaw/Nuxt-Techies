@@ -129,6 +129,7 @@ import DataTable from "@/components/Table/DataTable";
 import { mapState } from "vuex";
 export default {
   middleware: ["auth", "driver"],
+  layout: "dashboard",
   components: {
     "article-list": ArticleListModel,
     "user-list": UserListModel,

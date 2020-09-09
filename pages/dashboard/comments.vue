@@ -19,6 +19,7 @@
 <script>
 import CommentListModel from "@/components/CRUD_Model/CommentListModel";
 export default {
+  layout: "dashboard",
   components: {
     "comment-list": CommentListModel,
   },

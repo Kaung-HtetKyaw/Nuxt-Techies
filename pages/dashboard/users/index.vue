@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div class="white bs-border">
+    <h1 class="text-h5 text-md-h3 pa-4 text-center">Manage User Role</h1>
+    <v-divider></v-divider>
     <user-list :lazy="true" :params="{type:'all'}">
       <template v-slot="{users,lazyLoadUsers,loading}">
         <div>
@@ -83,7 +85,7 @@
             </v-card>
           </div>
           <div v-else>
-            <content-placeholders v-for="n in 5" :key="n" class="white">
+            <content-placeholders v-for="n in 10" :key="n" class="white">
               <content-placeholders-text :lines="2" />
             </content-placeholders>
           </div>
@@ -98,6 +100,7 @@ import UserListModel from "@/components/CRUD_Model/UserListModel";
 import SetAuthority from "@/components/CRUD_Model/SetAuthorityModel";
 import { getUserType } from "@/utils/utils";
 export default {
+  layout: "dashboard",
   components: {
     "user-list": UserListModel,
     "set-authority": SetAuthority,
