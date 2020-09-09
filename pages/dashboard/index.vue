@@ -1,14 +1,15 @@
 <template>
   <div>
     <h1>This is dashboard</h1>
-    <div class="my-4">
+    <div class="my-4 white bs-border">
       <article-list :lazy="false" :params="{type:'all'}">
         <template v-slot="{articles,loading}">
           <div>
             <div>
-              <h1 class="text-center my-2">Articles</h1>
+              <h1 class="text-h5 text-md-h3 pa-4 text-center">Articles</h1>
               <data-table :loading="loading" type="articles" :data="articles"></data-table>
-              <div class="d-flex justify-center align-center my-4">
+
+              <div class="d-flex justify-center align-center pa-4">
                 <v-btn
                   nuxt
                   color="purple"
@@ -23,14 +24,14 @@
       </article-list>
     </div>
 
-    <div class="my-4">
+    <div class="my-4 white bs-border">
       <user-list :lazy="false" :params="{type:'all'}">
         <template v-slot="{users,loading}">
           <div>
             <div>
-              <h1 class="text-center my-2">Users</h1>
+              <h1 class="text-h5 text-md-h3 pa-4 text-center">Users</h1>
               <data-table :loading="loading" type="users" :data="users"></data-table>
-              <div class="d-flex justify-center align-center my-4">
+              <div class="d-flex justify-center align-center pa-4">
                 <v-btn
                   nuxt
                   color="purple"
@@ -44,14 +45,14 @@
         </template>
       </user-list>
     </div>
-    <div class="my-4">
+    <div class="my-4 white bs-border">
       <comment-list :lazy="false" :params="{type:'all'}">
         <template v-slot="{comments,loading}">
           <div>
             <div>
-              <h1 class="text-center my-2">Comments</h1>
+              <h1 class="text-h5 text-md-h3 pa-4 text-center">Comments</h1>
               <data-table :loading="loading" type="comments" :data="comments"></data-table>
-              <div class="d-flex justify-center align-center my-4">
+              <div class="d-flex justify-center align-center pa-4">
                 <v-btn
                   nuxt
                   color="purple"
@@ -65,14 +66,14 @@
         </template>
       </comment-list>
     </div>
-    <div class="my-4">
+    <div class="my-4 white bs-border">
       <report-list :lazy="false" :params="{type:'all'}">
         <template v-slot="{reports,loading}">
           <div>
             <div>
-              <h1 class="text-center my-2">Reports</h1>
+              <h1 class="text-h5 text-md-h3 pa-4 text-center">Reports</h1>
               <data-table :loading="loading" type="reports" :data="reports"></data-table>
-              <div class="d-flex justify-center align-center my-4">
+              <div class="d-flex justify-center align-center pa-4">
                 <v-btn
                   nuxt
                   color="purple"
@@ -86,11 +87,11 @@
         </template>
       </report-list>
     </div>
-    <div class="my-4">
+    <div class="my-4 white bs-border">
       <div>
-        <h1 class="text-center my-2">Tags</h1>
+        <h1 class="text-h5 text-md-h3 pa-4 text-center">Tags</h1>
         <data-table type="tags" :data="tags"></data-table>
-        <div class="d-flex justify-center align-center my-4">
+        <div class="d-flex justify-center align-center pa-4">
           <v-btn
             nuxt
             color="purple"
@@ -101,11 +102,11 @@
         </div>
       </div>
     </div>
-    <div class="my-4">
+    <div class="my-4 white bs-border">
       <div>
-        <h1 class="text-center my-2">Topics</h1>
+        <h1 class="text-h5 text-md-h3 pa-4 text-center">Topics</h1>
         <data-table type="topics" :data="topics"></data-table>
-        <div class="d-flex justify-center align-center my-4">
+        <div class="d-flex justify-center align-center pa-4">
           <v-btn
             nuxt
             color="purple"
@@ -129,7 +130,6 @@ import DataTable from "@/components/Table/DataTable";
 import { mapState } from "vuex";
 export default {
   middleware: ["auth", "driver"],
-  layout: "dashboard",
   components: {
     "article-list": ArticleListModel,
     "user-list": UserListModel,
