@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container fluid class="px-0">
+    <v-container fluid class="pa-0">
       <v-row dense>
         <v-col cols="12" md="3" sm="0" class="d-none d-md-block flex-column">
           <div class="py-4 white bs-border">
@@ -12,8 +12,8 @@
             <tag-group class="mt-4"></tag-group>
           </div>
         </v-col>
-        <v-col cols="12" md="6" sm="12" class="pt-0">
-          <v-container class="px-0 pt-0">
+        <v-col cols="12" md="6" sm="12" class="py-0">
+          <v-container class="pa-0">
             <v-row dense>
               <article-list-model
                 @dataReady="listenArticlesState"
@@ -21,9 +21,9 @@
                 :params="{type:'all'}"
               >
                 <template v-slot="{ articles, lazyLoadArticles, loading, empty }">
-                  <v-container class="px-0 pt-0">
-                    <v-col cols="12" sm="12" class="pt-0">
-                      <v-container class="px-0 pt-0">
+                  <v-container class="pa-0">
+                    <v-col cols="12" sm="12" class="py-0">
+                      <v-container class="pa-0">
                         <v-row dense>
                           <transition-group name="vertical" tag="div" class="full-width">
                             <v-col

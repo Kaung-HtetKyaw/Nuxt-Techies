@@ -5,11 +5,11 @@
     </nav>
     <v-main class="bg">
       <v-container>
-        <div class="white bs-border pa-2 d-flex justify-start align-center my-1">
+        <!-- <div class="white bs-border pa-2 d-flex justify-start align-center my-1">
           <div>
             <span class="font-italic">{{breadCrumb}}</span>
           </div>
-        </div>
+        </div>-->
 
         <transition name="vertical" mode="out-in">
           <nuxt />

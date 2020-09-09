@@ -1,6 +1,58 @@
 <template>
   <div>
-    <h1>This is dashboard</h1>
+    <v-container class="pa-0">
+      <v-row dense>
+        <v-col cols="12" sm="12" md="4" class="full-height">
+          <v-card color="#385F73" dark>
+            <v-card-title class="headline">Manage Users</v-card-title>
+            <v-card-actions>
+              <v-btn text nuxt :to="{name:'dashboard-users'}" class="white--text">Manage Now</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+        <v-col cols="12" sm="12" md="4" class="full-height">
+          <v-card color="#1F7087" dark>
+            <v-card-title class="headline">Manage Articles</v-card-title>
+            <v-card-actions>
+              <v-btn text nuxt :to="{name:'dashboard-articles'}" class="white--text">Manage Now</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+        <v-col cols="12" sm="12" md="4" class="full-height">
+          <v-card color="#006064" dark>
+            <v-card-title class="headline">Manage Tags</v-card-title>
+            <v-card-actions>
+              <v-btn text nuxt :to="{name:'dashboard-tags'}" class="white--text">Manage Now</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+        <v-col cols="12" sm="12" md="4" class="full-height">
+          <v-card color="#004D40" dark>
+            <v-card-title class="headline">Review Reports</v-card-title>
+            <v-card-actions>
+              <v-btn text nuxt :to="{name:'dashboard-reports'}" class="white--text">Review Now</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+        <v-col cols="12" sm="12" md="4" class="full-height">
+          <v-card color="#00838F" dark>
+            <v-card-title class="headline">Review Comments</v-card-title>
+            <v-card-actions>
+              <v-btn text nuxt :to="{name:'dashboard-comments'}" class="white--text">Review Now</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+        <v-col cols="12" sm="12" md="4" class="full-height">
+          <v-card color="#00796B" dark>
+            <v-card-title class="headline">Manage Topics</v-card-title>
+            <v-card-actions>
+              <v-btn text nuxt :to="{name:'dashboard-topics'}" class="white--text">Manage Now</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+
     <div class="my-4 white bs-border">
       <article-list :lazy="false" :params="{type:'all'}">
         <template v-slot="{articles,loading}">
