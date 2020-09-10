@@ -22,15 +22,15 @@
                       <v-avatar size="35">
                         <img :src="author.photo.url" :alt="author.displayName" />
                       </v-avatar>
-                      <span class="pl-3 d-none d-md-inline-block">
+                      <span class="pl-3 d-inline-block text-caption text-md-body-2">
                         {{
                         author.displayName
                         }}
                       </span>
                     </nuxt-link>
                   </div>
-                  <div>
-                    <p class="text-caption">{{ timeAgo }} ago</p>
+                  <div class="d-flex flex-row justify-space-between align-center">
+                    <p class="text-caption text-md-body-2 ma-0">{{ timeAgo }} ago</p>
                   </div>
                 </div>
                 <markdown-container
@@ -38,75 +38,96 @@
                   class="text-sm-body-2 text-md-subtitle-1 font-weight-medium pt-3"
                 ></markdown-container>
               </v-card-text>
-              <v-card-actions class="d-flex justify-center align-center">
+              <v-card-actions class="d-flex justify-center align-center pa-0">
                 <div v-if="!!user">
                   <div class="d-none d-md-block">
+                    <v-btn
+                      v-if="comment.by === user.uid"
+                      text
+                      color="deep-purple accent-4"
+                      nuxt
+                      :to="{name:'by-comment-cid-edit',params:{by:comment.id,cid:comment.id}}"
+                    >Edit</v-btn>
+
+                    <v-btn @click="show_form = !show_form" text color="deep-purple accent-4">Reply</v-btn>
                     <v-btn
                       v-if="comment.by === user.uid"
                       text
                       color="red accent-4"
                       nuxt
                       :to="{
-                    name: 'by-comment-id-delete',
-                    params: { by: comment.by, id: comment.id }
+                    name: 'by-comment-cid-delete',
+                    params: { by: comment.by, cid: comment.id }
                   }"
                     >Delete</v-btn>
                     <v-btn
-                      v-if="comment.by === user.uid"
                       text
-                      color="deep-purple accent-4"
+                      color="red"
                       nuxt
-                      :to="{name:'by-comment-id-edit',params:{by:comment.id,id:comment.id}}"
-                    >Edit</v-btn>
-                    <v-btn @click="show_form = !show_form" text color="deep-purple accent-4">Reply</v-btn>
+                      :to="{name:'by-comment-cid-report',params:{by:comment.id,cid:comment.id}}"
+                    >Report Abuse</v-btn>
                   </div>
-                  <div class="d-block d-md-none">
-                    <v-menu bottom origin="center center" transition="scale-transition">
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-btn
-                          x-small
-                          :ripple="false"
-                          text
-                          color="purple"
-                          v-bind="attrs"
-                          v-on="on"
-                        >Manage</v-btn>
-                      </template>
-                      <v-list elevation="0">
-                        <v-list-item>
-                          <v-list-item-title>
-                            <v-btn
-                              x-small
-                              @click="show_form = !show_form"
-                              text
-                              color="deep-purple accent-4"
-                            >Reply</v-btn>
-                          </v-list-item-title>
-                          <v-list-item-title>
-                            <v-btn
-                              v-if="comment.by === user.uid"
-                              text
-                              x-small
-                              color="deep-purple accent-4"
-                              :to="{name:'by-comment-id-edit',params:{by:comment.id,id:comment.id}}"
-                            >Edit</v-btn>
-                          </v-list-item-title>
-                          <v-list-item-title>
-                            <v-btn
-                              v-if="comment.by === user.uid"
-                              x-small
-                              text
-                              color="red accent-4"
-                              nuxt
-                              :to="{
-                    name: 'by-comment-id-delete',
-                    params: { by: comment.by, id: comment.id }
+                  <div class="d-block d-md-none justify-center">
+                    <div class="d-flex justify-center align-center">
+                      <v-menu transition="scale-transition">
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn
+                            x-small
+                            :ripple="false"
+                            text
+                            color="purple"
+                            v-bind="attrs"
+                            v-on="on"
+                          >Manage</v-btn>
+                        </template>
+                        <v-list elevation="0">
+                          <v-list-item>
+                            <v-list-item-title>
+                              <v-btn
+                                x-small
+                                @click="show_form = !show_form"
+                                text
+                                color="deep-purple accent-4"
+                              >Reply</v-btn>
+                            </v-list-item-title>
+                            <v-list-item-title>
+                              <v-btn
+                                v-if="comment.by === user.uid"
+                                text
+                                x-small
+                                color="deep-purple accent-4"
+                                :to="{name:'by-comment-cid-edit',params:{by:comment.id,cid:comment.id}}"
+                              >Edit</v-btn>
+                            </v-list-item-title>
+                            <v-list-item-title>
+                              <v-btn
+                                v-if="comment.by === user.uid"
+                                x-small
+                                text
+                                color="red accent-4"
+                                nuxt
+                                :to="{
+                    name: 'by-comment-cid-delete',
+                    params: { by: comment.by, cid: comment.id }
                   }"
-                            >Delete</v-btn>
-                          </v-list-item-title>
-                        </v-list-item>
-                      </v-list>
-                    </v-menu>
+                              >Delete</v-btn>
+                            </v-list-item-title>
+                          </v-list-item>
+                        </v-list>
+                      </v-menu>
+                    </div>
+                  </div>
+                  <div class="d-block d-md-none justify-center my-1">
+                    <div class="d-flex justify-center align-center my-1">
+                      <v-btn
+                        x-small
+                        :ripple="false"
+                        text
+                        color="red"
+                        nuxt
+                        :to="{name:'by-comment-cid-report',params:{by:comment.id,cid:comment.id}}"
+                      >Report Abuse</v-btn>
+                    </div>
                   </div>
                 </div>
                 <div v-else>

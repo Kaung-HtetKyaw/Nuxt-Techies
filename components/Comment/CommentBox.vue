@@ -1,5 +1,5 @@
 <template>
-  <v-container class="white">
+  <v-container class="white pa-0">
     <v-row dense>
       <v-col cols="12" sm="12">
         <div>

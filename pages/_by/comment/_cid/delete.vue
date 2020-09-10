@@ -50,7 +50,7 @@ export default {
       article: (state) => state.article.article,
     }),
     comment_id() {
-      return this.$route.params.id;
+      return this.$route.params.cid;
     },
     post_id() {
       return this.article.id;
