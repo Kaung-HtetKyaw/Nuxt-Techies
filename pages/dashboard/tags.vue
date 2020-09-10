@@ -26,6 +26,7 @@ export default {
   components: {
     "tag-card": TagCard,
   },
+  middleware: ["auth", "driver"],
   async fetch() {
     return this.$store.dispatch("tag/fetchAllTags");
   },

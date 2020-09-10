@@ -8,7 +8,7 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  middleware: ["auth", "admin"],
+  middleware: ["auth", "driver"],
   layout: "dashboard",
   computed: {
     ...mapState({

@@ -76,7 +76,7 @@
           <p class="mb-2 text-subtitle-2 font-italic opacity-7">{{article.description}}</p>
         </nuxt-link>
 
-        <v-card-actions v-if="!!user">
+        <v-card-actions v-if="!!user&&action">
           <like-btn :data="article" type="article" :user="user">
             <template v-slot="{ like, isLiked }">
               <v-btn :ripple="false" text @click="like" class="opacity-7">
@@ -123,6 +123,10 @@ export default {
     banner: {
       type: Boolean,
       default: false,
+    },
+    action: {
+      type: Boolean,
+      default: true,
     },
   },
   components: {

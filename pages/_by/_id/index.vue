@@ -63,7 +63,7 @@
                   :to="{ name: 'by-id-delete', params: { id, by } }"
                 >Delete</v-btn>
               </div>
-              <div>
+              <div class="d-flex justify-center align-center">
                 <v-btn
                   text
                   color="red"
@@ -143,7 +143,7 @@
         </author-profile>
       </div>
       <div v-if="article.tags.length>0">
-        <v-container>
+        <v-container class="pa-0">
           <v-row dense>
             <v-col cols="12" sm="12">
               <related-articles :articleToExclude="article">
@@ -161,7 +161,8 @@
                         v-if="relatedArticles.length>0"
                         class="white bs-border my-3 pa-md-8 pa-sm-4"
                       >
-                        <h3 class="text-h4 text-center font-weight-bold">Read Next</h3>
+                        <h3 class="text-h5 text-md-h4 pa-4 text-center">Related Articles</h3>
+                        <v-divider></v-divider>
                         <related-articles-card
                           v-for="relatedArticle in relatedArticles"
                           :key="relatedArticle.id"

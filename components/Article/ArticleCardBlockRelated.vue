@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <div class="py-2">
     <v-container>
       <v-row dense>
         <v-col cols="12" sm="12" md="1" class="d-flex justify-center">
           <nuxt-link :to="{name:'by',params:{by:article.by}}">
-            <v-avatar size="60" v-if="isEmptyAuthor">
+            <v-avatar size="40" v-if="isEmptyAuthor">
               <img :src="defaultUserObjFB.photo.url" :alt="defaultUserObjFB.displayName" />
             </v-avatar>
-            <v-avatar size="60" v-else>
+            <v-avatar size="40" v-else>
               <img :src="author.photo.url" :alt="author.displayName" />
             </v-avatar>
           </nuxt-link>
@@ -20,11 +20,11 @@
 
             <div class="text--secondary">
               <nuxt-link :to="{name:'by',params:{by:article.by}}">
-                <span>{{author.displayName}}</span>
+                <span class="text-body-2">{{author.displayName}}</span>
               </nuxt-link>
 
               <span>-</span>
-              <span>{{timeAgo}} ago</span>
+              <span class="text-body-2">{{timeAgo}} ago</span>
             </div>
           </div>
         </v-col>

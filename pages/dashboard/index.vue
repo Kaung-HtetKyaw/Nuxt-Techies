@@ -5,6 +5,7 @@
         <v-col cols="12" sm="12" md="4" class="full-height">
           <v-card color="#385F73" dark>
             <v-card-title class="headline">Manage Users</v-card-title>
+            <v-card-subtitle>You have to be an admin to manage users</v-card-subtitle>
             <v-card-actions>
               <v-btn text nuxt :to="{name:'dashboard-users'}" class="white--text">Manage Now</v-btn>
             </v-card-actions>
@@ -29,22 +30,24 @@
         <v-col cols="12" sm="12" md="4" class="full-height">
           <v-card color="#004D40" dark>
             <v-card-title class="headline">Review Reports</v-card-title>
+
             <v-card-actions>
               <v-btn text nuxt :to="{name:'dashboard-reports'}" class="white--text">Review Now</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
-        <!-- <v-col cols="12" sm="12" md="4" class="full-height">
+        <v-col cols="12" sm="12" md="4" class="full-height">
           <v-card color="#00838F" dark>
             <v-card-title class="headline">Review Comments</v-card-title>
             <v-card-actions>
               <v-btn text nuxt :to="{name:'dashboard-comments'}" class="white--text">Review Now</v-btn>
             </v-card-actions>
           </v-card>
-        </v-col>-->
+        </v-col>
         <v-col cols="12" sm="12" md="4" class="full-height">
           <v-card color="#00796B" dark>
             <v-card-title class="headline">Manage Topics</v-card-title>
+
             <v-card-actions>
               <v-btn text nuxt :to="{name:'dashboard-topics'}" class="white--text">Manage Now</v-btn>
             </v-card-actions>
@@ -97,7 +100,7 @@
         </template>
       </user-list>
     </div>
-    <!-- <div class="my-4 white bs-border">
+    <div class="my-4 white bs-border">
       <comment-list :lazy="false" :params="{type:'all'}">
         <template v-slot="{comments,loading}">
           <div>
@@ -117,7 +120,7 @@
           </div>
         </template>
       </comment-list>
-    </div>-->
+    </div>
     <div class="my-4 white bs-border">
       <report-list :lazy="false" :params="{type:'all'}">
         <template v-slot="{reports,loading}">

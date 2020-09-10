@@ -67,7 +67,7 @@
                       :to="{name:'by-comment-cid-report',params:{by:comment.id,cid:comment.id}}"
                     >Report Abuse</v-btn>
                   </div>
-                  <div class="d-block d-md-none justify-center">
+                  <div class="d-block d-md-none justify-center" v-if="comment.by===user.uid">
                     <div class="d-flex justify-center align-center">
                       <v-menu transition="scale-transition">
                         <template v-slot:activator="{ on, attrs }">
@@ -83,16 +83,10 @@
                         <v-list elevation="0">
                           <v-list-item>
                             <v-list-item-title>
-                              <v-btn
-                                x-small
-                                @click="show_form = !show_form"
-                                text
-                                color="deep-purple accent-4"
-                              >Reply</v-btn>
+                              <v-btn x-small text color="deep-purple accent-4">Reply</v-btn>
                             </v-list-item-title>
                             <v-list-item-title>
                               <v-btn
-                                v-if="comment.by === user.uid"
                                 text
                                 x-small
                                 color="deep-purple accent-4"
@@ -101,7 +95,6 @@
                             </v-list-item-title>
                             <v-list-item-title>
                               <v-btn
-                                v-if="comment.by === user.uid"
                                 x-small
                                 text
                                 color="red accent-4"
@@ -115,6 +108,16 @@
                           </v-list-item>
                         </v-list>
                       </v-menu>
+                    </div>
+                  </div>
+                  <div class="d-block d-md-none justify-center my-1" v-else>
+                    <div class="d-flex justify-center align-center my-1">
+                      <v-btn
+                        x-small
+                        @click="show_form = !show_form"
+                        text
+                        color="deep-purple accent-4"
+                      >Reply</v-btn>
                     </div>
                   </div>
                   <div class="d-block d-md-none justify-center my-1">

@@ -1,19 +1,9 @@
 <template>
   <div class="white bs-border">
-    <h1 class="text-h5 text-md-h3 pa-4 text-center">Review Articles</h1>
+    <h1 class="text-h5 text-md-h4 pa-4 text-center">Review Articles</h1>
     <v-container fluid class="pa-0">
       <v-row dense>
-        <v-col cols="12" md="3" sm="0" class="d-none d-md-block flex-column">
-          <div class="py-4 white bs-border">
-            <div v-if="!!user">
-              <user-avatar :user="user"></user-avatar>
-            </div>
-            <user-info></user-info>
-            <v-divider class="mt-4"></v-divider>
-            <tag-group class="mt-4"></tag-group>
-          </div>
-        </v-col>
-        <v-col cols="12" md="6" sm="12" class="py-0">
+        <v-col cols="12" md="6" offset-md="3" sm="12" class="py-0">
           <v-container class="pa-0">
             <v-row dense>
               <article-list-model :sort="false" :lazy="true" :params="{type:'all'}">
@@ -58,9 +48,6 @@
             </v-row>
           </v-container>
         </v-col>
-        <v-col cols="12" sm="0" md="3" class="red d-none d-md-flex">
-          <h1>Posts</h1>
-        </v-col>
       </v-row>
     </v-container>
   </div>
@@ -95,6 +82,7 @@ export default {
     "empty-alert": EmptyAlert,
   },
   mixins: [authHydrated, clearArticles],
+  middleware: ["auth", "driver"],
 };
 </script>
 

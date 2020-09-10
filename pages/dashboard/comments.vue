@@ -20,6 +20,7 @@
 import CommentListModel from "@/components/CRUD_Model/CommentListModel";
 export default {
   layout: "dashboard",
+  middleware: ["auth", "driver"],
   components: {
     "comment-list": CommentListModel,
   },
