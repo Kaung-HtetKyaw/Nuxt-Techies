@@ -38,11 +38,10 @@
                   class="text-sm-body-2 text-md-subtitle-1 font-weight-medium pt-3"
                 ></markdown-container>
               </v-card-text>
-              <v-card-actions class="d-flex justify-center align-center pa-0">
+              <v-card-actions class="d-flex justify-center align-center pa-0" v-if="action">
                 <div v-if="!!user">
-                  <div class="d-none d-md-block">
+                  <div class="d-none d-md-block" v-if="comment.by === user.uid||isDriver">
                     <v-btn
-                      v-if="comment.by === user.uid"
                       text
                       color="deep-purple accent-4"
                       nuxt
@@ -51,7 +50,6 @@
 
                     <v-btn @click="show_form = !show_form" text color="deep-purple accent-4">Reply</v-btn>
                     <v-btn
-                      v-if="comment.by === user.uid"
                       text
                       color="red accent-4"
                       nuxt
@@ -67,7 +65,10 @@
                       :to="{name:'by-comment-cid-report',params:{by:comment.id,cid:comment.id}}"
                     >Report Abuse</v-btn>
                   </div>
-                  <div class="d-block d-md-none justify-center" v-if="comment.by===user.uid">
+                  <div
+                    class="d-block d-md-none justify-center"
+                    v-if="comment.by===user.uid||isDriver"
+                  >
                     <div class="d-flex justify-center align-center">
                       <v-menu transition="scale-transition">
                         <template v-slot:activator="{ on, attrs }">
@@ -83,7 +84,12 @@
                         <v-list elevation="0">
                           <v-list-item>
                             <v-list-item-title>
-                              <v-btn x-small text color="deep-purple accent-4">Reply</v-btn>
+                              <v-btn
+                                @click="show_form = !show_form"
+                                x-small
+                                text
+                                color="deep-purple accent-4"
+                              >Reply</v-btn>
                             </v-list-item-title>
                             <v-list-item-title>
                               <v-btn
@@ -161,6 +167,7 @@ import { mapState, mapGetters } from "vuex";
 import { defaultCommentObjFB, defaultUserObjFB } from "@/utils/constants";
 import { timeAgo } from "@/utils/utils";
 import { authHydrated } from "@/mixins/Hydrated";
+import { authority } from "@/mixins/authority";
 import CommentBox from "@/components/Comment/CommentBox";
 import Stack from "@/components/UI/Stack";
 import Markdonwn from "@/components/UI/MarkDown";
@@ -172,6 +179,10 @@ export default {
       type: String,
       required: true,
     },
+    action: {
+      type: Boolean,
+      default: true,
+    },
   },
   components: {
     "create-comment": CommentBox,
@@ -179,15 +190,15 @@ export default {
     "markdown-container": Markdonwn,
     "sign-in": SignInModal,
   },
-  mixins: [authHydrated],
+  mixins: [authHydrated, authority],
   async fetch() {
-    const comment = this.getCommentByID(this.id);
-
-    return fetchUser(comment.by).then((res) => {
-      const author = res;
-      this.comment = comment;
-      this.author = author;
-    });
+    let comment = this.getCommentByID(this.id);
+    if (!comment) {
+      comment = await fetchComment(this.id);
+    }
+    const author = await fetchUser(comment.by);
+    this.comment = comment;
+    this.author = author;
   },
   data() {
     return {

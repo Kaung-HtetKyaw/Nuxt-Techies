@@ -212,8 +212,8 @@
                 <div v-if="!loading">
                   <comment v-for="kid in article.kids" :key="kid" :id="kid" />
                 </div>
-                <div v-else>
-                  <h1>#Loading.....</h1>
+                <div v-else class="d-flex justify-center align-center">
+                  <v-progress-circular indeterminate color="purple"></v-progress-circular>
                 </div>
               </v-col>
             </v-row>

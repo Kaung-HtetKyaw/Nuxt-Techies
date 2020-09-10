@@ -1,8 +1,13 @@
 <template>
   <div>
-    <h1 v-if="$fetchState.pending">#Loading....</h1>
+    <div
+      v-if="$fetchState.pending"
+      class="d-flex justify-center align-center full-width full-height"
+    >
+      <v-progress-circular indeterminate color="purple"></v-progress-circular>
+    </div>
     <div v-else>
-      <delete-comment
+      <update-comment
         type="update"
         collection="comment"
         :params="{id:comment_id,data:comment,fetch:false}"
@@ -11,22 +16,31 @@
           <div>
             <v-container class="white">
               <v-row dense>
-                <v-col cols="12" sm="12">
+                <v-col cols="12" sm="12" class="d-flex justify-center align-center">
                   <markdown-container :content="comment.message"></markdown-container>
                 </v-col>
                 <v-col cols="12" sm="10" offset-sm="1">
-                  <div class="white pa-md-8 pa-sm-4 bs-border">
-                    <h1 class="text-center">Editing Comment</h1>
+                  <div class="white pa-md-8 pa-sm-4">
+                    <h1
+                      class="text-h5 text-md-h4 text-center my-2 font-weight-medium"
+                    >Editing Comment</h1>
+                    <v-divider></v-divider>
                     <v-form v-model="valid">
                       <v-textarea placeholder="Add a comment" outlined v-model="comment.message"></v-textarea>
                       <div class="d-flex justify-sm-center align-center">
-                        <v-btn text color="purple" @click="cancel">Cancel</v-btn>
                         <v-btn
-                          text
+                          class="white--text"
                           color="purple"
+                          depressed
                           :loading="loading"
                           @click="updateComment(writeFB)"
                         >Submit</v-btn>
+                        <v-btn
+                          depressed
+                          color="indigo lighten-4"
+                          class="white--text mx-1"
+                          @click="cancel"
+                        >Cancel</v-btn>
                       </div>
                     </v-form>
                   </div>
@@ -35,7 +49,7 @@
             </v-container>
           </div>
         </template>
-      </delete-comment>
+      </update-comment>
     </div>
   </div>
 </template>
@@ -48,7 +62,7 @@ export default {
   middleware: ["auth"],
   components: {
     "markdown-container": Markdown,
-    "delete-comment": WriteModelFB,
+    "update-comment": WriteModelFB,
   },
   async fetch() {
     const comment = this.getCommentByID(this.comment_id);
