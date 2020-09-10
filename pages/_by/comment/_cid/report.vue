@@ -1,11 +1,14 @@
 <template>
   <div>
-    <div v-if="$fetchState.pending">
-      <h1>#Loading.....</h1>
+    <div
+      v-if="$fetchState.pending"
+      class="d-flex justify-center align-center full-width full-height"
+    >
+      <v-progress-circular indeterminate color="purple"></v-progress-circular>
     </div>
     <v-card v-else elevation="0" class="bs-border d-flex justify-center align-center">
       <write-fb type="create" collection="report" :params="{ data:report }">
-        <template v-slot="{ writeFB, loading }">
+        <template v-slot="{ writeFB }">
           <div>
             <v-container class="white">
               <v-row dense class="text-center">
@@ -20,6 +23,9 @@
                     <div class="my-2 full-width">
                       <h3 class="text-left text-subtitle-1 font-weight-medium my-1">Reported Comment</h3>
                       <v-text-field disabled outlined dense v-model="comment.id"></v-text-field>
+                    </div>
+                    <div class="my-2 full-width">
+                      <markdown :content="comment.message"></markdown>
                     </div>
                     <div class="my-2 full-width">
                       <h3 class="text-left text-subtitle-1 font-weight-medium my-1">Message</h3>
@@ -50,6 +56,7 @@
 
 <script>
 import WriteModelFB from "@/components/CRUD_Model/WriteModelFB";
+import MarkDown from "@/components/UI/MarkDown";
 import { deleteFile } from "@/services/Firebase/file";
 import { isFile } from "@/utils/utils";
 import { defaultReportObj } from "@/utils/constants";
@@ -58,6 +65,7 @@ import { mapGetters, mapState } from "vuex";
 export default {
   components: {
     "write-fb": WriteModelFB,
+    markdown: MarkDown,
   },
   middleware: ["auth"],
   async fetch() {
