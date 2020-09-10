@@ -101,6 +101,7 @@ import SetAuthority from "@/components/CRUD_Model/SetAuthorityModel";
 import { getUserType } from "@/utils/utils";
 export default {
   layout: "dashboard",
+  middleware: ["auth", "admin"],
   components: {
     "user-list": UserListModel,
     "set-authority": SetAuthority,

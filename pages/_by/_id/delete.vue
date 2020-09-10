@@ -36,6 +36,13 @@
                   </div>
                 </v-col>
               </v-row>
+              <v-row v-else>
+                <v-col cols="12" sm="12">
+                  <div>
+                    <v-progress-circular indeterminate color="purple"></v-progress-circular>
+                  </div>
+                </v-col>
+              </v-row>
             </v-container>
           </div>
         </template>

@@ -14,6 +14,10 @@ export default {
         );
       },
     },
+    sort: {
+      type: Boolean,
+      default: true,
+    },
   },
   mixins: [authHydrated],
   async fetch() {
@@ -60,7 +64,11 @@ export default {
       storedArticles: (state) => state.article.articles,
     }),
     articles() {
-      if (this.user && (this.user.claims.a || this.user.claims.d)) {
+      if (
+        this.user &&
+        (this.user.claims.a || this.user.claims.d) &&
+        this.sort
+      ) {
         return priortizeFollowingArticles(
           this.storedArticles,
           this.user.following

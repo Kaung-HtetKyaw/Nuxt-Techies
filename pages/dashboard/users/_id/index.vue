@@ -23,6 +23,7 @@ import { fetchUser } from "@/services/Firebase/userAuth";
 import { mapGetters } from "vuex";
 export default {
   layout: "dashboard",
+  middleware: ["auth", "admin"],
   components: {
     "user-info": UserInfo,
     "user-links": UserSocialLinks,

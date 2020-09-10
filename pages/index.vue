@@ -15,11 +15,7 @@
         <v-col cols="12" md="6" sm="12" class="py-0">
           <v-container class="pa-0">
             <v-row dense>
-              <article-list-model
-                @dataReady="listenArticlesState"
-                :lazy="true"
-                :params="{type:'all'}"
-              >
+              <article-list-model :lazy="true" :params="{type:'all'}">
                 <template v-slot="{ articles, lazyLoadArticles, loading, empty }">
                   <v-container class="pa-0">
                     <v-col cols="12" sm="12" class="py-0">
@@ -98,17 +94,6 @@ export default {
     "empty-alert": EmptyAlert,
   },
   mixins: [authHydrated, clearArticles],
-  data() {
-    return { isHydrated: false };
-  },
-  methods: {
-    listenArticlesState() {},
-  },
-  computed: {
-    ...mapState({
-      isAuthenticated: (state) => state.user.isAuthenticated,
-    }),
-  },
 };
 </script>
 

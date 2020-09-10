@@ -45,7 +45,7 @@
           <h3 class="mb-2 text-h6">{{ article.title }}</h3>
         </nuxt-link>
       </v-card-text>
-      <v-card-actions v-if="!!user">
+      <v-card-actions v-if="!!user" class="pa-0">
         <like-btn :data="article" type="article" :user="user">
           <template v-slot="{ like, isLiked }">
             <v-btn :ripple="false" text @click="like" class="opacity-7">

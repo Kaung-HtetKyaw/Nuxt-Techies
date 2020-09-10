@@ -45,6 +45,9 @@ export default {
    ** Nuxt.js dev-modules
    */
   buildModules: ["@nuxtjs/vuetify"],
+  scrollBehavior(to, from, savedPosition) {
+    return { x: 0, y: 0 };
+  },
   /*
    ** Nuxt.js modules
    */
