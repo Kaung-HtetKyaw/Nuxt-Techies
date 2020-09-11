@@ -1,7 +1,7 @@
 {
-  "name": "nuxt-blog",
+  "name": "mtu-code-lab",
   "version": "1.0.0",
-  "description": "My astounding Nuxt.js project",
+  "description": "Medium is not like any other platform on the internet. Our sole purpose is to help you find compelling ideas, knowledge, and perspectives",
   "author": "Kaung Htet Kyaw",
   "private": true,
   "scripts": {
@@ -15,6 +15,7 @@
     "@nuxtjs/firebase": "^6.0.1",
     "@nuxtjs/markdownit": "^1.2.10",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
+    "@nuxtjs/sitemap": "^2.4.0",
     "babel-runtime": "^6.26.0",
     "firebase": "^7.15.1",
     "firebase-admin": "^9.0.0",
@@ -24,7 +25,8 @@
     "prismjs": "^1.21.0",
     "vue-content-placeholders": "^0.2.1",
     "vue-markdown": "^2.2.4",
-    "vue-observe-visibility": "^0.4.6"
+    "vue-observe-visibility": "^0.4.6",
+    "vue-social-sharing": "^3.0.0-beta.11"
   },
   "devDependencies": {
     "@nuxtjs/svg": "^0.1.11",

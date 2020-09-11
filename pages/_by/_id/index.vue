@@ -12,12 +12,24 @@
       <div class="white pa-sm-6 pa-md-12 rounded-xl article-view bs-border">
         <div class="pa-4">
           <h1
-            :style="[article.tags.length>0?{textShadow:`-4px -1px 0 ${getTagByID(article.tags[0]).bg_color}`}:null]"
+            :style="[
+              article.tags.length > 0
+                ? {
+                    textShadow: `-4px -1px 0 ${
+                      getTagByID(article.tags[0]).bg_color
+                    }`
+                  }
+                : null
+            ]"
             class="text-center text-sm-h6 text-md-h3 font-weight-medium"
-          >{{ article.title }}</h1>
+          >
+            {{ article.title }}
+          </h1>
           <h3
             class="text-center opacity-7 text-sm-subtitle-2 text-md-h5 font-weight-medium font-italic"
-          >{{article.description}}</h3>
+          >
+            {{ article.description }}
+          </h3>
         </div>
 
         <div class="my-4 text-center d-flex justify-center align-center">
@@ -32,19 +44,21 @@
                     v-if="!loadingAuthor"
                     class="d-flex flex-column justify-space-between align-center font-italic text-subtitle-1"
                   >
-                    <nuxt-link :to="{name:'by',params:{by:author.uid}}">
-                      <p class="purple--text">{{author.displayName}}</p>
+                    <nuxt-link :to="{ name: 'by', params: { by: author.uid } }">
+                      <p class="purple--text">{{ author.displayName }}</p>
                     </nuxt-link>
 
-                    <p>{{timeAgo(article.timestamp)}} ago</p>
+                    <p>{{ timeAgo(article.timestamp) }} ago</p>
                   </div>
                 </transition>
               </div>
             </template>
           </author-profile>
-          <div class="d-flex flex-column justify-space-around align-center my-6">
+          <div
+            class="d-flex flex-column justify-space-around align-center my-6"
+          >
             <div v-if="!!user">
-              <div v-if="user.uid===article.by||isDriver">
+              <div v-if="user.uid === article.by || isDriver">
                 <v-btn
                   color="purple"
                   class="white--text my-3"
@@ -52,7 +66,8 @@
                   :ripple="false"
                   nuxt
                   :to="{ name: 'by-id-edit', params: { id, by } }"
-                >Edit</v-btn>
+                  >Edit</v-btn
+                >
                 <v-btn
                   text
                   color="red"
@@ -61,7 +76,8 @@
                   :ripple="false"
                   nuxt
                   :to="{ name: 'by-id-delete', params: { id, by } }"
-                >Delete</v-btn>
+                  >Delete</v-btn
+                >
               </div>
               <div class="d-flex justify-center align-center">
                 <v-btn
@@ -72,7 +88,8 @@
                   :ripple="false"
                   nuxt
                   :to="{ name: 'by-id-report', params: { id, by } }"
-                >Report</v-btn>
+                  >Report</v-btn
+                >
               </div>
             </div>
           </div>
@@ -81,12 +98,12 @@
             v-if="article.photo.url"
             height="400px"
             :style="{
-            backgroundImage: `url(${article.photo.url})`,
-           
-            backgroundSize:'cover',
-            backgroundPosition:'center',
-            backgroundRepeat:'no-repeat',
-          }"
+              backgroundImage: `url(${article.photo.url})`,
+
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }"
             class="mb-6"
           ></v-sheet>
         </div>
@@ -96,20 +113,35 @@
           <like-btn :data="article" type="article" :user="user">
             <template v-slot="{ like, isLiked }">
               <div class="d-flex flex-column justify-center align-center">
-                <v-btn icon :ripple="false" text @click="like" class="opacity-7">
-                  <v-icon size="30" v-if="!isLiked" left>mdi-heart-outline</v-icon>
+                <v-btn
+                  icon
+                  :ripple="false"
+                  text
+                  @click="like"
+                  class="opacity-7"
+                >
+                  <v-icon size="30" v-if="!isLiked" left
+                    >mdi-heart-outline</v-icon
+                  >
                   <v-icon size="30" color="red" v-else left>mdi-heart</v-icon>
-                  <span>{{ !isLiked?article.likesNo:'' }}</span>
+                  <span>{{ !isLiked ? article.likesNo : "" }}</span>
                 </v-btn>
                 <transition name="fade" mode="out-in">
-                  <liked-people v-if="isLiked" :peopleID="article.likes" class="pa-2">
+                  <liked-people
+                    v-if="isLiked"
+                    :peopleID="article.likes"
+                    class="pa-2"
+                  >
                     <template #header>People who reacted to this post</template>
                     <template #button>
-                      <span
-                        v-if="article.likesNo>1"
-                        class="text-caption"
-                      >{{isLiked?'You and '+(article.likesNo-1)+' others':''}}</span>
-                      <span v-else class="text-caption">{{isLiked?'You liked this article':''}}</span>
+                      <span v-if="article.likesNo > 1" class="text-caption">{{
+                        isLiked
+                          ? "You and " + (article.likesNo - 1) + " others"
+                          : ""
+                      }}</span>
+                      <span v-else class="text-caption">{{
+                        isLiked ? "You liked this article" : ""
+                      }}</span>
                     </template>
                     <template #icon>
                       <v-icon color="red">mdi-heart</v-icon>
@@ -142,12 +174,12 @@
           </template>
         </author-profile>
       </div>
-      <div v-if="article.tags.length>0">
+      <div v-if="article.tags.length > 0">
         <v-container class="pa-0">
           <v-row dense>
             <v-col cols="12" sm="12">
               <related-articles :articleToExclude="article">
-                <template v-slot="{loading,relatedArticles}">
+                <template v-slot="{ loading, relatedArticles }">
                   <div>
                     <div v-if="loading">
                       <content-placeholders :rounded="true">
@@ -158,10 +190,12 @@
 
                     <div v-else>
                       <div
-                        v-if="relatedArticles.length>0"
+                        v-if="relatedArticles.length > 0"
                         class="white bs-border my-3 pa-md-8 pa-sm-4"
                       >
-                        <h3 class="text-h5 text-md-h4 pa-4 text-center">Related Articles</h3>
+                        <h3 class="text-h5 text-md-h4 pa-4 text-center">
+                          Related Articles
+                        </h3>
                         <v-divider></v-divider>
                         <related-articles-card
                           v-for="relatedArticle in relatedArticles"
@@ -184,8 +218,13 @@
               <v-col cols="12" sm="12">
                 <h4
                   class="text-center text-sm-subtitle-2 text-md-h6 font-weight-medium"
-                >Add a Comment</h4>
-                <create-comment :show="true" :parent="{ ...article }"></create-comment>
+                >
+                  Add a Comment
+                </h4>
+                <create-comment
+                  :show="true"
+                  :parent="{ ...article }"
+                ></create-comment>
               </v-col>
             </v-row>
           </v-container>
@@ -203,7 +242,7 @@
         </div>
 
         <div
-          v-if="article.kids.length>0"
+          v-if="article.kids.length > 0"
           class="comment-section white bs-border pa-md-8 pa-sm-4 my-6"
         >
           <v-container>
@@ -213,7 +252,10 @@
                   <comment v-for="kid in article.kids" :key="kid" :id="kid" />
                 </div>
                 <div v-else class="d-flex justify-center align-center">
-                  <v-progress-circular indeterminate color="purple"></v-progress-circular>
+                  <v-progress-circular
+                    indeterminate
+                    color="purple"
+                  ></v-progress-circular>
                 </div>
               </v-col>
             </v-row>
@@ -253,13 +295,13 @@ export default {
     "tag-slider": TagSlider,
     "liked-people": LikedPeople,
     "related-articles": RelatedArticlesModel,
-    "related-articles-card": RelatedArticlesCard,
+    "related-articles-card": RelatedArticlesCard
   },
   mixins: [authHydrated],
   async fetch() {
     this.loading = true;
     const article = await this.$store.dispatch("article/fetchArticle", {
-      id: this.id,
+      id: this.id
     });
     this.article = article;
     this.loading = false;
@@ -268,11 +310,11 @@ export default {
     return {
       article: null,
       loading: false,
-      new_comment: defaultCommentObjFB(),
+      new_comment: defaultCommentObjFB()
     };
   },
   watch: {
-    article: "loadComments",
+    article: "loadComments"
   },
   methods: {
     loadComments(article) {
@@ -293,7 +335,7 @@ export default {
     },
     timeAgo(time) {
       return timeAgo(time);
-    },
+    }
   },
 
   computed: {
@@ -304,12 +346,12 @@ export default {
       return this.$route.params.by;
     },
     ...mapGetters({
-      getTagByID: "tag/getTagByID",
+      getTagByID: "tag/getTagByID"
     }),
     isDriver() {
       return this.user ? isDriver(this.user) : false;
-    },
-  },
+    }
+  }
 };
 </script>
 

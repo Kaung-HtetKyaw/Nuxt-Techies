@@ -243,3 +243,28 @@ export function pathToBreadCrumb(path) {
   let paths = path.split("/").slice(1);
   return paths.join(" >> ");
 }
+
+export const createSEOMeta = (data, path) => {
+  const meta = [
+    { hid: "og:title", property: "og:title", content: data.title },
+    { hid: "description", name: "description", content: data.description },
+    {
+      hid: "og:description",
+      property: "og:description",
+      content: data.description
+    },
+    { hid: "og:image", property: "og:image", content: data.photo.url },
+    {
+      hid: "og:url",
+      property: "og:url",
+      content: process.env.appUrl + "/" + path
+    },
+    {
+      hid: "twitter:card",
+      name: "twitter:card",
+      content: "summary_large_image"
+    }
+  ];
+  console.log(meta);
+  return meta;
+};
