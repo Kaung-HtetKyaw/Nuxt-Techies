@@ -11,6 +11,9 @@
         </v-col>
       </v-row>
       <v-row dense v-else class="d-flex">
+        <v-btn color="purple" dark small fixed bottom right fab nuxt :to="{name:'t-new'}">
+          <v-icon color="white">mdi-plus</v-icon>
+        </v-btn>
         <v-col v-for="tag in tags" :key="tag.id" cols="12" sm="12" md="4" class="text-h3">
           <tag-card :tag="tag"></tag-card>
         </v-col>

@@ -44,12 +44,19 @@
       <v-row dense justify="center" class="pa-4">
         <v-btn
           depressed
+          :ripple="false"
           color="indigo lighten-2"
           nuxt
-          :to="reviewLink"
+          @click="reviewReport"
           class="white--text my-2 mx-1"
         >Review</v-btn>
-        <v-btn depressed color="red" class="white--text my-2 mx-1">Delete Account</v-btn>
+        <v-btn
+          depressed
+          :ripple="false"
+          color="red"
+          class="white--text my-2 mx-1"
+          @click="deleteReport"
+        >{{deleting?'Removing report':'Remove report'}}</v-btn>
       </v-row>
     </v-container>
   </div>
@@ -62,6 +69,26 @@ export default {
     report: {
       type: Object,
       required: true,
+    },
+  },
+  data() {
+    return {
+      deleting: false,
+    };
+  },
+  methods: {
+    reviewReport() {
+      return this.deleteReport().then(() => {
+        this.$router.push(this.reviewLink);
+      });
+    },
+    deleteReport() {
+      this.deleting = true;
+      return this.$store
+        .dispatch("report/deleteReport", { id: this.report.id })
+        .then(() => {
+          this.deleting = false;
+        });
     },
   },
   computed: {

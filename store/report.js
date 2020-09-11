@@ -24,6 +24,9 @@ export const mutations = {
   ADD_REPORT(state, { report }) {
     state.reports.push(report);
   },
+  DELETE_REPORT(state, { id }) {
+    removeByID(state.reports, id);
+  },
   SET_LAST_VISIBLE(state, lvState) {
     state.lastVisible = lvState;
   }
@@ -50,6 +53,11 @@ export const actions = {
     return createReport(params).then(report => {
       commit("ADD_REPORT", { report });
       return report;
+    });
+  },
+  deleteReport({ commit }, params) {
+    return deleteReport(params.id).then(() => {
+      commit("DELETE_REPORT", { id: params.id });
     });
   }
 };

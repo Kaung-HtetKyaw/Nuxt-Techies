@@ -101,7 +101,7 @@ import ProfileCard from "@/components/Author/ProfileCard";
 import ArticleCard from "@/components/Article/ArticleCardBlockBrief";
 import UserModelFB from "@/components/Author/UserModelFB";
 import { mapState } from "vuex";
-
+import { clearArticles } from "@/mixins/clearDataBeforeDestroyed";
 export default {
   middleware: ["auth"],
   components: {
@@ -111,6 +111,7 @@ export default {
     "profile-card": ProfileCard,
     "article-card": ArticleCard,
   },
+  mixins: [clearArticles],
   created() {
     this.$store.dispatch("article/clearArticles");
   },

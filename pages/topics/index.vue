@@ -9,6 +9,9 @@
 
     <div v-else>
       <h1 class="text-center text-md-left">Topics</h1>
+      <v-btn color="purple" dark small fixed bottom right fab nuxt :to="{name:'topics-new'}">
+        <v-icon color="white">mdi-plus</v-icon>
+      </v-btn>
       <v-container class="px-0">
         <v-row dense>
           <v-col cols="12" sm="12" md="4" v-for="topic in topics" :key="topic.id">

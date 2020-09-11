@@ -2,6 +2,9 @@
   <div>
     <v-container fluid class="pa-0">
       <v-row dense>
+        <v-btn color="purple" dark small fixed bottom right fab nuxt :to="{name:'new'}">
+          <v-icon color="white">mdi-plus</v-icon>
+        </v-btn>
         <v-col cols="12" md="3" sm="0" class="d-none d-md-block flex-column">
           <div class="py-4 white bs-border">
             <div v-if="!!user">

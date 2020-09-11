@@ -9,16 +9,19 @@
               <p
                 class="text-body-2 opacity-7 text-center"
               >A report will be removed as soon as you review it</p>
-              <report-card
-                v-for="(report,i) in reports"
-                :key="report.id"
-                :report="report"
-                v-observe-visibility="
+              <transition-group name="vertical" tag="div">
+                <report-card
+                  v-for="(report,i) in reports"
+                  :key="report.id"
+                  :report="report"
+                  v-observe-visibility="
                               i === reports.length - 1
                                 ? lazyLoadReports
                                 : false
                             "
-              ></report-card>
+                ></report-card>
+              </transition-group>
+
               <div v-if="loading" class="d-flex justify-center align-center">
                 <v-progress-circular indeterminate color="purple"></v-progress-circular>
               </div>
