@@ -21,12 +21,12 @@
                   }
                 : null
             ]"
-            class="text-center text-sm-h6 text-md-h3 font-weight-medium"
+            class="text-center text-sm-h6 text-md-h4 font-weight-medium"
           >
             {{ article.title }}
           </h1>
           <h3
-            class="text-center opacity-7 text-sm-subtitle-2 text-md-h5 font-weight-medium font-italic"
+            class="text-center opacity-7 text-subtitle-1 font-weight-medium font-italic my-4"
           >
             {{ article.description }}
           </h3>
@@ -93,6 +93,17 @@
               </div>
             </div>
           </div>
+          <v-container>
+            <v-row dense justify="center">
+              <social-btn
+                v-for="type in ['facebook', 'twitter', 'reddit', 'linkedin']"
+                :key="type"
+                :type="type"
+                :article="article"
+                class="px-1 my-1"
+              ></social-btn
+            ></v-row>
+          </v-container>
 
           <v-sheet
             v-if="article.photo.url"
@@ -134,14 +145,16 @@
                   >
                     <template #header>People who reacted to this post</template>
                     <template #button>
-                      <span v-if="article.likesNo > 1" class="text-caption">{{
-                        isLiked
-                          ? "You and " + (article.likesNo - 1) + " others"
-                          : ""
-                      }}</span>
-                      <span v-else class="text-caption">{{
-                        isLiked ? "You liked this article" : ""
-                      }}</span>
+                      <span v-if="article.likesNo > 1" class="text-caption">
+                        {{
+                          isLiked
+                            ? "You and " + (article.likesNo - 1) + " others"
+                            : ""
+                        }}
+                      </span>
+                      <span v-else class="text-caption">
+                        {{ isLiked ? "You liked this article" : "" }}
+                      </span>
                     </template>
                     <template #icon>
                       <v-icon color="red">mdi-heart</v-icon>
@@ -278,8 +291,9 @@ import TagSlider from "@/components/UI/TagSlider";
 import LikedPeople from "@/components/UI/PeopleListModal";
 import RelatedArticlesModel from "@/components/Article/RelatedArticlesModel";
 import RelatedArticlesCard from "@/components/Article/ArticleCardBlockRelated";
-import { defaultCommentObjFB } from "@/utils/constants";
-import { timeAgo, isDriver } from "@/utils/utils";
+import SocialButton from "@/components/Button/SocialBtn";
+import { defaultCommentObjFB, defaultMeta } from "@/utils/constants";
+import { timeAgo, isDriver, createSEOMeta } from "@/utils/utils";
 import { mapState, mapGetters } from "vuex";
 import { authHydrated } from "@/mixins/Hydrated";
 
@@ -295,7 +309,11 @@ export default {
     "tag-slider": TagSlider,
     "liked-people": LikedPeople,
     "related-articles": RelatedArticlesModel,
-    "related-articles-card": RelatedArticlesCard
+    "related-articles-card": RelatedArticlesCard,
+    "social-btn": SocialButton
+  },
+  head() {
+    return this.meta;
   },
   mixins: [authHydrated],
   async fetch() {
@@ -350,6 +368,17 @@ export default {
     }),
     isDriver() {
       return this.user ? isDriver(this.user) : false;
+    },
+    path() {
+      return this.$route.fullPath;
+    },
+
+    meta() {
+      if (this.article) {
+        const title = this.article.title;
+        return { title, meta: createSEOMeta(this.article, this.path) };
+      }
+      return defaultMeta(this.path);
     }
   }
 };

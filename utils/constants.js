@@ -116,3 +116,32 @@ export const signInLogo = {
   facebook: "https://cdn.worldvectorlogo.com/logos/facebook-icon.svg",
   github: "https://cdn.worldvectorlogo.com/logos/github-icon-1.svg"
 };
+
+export function defaultMeta(path) {
+  const title = "Loading....";
+  const meta = [
+    { hid: "og:title", property: "og:title", content: "Loading...." },
+    { hid: "description", name: "description", content: "Loading...." },
+    {
+      hid: "og:description",
+      property: "og:description",
+      content: "Loading...."
+    },
+    {
+      hid: "og:image",
+      property: "og:image",
+      content: "https://upload.wikimedia.org/wikipedia/commons/7/71/Black.png"
+    },
+    {
+      hid: "og:url",
+      property: "og:url",
+      content: process.env.appUrl + "/" + path
+    },
+    {
+      hid: "twitter:card",
+      name: "twitter:card",
+      content: "summary_large_image"
+    }
+  ];
+  return { title, meta };
+}

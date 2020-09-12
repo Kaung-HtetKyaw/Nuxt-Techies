@@ -1,7 +1,7 @@
 import colors from "vuetify/es5/util/colors";
 
 export default {
-  mode: "universal",
+  mode: "spa",
   /*
    ** Headers of the page
    */
@@ -26,6 +26,7 @@ export default {
       }
     ]
   },
+  env: { appUrl: "https://fb-test-4125a.web.app" },
   /*
    ** Customize the progress-bar color
    */
@@ -56,7 +57,7 @@ export default {
     "@nuxtjs/axios",
     "@nuxtjs/pwa",
     "@nuxtjs/markdownit",
-
+    "vue-social-sharing/nuxt",
     [
       "@nuxtjs/firebase",
       {

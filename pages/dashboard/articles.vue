@@ -6,20 +6,30 @@
         <v-col cols="12" md="6" offset-md="3" sm="12" class="py-0">
           <v-container class="pa-0">
             <v-row dense>
-              <article-list-model :sort="false" :lazy="true" :params="{type:'all'}">
-                <template v-slot="{ articles, lazyLoadArticles, loading, empty }">
+              <article-list-model
+                :sort="false"
+                :lazy="true"
+                :params="{ type: 'all' }"
+              >
+                <template
+                  v-slot="{ articles, lazyLoadArticles, loading, empty }"
+                >
                   <v-container class="pa-0">
                     <v-col cols="12" sm="12" class="py-0">
                       <v-container class="pa-0">
                         <v-row dense>
-                          <transition-group name="vertical" tag="div" class="full-width">
+                          <transition-group
+                            name="vertical"
+                            tag="div"
+                            class="full-width"
+                          >
                             <v-col
                               v-for="(article, i) in articles"
                               v-observe-visibility="
-                              i === articles.length - 1
-                                ? lazyLoadArticles
-                                : false
-                            "
+                                i === articles.length - 1
+                                  ? lazyLoadArticles
+                                  : false
+                              "
                               :key="article.id"
                               cols="12"
                               sm="12"
@@ -30,7 +40,13 @@
                           </transition-group>
                         </v-row>
                         <v-row dense v-if="loading">
-                          <v-col cols="12" sm="12" v-for="i in 10" :key="i" class="white">
+                          <v-col
+                            cols="12"
+                            sm="12"
+                            v-for="i in 10"
+                            :key="i"
+                            class="white"
+                          >
                             <content-placeholders rounded>
                               <content-placeholders-img />
                               <content-placeholders-text :lines="3" />
@@ -79,10 +95,10 @@ export default {
     "tag-group": TagGroup,
     "user-info": NavigationDrawer,
     "user-avatar": UserAvatar,
-    "empty-alert": EmptyAlert,
+    "empty-alert": EmptyAlert
   },
   mixins: [authHydrated, clearArticles],
-  middleware: ["auth", "driver"],
+  middleware: ["auth", "driver"]
 };
 </script>
 

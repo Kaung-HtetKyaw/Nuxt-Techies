@@ -27,15 +27,39 @@ export function previewImg(file, callback) {
 
 export function timeAgo(time) {
   const between = (Date.now() - Number(time)) / 1000;
-  if (between < 3600) {
-    return pluralize(between / 60, "minute");
-  } else if (between < 86400) {
-    return pluralize(between / 3600, "hour");
-  } else if (between > 86400) {
-    return pluralize(between / 86400, "day");
+  if (between < hour()) {
+    return pluralize(between / minute(), "minute");
+  } else if (between < day()) {
+    return pluralize(between / hour(), "hour");
+  } else if (between < month()) {
+    return pluralize(between / day(), "day");
+  } else if (between < year()) {
+    return pluralize(between / month(), "month");
+  } else if (between > year()) {
+    return pluralize(between / year(), "year");
   }
 }
+function second() {
+  return 1;
+}
 
+function minute() {
+  return second() * 60;
+}
+
+function hour() {
+  return minute() * 60;
+}
+
+function day() {
+  return hour() * 24;
+}
+function month() {
+  return day() * 30;
+}
+function year() {
+  return month() * 12;
+}
 function pluralize(time, label) {
   const roundedTime = Math.round(time);
   if (roundedTime === 1) {
@@ -254,6 +278,8 @@ export const createSEOMeta = (data, path) => {
       content: data.description
     },
     { hid: "og:image", property: "og:image", content: data.photo.url },
+    { hid: "og:type", property: "og:type", content: "website" },
+    { hid: "og:site_name", property: "og:site_name", content: "MTU Code Lab" },
     {
       hid: "og:url",
       property: "og:url",
@@ -263,8 +289,22 @@ export const createSEOMeta = (data, path) => {
       hid: "twitter:card",
       name: "twitter:card",
       content: "summary_large_image"
+    },
+    {
+      hid: "twitter:title",
+      name: "twitter:title",
+      content: "Vue Social Cards Example"
+    },
+    {
+      hid: "twitter:description",
+      name: "twitter:description",
+      content: "Vue sample site showing off Twitter and Facebook Cards."
     }
   ];
   console.log(meta);
   return meta;
 };
+
+export function getHashTags(tags) {
+  return tags.map(tag => tag.name).join(",");
+}
