@@ -7,7 +7,7 @@
         :title="article.title"
         :description="article.description"
         :quote="article.description"
-        hashtags="vuejs,vite"
+        :hashtags="hashtags"
       >
         <v-btn
           depressed
@@ -16,8 +16,8 @@
           class="white--text d-flex justify-space-between align-center"
           x-small
         >
-          <v-icon class="px-1" small>{{network.icon}}</v-icon>
-          <span class="px-1">{{type}}</span>
+          <v-icon class="px-1" small>{{ network.icon }}</v-icon>
+          <span class="px-1">{{ type }}</span>
         </v-btn>
       </ShareNetwork>
     </div>
@@ -32,32 +32,32 @@ export default {
   props: {
     type: {
       type: String,
-      required: true,
+      required: true
     },
     article: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   mixins: [tagsHydrated],
   data() {
     return {
       facebook: {
         color: "#1877f2",
-        icon: "mdi-facebook",
+        icon: "mdi-facebook"
       },
       twitter: {
         color: "#08a0e9",
-        icon: "mdi-twitter",
+        icon: "mdi-twitter"
       },
       linkedin: {
         color: "#0077b5",
-        icon: "mdi-linkedin",
+        icon: "mdi-linkedin"
       },
       reddit: {
         color: "#ff4301",
-        icon: "mdi-reddit",
-      },
+        icon: "mdi-reddit"
+      }
     };
   },
   computed: {
@@ -68,20 +68,19 @@ export default {
       return process.env.appUrl + "/" + this.$route.fullPath;
     },
     ...mapGetters({
-      getTagByID: "tag/getTagByID",
+      getTagByID: "tag/getTagByID"
     }),
     hashtags() {
       let tags = [];
       if (this.tags.length > 0) {
-        tags = this.article.tags.map((id) => this.getTagByID(id));
+        tags = this.article.tags.map(id => this.getTagByID(id));
         console.log(getHashTags(tags));
         return getHashTags(tags);
       }
       return "";
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>
