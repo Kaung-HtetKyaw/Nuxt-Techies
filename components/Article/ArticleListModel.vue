@@ -8,22 +8,22 @@ export default {
     params: {
       type: Object,
       required: true,
-      validator: function(value) {
+      validator: function (value) {
         return (
           ["all", "user", "tag", "popular", "topic"].indexOf(value.type) !== -1
         );
-      }
+      },
     },
     sort: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   mixins: [authHydrated],
   async fetch() {
     const articles = await this.$store.dispatch("article/getArticles", {
       params: this.params,
-      lazy: this.lazyLoad
+      lazy: this.lazyLoad,
     });
 
     //set lazy loading state
@@ -41,7 +41,7 @@ export default {
   data() {
     return {
       lazyLoad: false,
-      empty: false
+      empty: false,
     };
   },
 
@@ -50,18 +50,18 @@ export default {
       if (isVisible && !this.$fetchState.pending && !this.empty) {
         this.$fetch();
       }
-    }
+    },
   },
   watch: {
-    params: function() {
+    params: function () {
       this.empty = false;
       this.lazyLoad = false;
       this.$fetch();
-    }
+    },
   },
   computed: {
     ...mapState({
-      storedArticles: state => state.article.articles
+      storedArticles: (state) => state.article.articles,
     }),
     articles() {
       if (
@@ -76,15 +76,15 @@ export default {
         );
       }
       return this.storedArticles;
-    }
+    },
   },
   render() {
     return this.$scopedSlots.default({
       loading: this.$fetchState.pending,
       articles: this.articles,
       lazyLoadArticles: this.lazyLoadArticles,
-      empty: this.empty
+      empty: this.empty,
     });
-  }
+  },
 };
 </script>

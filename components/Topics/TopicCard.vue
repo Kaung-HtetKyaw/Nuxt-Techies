@@ -24,8 +24,13 @@
           }"
         >
           <h3 class="mb-2 text-h6">{{ topic.name }}</h3>
-          <p>{{topic.members.length}} members</p>
-          <p>Created {{timeAgo}} ago</p>
+          <div class="text-subtitle-2 text-subtitle-md-1 my-1">
+            <span>{{topic.members.length}} {{topic.members.length>1?'members':'member'}}</span>
+            <span>-</span>
+            <span>{{topic.kids.length}} {{topic.kids.length>1?'articles':'article'}}</span>
+          </div>
+
+          <p class="text-subtitle-2 text-subtitle-md-1">Created {{timeAgo}} ago</p>
         </nuxt-link>
       </v-card-text>
       <v-card-actions v-if="!!user">

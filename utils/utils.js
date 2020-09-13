@@ -27,7 +27,9 @@ export function previewImg(file, callback) {
 
 export function timeAgo(time) {
   const between = (Date.now() - Number(time)) / 1000;
-  if (between < hour()) {
+  if (between === 0) {
+    return "Just now";
+  } else if (between < hour()) {
     return pluralize(between / minute(), "minute");
   } else if (between < day()) {
     return pluralize(between / hour(), "hour");
@@ -203,7 +205,6 @@ export function dataItemComments(items) {
 export function dataItemReports(items) {
   let reports = Array.isArray(items) ? [...items] : [{ ...items }];
   return reports.map(report => {
-    console.log(report);
     let result = {};
     result.id = report.id;
     result.by = report.by;
@@ -301,7 +302,6 @@ export const createSEOMeta = (data, path) => {
       content: "Vue sample site showing off Twitter and Facebook Cards."
     }
   ];
-  console.log(meta);
   return meta;
 };
 

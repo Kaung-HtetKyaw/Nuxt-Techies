@@ -108,6 +108,7 @@ import ArticleCard from "@/components/Article/ArticleCardBlockHorizontal";
 import UserModel from "@/components/Author/UserModelFB";
 import TopicAboutCard from "@/components/Topics/TopicAboutCard";
 import EmptyAlert from "@/components/Alert/EmptyAlert";
+
 import { mapState, mapGetters } from "vuex";
 import { fetchArticlesByID } from "@/services/Firebase/article";
 import { authHydrated } from "@/mixins/Hydrated";
@@ -120,6 +121,7 @@ export default {
     "author-card": UserModel,
     "about-card": TopicAboutCard,
     "empty-alert": EmptyAlert,
+
   },
   mixins: [authHydrated, clearArticles],
   async fetch() {

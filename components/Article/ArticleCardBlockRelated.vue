@@ -15,7 +15,7 @@
         <v-col cols="12" sm="12" md="11">
           <div class="d-flex flex-column justify-center align-center align-md-start">
             <nuxt-link :to="{name:'by-id',params:{by:article.by,id:article.id}}">
-              <p class="text-h5 font-weight-bold my-0 py-1">{{article.title}}</p>
+              <p class="text-h5 font-weight-bold my-0 py-1 text-center">{{article.title}}</p>
             </nuxt-link>
 
             <div class="text--secondary">

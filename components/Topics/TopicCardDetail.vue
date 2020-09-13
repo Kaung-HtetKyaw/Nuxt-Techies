@@ -32,7 +32,12 @@
                 <div class="text-subtitle-2 text-subtitle-md-1">
                   <span>{{topic.members.length}} members</span>
                   <span>-</span>
-                  <span class="purple--text">See all members</span>
+                  <members :peopleID="topic.members" class="d-inline-block">
+                    <template #header>Members</template>
+                    <template #button>
+                      <span class="purple--text text-capitalize">See all members</span>
+                    </template>
+                  </members>
                 </div>
               </v-col>
               <v-col
@@ -115,6 +120,7 @@
 <script>
 import FollowBtn from "@/components/Button/FollowTopicsModelBtn";
 import SignInModal from "@/components/Button/SignInModal";
+import PeopleList from "@/components/UI/PeopleListModal";
 import { authHydrated } from "@/mixins/Hydrated";
 import { timeAgo } from "@/utils/utils";
 export default {
@@ -127,6 +133,7 @@ export default {
   components: {
     "follow-btn": FollowBtn,
     "sign-in-modal": SignInModal,
+    members: PeopleList,
   },
   mixins: [authHydrated],
   computed: {

@@ -1,5 +1,5 @@
 export const clearArticles = {
-  beforeDestroy() {
+  created() {
     this.$store.dispatch("article/clearArticles");
   }
 };

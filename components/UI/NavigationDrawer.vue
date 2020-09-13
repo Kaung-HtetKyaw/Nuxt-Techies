@@ -123,7 +123,7 @@ export default {
             {
               icon: "mdi-cog",
               title: "Settings",
-              to: { name: "by", params: { by: vm.user.uid } },
+              to: { name: "by-settings", params: { by: vm.user.uid } },
             },
             {
               icon: "mdi-account-group",
