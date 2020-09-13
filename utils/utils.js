@@ -301,7 +301,7 @@ export const createSEOMeta = (data, path) => {
       content: "Vue sample site showing off Twitter and Facebook Cards."
     }
   ];
-  console.log(meta);
+
   return meta;
 };
 
