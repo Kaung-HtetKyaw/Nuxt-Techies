@@ -9,8 +9,7 @@
           height="200px"
           :style="{
           backgroundImage: `url(${
-            topic.cover.url
-             
+            topic.cover.url?topic.cover.url:defaultTopicCover
           })`
         }"
           class="center-background-img"
@@ -55,6 +54,7 @@ import FollowTopicsModelBtn from "@/components/Button/FollowTopicsModelBtn";
 import { mapGetters } from "vuex";
 import { fetchUser } from "@/services/Firebase/userAuth";
 import { isEmptyObj, timeAgo } from "@/utils/utils";
+import { defaultTopicObjFB, defaultTopicCover } from "@/utils/constants";
 import { authHydrated } from "@/mixins/Hydrated";
 export default {
   props: {
@@ -68,7 +68,9 @@ export default {
     "follow-btn": FollowTopicsModelBtn,
   },
   data() {
-    return {};
+    return {
+      defaultTopicCover: defaultTopicCover,
+    };
   },
   computed: {
     timeAgo() {

@@ -20,6 +20,7 @@ export const date_sort_desc = function(date1, date2) {
 
 export function priortizeFollowingArticles(articles, followingID, userID) {
   let result = [];
+
   let followingArticles = articles.filter(article => {
     return followingID.includes(article.by);
   });
@@ -29,5 +30,6 @@ export function priortizeFollowingArticles(articles, followingID, userID) {
   });
 
   result = result.concat(followingArticles, normalArticles);
+
   return result;
 }

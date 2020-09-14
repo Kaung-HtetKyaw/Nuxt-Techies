@@ -117,7 +117,6 @@ export default {
       }
       //update the image only when user update it
       if (isFile(this.file)) {
-        console.log(this.file);
         fileUpload({
           folder: "tags",
           file: this.file,

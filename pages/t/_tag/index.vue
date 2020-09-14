@@ -94,7 +94,7 @@ import ArticleCard from "@/components/Article/ArticleCardBlockBrief";
 import EmptyAlert from "@/components/Alert/EmptyAlert";
 import { mapGetters } from "vuex";
 import { authHydrated } from "@/mixins/Hydrated";
-import { clearArticles } from "@/mixins/clearDataBeforeDestroyed";
+
 import { authority } from "@/mixins/authority";
 export default {
   components: {
@@ -102,7 +102,7 @@ export default {
     "article-card": ArticleCard,
     "empty-alert": EmptyAlert,
   },
-  mixins: [authHydrated, authority, clearArticles],
+  mixins: [authHydrated, authority],
   data() {
     return {
       articles: [],

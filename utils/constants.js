@@ -87,15 +87,15 @@ export function defaultTopicObjFB() {
     },
     cover: {
       id,
-      url:
-        "https://blogs.sas.com/content/sastraining/files/2015/03/black_background.png"
+      url: ""
     },
     members: [],
     name: "",
     kids: []
   };
 }
-
+export const defaultTopicCover =
+  "https://blogs.sas.com/content/sastraining/files/2015/03/black_background.png";
 export function defaultReportObj() {
   const timestamp = Date.now();
   return {

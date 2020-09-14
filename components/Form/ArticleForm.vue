@@ -2,12 +2,7 @@
   <div>
     <v-form ref="form">
       <div class="d-flex align-center px-2 mb-8">
-        <v-btn
-          elevation="0"
-          color="grey lighten-1"
-          class="white--text"
-          :ripple="false"
-        >
+        <v-btn elevation="0" color="grey lighten-1" class="white--text" :ripple="false">
           <v-file-input
             show-size
             value="any"
@@ -19,9 +14,7 @@
             :rules="fileRules"
           ></v-file-input>
         </v-btn>
-        <span class="text-sm-subtitle-2 text-md-h6 grey--text lighten-1 ml-3"
-          >Add a Cover image</span
-        >
+        <span class="text-sm-subtitle-2 text-md-h6 grey--text lighten-1 ml-3">Add a Cover image</span>
       </div>
       <img :src="clonedArticle.photo.url" class="my-2" />
       <div>
@@ -36,10 +29,7 @@
         ></v-textarea>
       </div>
       <div>
-        <autocomplete-tag
-          v-model="clonedArticle.tags"
-          :article_tags="clonedArticle.tags"
-        ></autocomplete-tag>
+        <autocomplete-tag v-model="clonedArticle.tags" :article_tags="clonedArticle.tags"></autocomplete-tag>
       </div>
       <div>
         <v-textarea
@@ -77,35 +67,35 @@ import { mapState } from "vuex";
 
 export default {
   components: {
-    "autocomplete-tag": AutoCompleteTag
+    "autocomplete-tag": AutoCompleteTag,
   },
   middleware: ["auth"],
   mixins: [rules],
   props: {
     article: {
       type: Object,
-      required: true
+      required: true,
     },
     file: {
       //accept any type
       required: true,
-      validator: v => true
-    }
+      validator: (v) => true,
+    },
   },
   data() {
     return {
       clonedFile: {},
       tags: [],
-      clonedArticle: {}
+      clonedArticle: {},
     };
   },
   watch: {
     "clonedArticle.tags": {
       deep: true,
-      handler: function(v1, v2) {
+      handler: function (v1, v2) {
         this.$emit("articleChanged", this.clonedArticle);
-      }
-    }
+      },
+    },
   },
   created() {
     this.clonedArticle = { ...this.article };
@@ -123,19 +113,19 @@ export default {
     previewImg(file) {
       if (file) {
         let vm = this;
-        console.log("vm file", this.clonedFile);
+
         previewImg(file, callback);
         function callback(preview) {
           vm.clonedArticle.photo.url = preview;
         }
       }
-    }
+    },
   },
   computed: {
     ...mapState({
-      user: state => state.user.user
-    })
-  }
+      user: (state) => state.user.user,
+    }),
+  },
 };
 </script>
 

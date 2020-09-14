@@ -3,7 +3,8 @@ import {
   createUser,
   updateUser,
   updateUsers,
-  fetchUsersByType
+  fetchUsersByType,
+  fetchUsersByID
 } from "@/services/Firebase/userAuth";
 
 import userFactory from "@/utils/factory/user";
@@ -169,6 +170,17 @@ export const actions = {
         { data: topic, id: topic.id },
         { root: true }
       );
+    });
+  },
+  removeTopicFromMembers({ commit, state, dispatch }, { topic }) {
+    const members = topic.members;
+    members.forEach(async member => {
+      let user = await fetchUser(member);
+      removeByID(user.topics, topic.id);
+      if (member === state.user.uid) {
+        dispatch("updateUser", { data: user, id: user.uid });
+      }
+      updateUser(user);
     });
   },
   changeClaim({ dispatch }, { user }) {

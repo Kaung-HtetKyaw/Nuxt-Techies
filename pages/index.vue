@@ -2,7 +2,7 @@
   <div>
     <v-container fluid class="pa-0">
       <v-row dense>
-        <v-btn color="purple" dark small fixed bottom right fab nuxt :to="{name:'new'}">
+        <v-btn color="purple" dark fixed bottom right fab nuxt :to="{name:'new'}">
           <v-icon color="white">mdi-plus</v-icon>
         </v-btn>
         <v-col cols="12" md="3" sm="0" class="d-none d-md-block flex-column">
@@ -81,7 +81,6 @@ import UserAvatar from "@/components/UI/UserAvatarDrawer";
 import EmptyAlert from "@/components/Alert/EmptyAlert";
 import { mapState } from "vuex";
 import { authHydrated } from "@/mixins/Hydrated";
-import { clearArticles } from "@/mixins/clearDataBeforeDestroyed";
 import { priortizeFollowingArticles } from "@/utils/sort";
 export default {
   components: {
@@ -96,7 +95,7 @@ export default {
     "user-avatar": UserAvatar,
     "empty-alert": EmptyAlert,
   },
-  mixins: [authHydrated, clearArticles],
+  mixins: [authHydrated],
 };
 </script>
 

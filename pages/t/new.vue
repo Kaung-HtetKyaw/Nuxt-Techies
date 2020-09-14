@@ -114,7 +114,6 @@ export default {
       }
       //update the image only when user update it
       if (isFile(this.file)) {
-        console.log(this.file);
         fileUpload({
           folder: "tags",
           file: this.file,
@@ -150,11 +149,9 @@ export default {
     },
     setTextColor(color) {
       this.tag.text_color = color;
-      console.log(this.tag.text_color);
     },
     setBackgroundColor(color) {
       this.tag.bg_color = color;
-      console.log(this.tag.bg_color);
     },
   },
   computed: {

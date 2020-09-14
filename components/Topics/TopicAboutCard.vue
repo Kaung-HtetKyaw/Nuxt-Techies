@@ -29,8 +29,11 @@
               <v-list-item-content>
                 <v-list-item-title v-if="fetchingCreator">Loading...</v-list-item-title>
                 <v-list-item-title v-else>
-                  Created by
-                  <span class="purple--text">{{creator.displayName}}</span>
+                  <nuxt-link :to="{name:'by',params:{by:creator.uid}}">
+                    <span class="black--text">Created by</span>
+
+                    <span class="purple--text">{{creator.displayName}}</span>
+                  </nuxt-link>
                 </v-list-item-title>
               </v-list-item-content>
             </template>

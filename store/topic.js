@@ -53,10 +53,14 @@ export const actions = {
       return { ...params.data };
     });
   },
-  deleteTopic({ commit, getters }, params) {
+  deleteTopic({ commit, getters, dispatch }, params) {
     const topic = { ...getters.getTopicByID(params.id) };
+    const members = topic.members;
     return deleteTopic(params.id).then(() => {
       commit("DELETE_TOPIC", { id: params.id });
+      //update members
+      dispatch("user/removeTopicFromMembers", { topic }, { root: true });
+      //delete article from topics
       return deleteArticles(topic.kids);
     });
   },

@@ -6,7 +6,7 @@
           height="300px"
           :style="{
           backgroundImage: `url(${
-            topic.cover.url
+            topic.cover.url?topic.cover.url:defaultTopicCover
              
           })`
         }"
@@ -123,6 +123,7 @@ import SignInModal from "@/components/Button/SignInModal";
 import PeopleList from "@/components/UI/PeopleListModal";
 import { authHydrated } from "@/mixins/Hydrated";
 import { timeAgo } from "@/utils/utils";
+import { defaultTopicObjFB, defaultTopicCover } from "@/utils/constants";
 export default {
   props: {
     topic: {
@@ -136,6 +137,11 @@ export default {
     members: PeopleList,
   },
   mixins: [authHydrated],
+  data() {
+    return {
+      defaultTopicCover: defaultTopicCover,
+    };
+  },
   computed: {
     timeAgo() {
       return timeAgo(this.topic.about.timestamp);
