@@ -38,7 +38,7 @@
                         class="text-sm-subtitle-2 text-md-h6 grey--text lighten-1 ml-3"
                       >Add a Cover image</span>
                     </div>
-                    <img :src="topic.cover.url" :alt="topic.name" />
+                    <img :src="topic.cover.url" />
                   </div>
                 </div>
               </div>
@@ -89,7 +89,6 @@ export default {
       this.creating = true;
       //update the image only when user update it
       if (isFile(this.file)) {
-        console.log(this.file);
         fileUpload({
           folder: "topics",
           file: this.file,

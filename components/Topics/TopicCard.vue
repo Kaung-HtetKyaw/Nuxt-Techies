@@ -9,8 +9,7 @@
           height="200px"
           :style="{
           backgroundImage: `url(${
-            topic.cover.url
-             
+            topic.cover.url?topic.cover.url:defaultTopicCover
           })`
         }"
           class="center-background-img"
@@ -24,8 +23,13 @@
           }"
         >
           <h3 class="mb-2 text-h6">{{ topic.name }}</h3>
-          <p>{{topic.members.length}} members</p>
-          <p>Created {{timeAgo}} ago</p>
+          <div class="text-subtitle-2 text-subtitle-md-1 my-1">
+            <span>{{topic.members.length}} {{topic.members.length>1?'members':'member'}}</span>
+            <span>-</span>
+            <span>{{topic.kids.length}} {{topic.kids.length>1?'articles':'article'}}</span>
+          </div>
+
+          <p class="text-subtitle-2 text-subtitle-md-1">Created {{timeAgo}} ago</p>
         </nuxt-link>
       </v-card-text>
       <v-card-actions v-if="!!user">
@@ -50,6 +54,7 @@ import FollowTopicsModelBtn from "@/components/Button/FollowTopicsModelBtn";
 import { mapGetters } from "vuex";
 import { fetchUser } from "@/services/Firebase/userAuth";
 import { isEmptyObj, timeAgo } from "@/utils/utils";
+import { defaultTopicObjFB, defaultTopicCover } from "@/utils/constants";
 import { authHydrated } from "@/mixins/Hydrated";
 export default {
   props: {
@@ -63,7 +68,9 @@ export default {
     "follow-btn": FollowTopicsModelBtn,
   },
   data() {
-    return {};
+    return {
+      defaultTopicCover: defaultTopicCover,
+    };
   },
   computed: {
     timeAgo() {

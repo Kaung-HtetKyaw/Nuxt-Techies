@@ -41,7 +41,7 @@
                   </v-col>
                   <v-col cols="12" sm="12" md="8" class="pa-3">
                     <h1
-                      class="text-center text-md-left text-h5 text-md-h4 font-weight-medium"
+                      class="text-center text-left text-h6 text-md-h5 font-weight-medium"
                     >Discussions</h1>
                     <article-list :lazy="true" :params="{ type: 'topic', param: topicID }">
                       <template v-slot="{ articles, lazyLoadArticles, loading, empty }">
@@ -108,10 +108,11 @@ import ArticleCard from "@/components/Article/ArticleCardBlockHorizontal";
 import UserModel from "@/components/Author/UserModelFB";
 import TopicAboutCard from "@/components/Topics/TopicAboutCard";
 import EmptyAlert from "@/components/Alert/EmptyAlert";
+
 import { mapState, mapGetters } from "vuex";
 import { fetchArticlesByID } from "@/services/Firebase/article";
 import { authHydrated } from "@/mixins/Hydrated";
-import { clearArticles } from "@/mixins/clearDataBeforeDestroyed";
+
 export default {
   components: {
     "article-list": ArticleListModel,
@@ -121,7 +122,7 @@ export default {
     "about-card": TopicAboutCard,
     "empty-alert": EmptyAlert,
   },
-  mixins: [authHydrated, clearArticles],
+  mixins: [authHydrated],
   async fetch() {
     if (!this.topic) {
       return this.$store.dispatch("topic/fetchAllTopics");

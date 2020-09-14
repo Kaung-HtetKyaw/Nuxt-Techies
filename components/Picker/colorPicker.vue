@@ -14,9 +14,7 @@ export default {
   },
   created() {
     if (this.color) {
-      console.log(this.picker);
       this.picker = { ...this.color };
-      console.log(this.picker);
     }
   },
   data() {
@@ -26,7 +24,6 @@ export default {
   },
   watch: {
     picker: function (v1, v2) {
-      console.log(v1);
       this.$emit("colorPick", v1);
     },
   },

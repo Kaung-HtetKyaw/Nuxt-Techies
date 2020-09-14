@@ -39,7 +39,7 @@
                         sm="12"
                         class="pt-0"
                       >
-                        <article-card :article="article" />
+                        <article-card :banner="true" :article="article" />
                       </v-col>
                     </v-row>
                     <v-row dense v-if="loading">
@@ -98,7 +98,7 @@
 import ArticleListModelFB from "@/components/Article/ArticleListModel";
 import LikeBtnFB from "@/components/Button/LikeBtnFB";
 import ProfileCard from "@/components/Author/ProfileCard";
-import ArticleCard from "@/components/Article/ArticleCardBlockBrief";
+import ArticleCard from "@/components/Article/ArticleCardBlockHorizontal";
 import UserModelFB from "@/components/Author/UserModelFB";
 import { mapState } from "vuex";
 import { clearArticles } from "@/mixins/clearDataBeforeDestroyed";

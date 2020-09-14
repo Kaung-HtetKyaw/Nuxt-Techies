@@ -91,7 +91,7 @@
                   <people-list :peopleID="author.following">
                     <template #header>Following</template>
                     <template #button>
-                      <span>{{author.following.length}} Followers</span>
+                      <span>{{author.following.length}} Following</span>
                     </template>
                   </people-list>
                 </div>
